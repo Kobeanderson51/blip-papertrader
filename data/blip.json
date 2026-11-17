@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T18:44:37+00:00",
+ "updated": "2026-11-17T18:46:22+00:00",
  "mint": "AmSY5M9AP3uX8QAfyGVx1N8EXf7DkUpGZzYDHVnRpump",
  "pool": "4yoz8Meobk2mpkV7tmXSgP2eUuHevZwshLnPHq88TarB",
  "creator_wallet": "hNtpBGt2WQxR3ZfA9gFw65YapqGVu88eDjxmHQoivuM",
@@ -102,6 +102,14 @@
  "history": [
   {
    "t": "2026-11-17T18:44:37+00:00",
+   "price": 2.094e-06,
+   "mcap": 2094.27,
+   "holders": 3,
+   "progress": 1.87,
+   "graduated": false
+  },
+  {
+   "t": "2026-11-17T18:46:22+00:00",
    "price": 2.094e-06,
    "mcap": 2094.27,
    "holders": 3,

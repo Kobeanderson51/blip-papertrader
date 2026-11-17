@@ -31,10 +31,6 @@ jobs:
       - name: Check prices and paper-trade
         run: python3 bot.py once
 
-      - name: Monitor $BLIP (read-only)
-        continue-on-error: true
-        run: python3 blip_monitor.py
-
       - name: Report
         if: always()
         run: |

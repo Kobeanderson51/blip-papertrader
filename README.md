@@ -46,9 +46,6 @@ A scheduled GitHub Action runs `bot.py once` every 15 minutes, so each "tick" is
 
 GitHub pauses scheduled workflows in public repos after 60 days without commits; any commit re-enables them.
 
-## $BLIP monitor (read-only)
-
-`blip_monitor.py` runs in the same job and writes `data/blip.json`: price, market cap, volume, holders, top wallets, bonding-curve progress and alerts (20%+ price moves, any wallet buying or selling 1%+ of supply, holder jumps, curve milestones, graduation). It never trades or signs anything. Settings are under `blip` in `config.json`.
 
 ## Notifications
 

@@ -101,19 +101,6 @@ footer{margin-top:28px;color:var(--dim);font-size:12px;line-height:18px}
 </div></div>
 <div class="tape"><div class="track" id="tape"><span>Loading markets…</span></div></div>
 <div class="wrap">
-  <div class="blip" id="blip" style="display:none">
-    <div class="bh"><span class="t">$BLIP</span><span class="badge" style="border-color:var(--blip);color:var(--blip)">YOUR COIN · WATCH ONLY</span><span class="ca" id="b-ca"></span><a id="b-link" target="_blank" rel="noopener">Pump.fun ↗</a></div>
-    <div class="bk">
-      <div><div class="l">PRICE</div><div class="v" id="b-price">—</div><div class="s" id="b-chg" style="font:500 12px 'JetBrains Mono',monospace"></div></div>
-      <div><div class="l">MARKET CAP</div><div class="v" id="b-mcap">—</div></div>
-      <div><div class="l">HOLDERS</div><div class="v" id="b-hold">—</div></div>
-      <div><div class="l">24H VOLUME</div><div class="v" id="b-vol">—</div></div>
-      <div><div class="l">BONDING CURVE</div><div class="v" id="b-curve">—</div><div class="gbar" style="margin-top:6px"><i id="b-cbar" style="width:0"></i></div></div>
-    </div>
-    <div class="bgrid"><div class="bc" id="b-chart"></div><div><div class="ph"><h2>ALERTS</h2><span class="muted" style="font-size:12px" id="b-you"></span></div><div class="alerts" id="b-alerts"></div></div></div>
-    <div class="ph" style="border-top:1px solid var(--line)"><h2>TOP HOLDERS</h2><span class="muted" style="font-size:12px">5-minute candles above · data refreshes ~every 15 min</span></div>
-    <div class="scroll" id="b-holders"></div>
-  </div>
   <div class="kpis">
     <div class="k"><div class="l">PORTFOLIO VALUE</div><div class="v" id="k-eq">—</div><div class="s" id="k-eqs"></div></div>
     <div class="k"><div class="l">TOTAL P&amp;L</div><div class="v" id="k-pnl">—</div><div class="s" id="k-pnls"></div></div>
@@ -202,23 +189,6 @@ function render(d){
   $("tradesn").textContent=d.trades.length+" orders";
   $("trades").innerHTML=d.trades.length?'<table><thead><tr><th>TIME</th><th>SIDE</th><th>COIN</th><th class="r">AMOUNT</th><th class="r">FILL PRICE</th><th class="r">FEES</th><th class="r">P&amp;L</th><th>REASON</th></tr></thead><tbody>'+d.trades.map(function(t){return'<tr><td class="muted">'+ago(t.t)+'</td><td><span class="side '+t.side+'">'+t.side.toUpperCase()+"</span></td><td><b>"+t.symbol+'</b></td><td class="r">'+usd(t.usd)+'</td><td class="r">'+px(t.fill_price)+'</td><td class="r muted">'+usd(t.fees_usd)+'</td><td class="r '+(t.pnl_usd==null?"muted":cl(t.pnl_usd))+'">'+(t.pnl_usd==null?"—":(t.pnl_usd>=0?"+":"")+usd(t.pnl_usd))+'</td><td class="muted">'+(t.reason?t.reason.replace("_"," "):"trend cross")+"</td></tr>"}).join("")+"</tbody></table>":'<div class="empty">No orders yet.</div>';
 }
-var BSRC="https://raw.githubusercontent.com/Kobeanderson51/blip-papertrader/main/data/blip.json",bChart=null,bSeries=null;
-function short(a){return a.slice(0,4)+"…"+a.slice(-4)}
-function renderBlip(b){
-  $("blip").style.display="";var m=b.market||{},ch=(m.change||{}).h24,c=b.bonding_curve||{};
-  $("b-ca").textContent=short(b.mint);$("b-link").href="https://pump.fun/coin/"+b.mint;
-  $("b-price").textContent=px(m.price);$("b-chg").innerHTML=ch==null?"":'<span class="'+cl(ch)+'">'+arrow(ch)+" "+pct(ch)+" 24h</span>";
-  $("b-mcap").textContent=big(m.market_cap);$("b-hold").textContent=b.holders?b.holders.count:"—";$("b-vol").textContent=big((m.volume||{}).h24);
-  $("b-curve").textContent=c.graduated?"GRADUATED":(c.progress_pct==null?"—":c.progress_pct.toFixed(1)+"%");$("b-cbar").style.width=(c.graduated?100:(c.progress_pct||0))+"%";
-  if(!bChart){bChart=LW.createChart($("b-chart"),opts());bSeries=bChart.addCandlestickSeries({upColor:"#39ff88",downColor:"#ff6b7a",borderUpColor:"#39ff88",borderDownColor:"#ff6b7a",wickUpColor:"#39ff88",wickDownColor:"#ff6b7a",priceFormat:{type:"price",precision:10,minMove:1e-10}})}
-  var bc=b.candles_5m||[];bSeries.setData(bc.map(function(r){return{time:r[0],open:r[1],high:r[2],low:r[3],close:r[4]}}));if(bc.length>40)bChart.timeScale().fitContent();else bChart.timeScale().applyOptions({barSpacing:10,rightOffset:4});
-  var you=b.creator_wallet,yh=you&&b.holders?b.holders.top.find(function(h){return h.owner===you}):null;
-  $("b-you").textContent=you?"you hold "+(yh?yh.pct.toFixed(2)+"%":"0%"):"";
-  $("b-alerts").innerHTML=(b.alerts||[]).map(function(a){return'<div class="al '+a.level+'"><div class="when">'+ago(a.t)+"</div>"+a.msg+"</div>"}).join("")||'<div class="empty">No alerts yet.</div>';
-  $("b-holders").innerHTML='<table><thead><tr><th>#</th><th>WALLET</th><th class="r">BLIP</th><th class="r">% SUPPLY</th><th class="r">VALUE</th></tr></thead><tbody>'+(b.holders?b.holders.top:[]).map(function(h,i){return"<tr><td class=\"muted\">"+(i+1)+'</td><td><a style="color:var(--ink)" target="_blank" rel="noopener" href="https://solscan.io/account/'+h.owner+'">'+short(h.owner)+"</a>"+(h.label?'<span class="lbl'+(h.label.indexOf("you")==0?" you":"")+'">'+h.label.toUpperCase()+"</span>":"")+'</td><td class="r">'+(+h.amount).toLocaleString("en-US")+'</td><td class="r">'+h.pct.toFixed(2)+'%</td><td class="r">'+usd(h.amount*(m.price||0))+"</td></tr>"}).join("")+"</tbody></table>";
-}
-function loadBlip(){fetch(BSRC+"?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(renderBlip).catch(function(){})}
-loadBlip();setInterval(loadBlip,60000);
 function load(){fetch(SRC+"?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(render).catch(function(e){console.error(e);$("st").textContent="waiting for first run";$("dot").className="dot stale";if(!eqChart&&!$("markets").children.length)$("markets").innerHTML='<div class="wait">Waiting for the bot\'s first run on GitHub. This page fills in automatically.</div>'})}
 load();setInterval(load,60000);
 </script></body></html>

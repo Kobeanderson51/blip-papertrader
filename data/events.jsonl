@@ -28,3 +28,4 @@
 {"t": "2026-11-17T20:04:41+00:00", "event": "candles_error", "symbol": "PNUT", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-17T20:04:49+00:00", "event": "candles_error", "symbol": "MOODENG", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-17T20:04:57+00:00", "event": "candles_error", "symbol": "GOAT", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-17T21:11:13+00:00", "event": "candles_error", "symbol": "MOODENG", "error": "<HTTPError 429: 'Too Many Requests'>"}

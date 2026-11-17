@@ -56,14 +56,14 @@
     }
   ],
   "strategy": {
-    "name": "ema_momentum",
-    "fast": 4,
-    "slow": 16,
-    "take_profit_pct": 4.0,
-    "stop_loss_pct": 2.5,
-    "max_hold_minutes": 720,
+    "name": "rsi_dip",
+    "rsi_buy": 20,
+    "rsi_exit": 50,
+    "stop_loss_pct": 8.0,
+    "max_hold_hours": 24,
+    "max_positions": 6,
     "min_liquidity_usd": 100000,
-    "allocation": "equal split of total equity across the watchlist"
+    "why": "Only candidate that was profitable on held-out data in research/ (+0.5% over 36 trades; fails at 2x costs). Forward test only."
   },
   "costs": {
     "swap_fee_pct": 0.25,
@@ -82,5 +82,9 @@
   "notify": {
     "goal_usd": 100.0,
     "warn_below_usd": 25.0
+  },
+  "kill_rules": {
+    "max_drawdown_pct": 20,
+    "review_after_trades": 30
   }
 }

@@ -81,10 +81,10 @@ def fetch_quotes(watchlist):
     return {w["symbol"]: best[w["mint"]] for w in watchlist if w["mint"] in best}
 
 
-def fetch_candles(pool, limit=96):
-    """Last `limit` closed 15-minute candle closes from GeckoTerminal (free, no key), oldest first."""
-    url = (f"https://api.geckoterminal.com/api/v2/networks/solana/pools/{pool}/ohlcv/minute"
-           f"?aggregate=15&limit={limit + 1}&currency=usd&token=base")
+def fetch_candles(pool, limit=200):
+    """Last `limit` closed 1-hour candles from GeckoTerminal (free, no key), oldest first."""
+    url = (f"https://api.geckoterminal.com/api/v2/networks/solana/pools/{pool}/ohlcv/hour"
+           f"?aggregate=1&limit={limit + 1}&currency=usd&token=base")
     req = urllib.request.Request(url, headers={"User-Agent": "blip-papertrader/1.0", "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=15) as r:
         rows = json.load(r)["data"]["attributes"]["ohlcv_list"]
@@ -132,24 +132,47 @@ def ema(values, n):
     return e
 
 
-def decide(sym, hist, pos, s, quote):
-    """Return 'buy', 'sell:<reason>' or None. ema_momentum: buy fast-over-slow cross, exit on TP/SL/time."""
-    price = quote["price"]
+def rsi(closes, n=14):
+    """Wilder RSI of a list of closes; returns list aligned to closes (None during warm-up)."""
+    out = [None] * len(closes)
+    if len(closes) <= n:
+        return out
+    gains = [max(closes[i] - closes[i - 1], 0) for i in range(1, len(closes))]
+    losses = [max(closes[i - 1] - closes[i], 0) for i in range(1, len(closes))]
+    ag, al = sum(gains[:n]) / n, sum(losses[:n]) / n
+    for i in range(n, len(closes)):
+        if i > n:
+            ag = (ag * (n - 1) + gains[i - 1]) / n
+            al = (al * (n - 1) + losses[i - 1]) / n
+        out[i] = 100.0 if al == 0 else 100 - 100 / (1 + ag / al)
+    return out
+
+
+def decide(sym, hist, pos, s, quote, state=None):
+    """rsi_dip (validated in research/, Nov 2026): on CLOSED 1h candles, buy when RSI(14) crosses below
+    `rsi_buy`; sell when RSI closes above `rsi_exit`, price hits the stop, or after `max_hold_hours`."""
+    closes = quote.get("closes") or []
+    candles = quote.get("candles") or []
+    r = rsi(closes, 14)
+    cur, prev = (r[-1], r[-2]) if len(r) >= 2 else (None, None)
     if pos:
-        chg = 100 * (price / pos["entry_price"] - 1)
-        held = (time.time() - pos["opened_ts"]) / 60
-        if chg >= s["take_profit_pct"]:
-            return "sell:take_profit"
-        if chg <= -s["stop_loss_pct"]:
+        if quote["price"] <= pos["entry_price"] * (1 - s["stop_loss_pct"] / 100):
             return "sell:stop_loss"
-        if held >= s["max_hold_minutes"]:
+        if cur is not None and cur > s["rsi_exit"]:
+            return "sell:rsi_recovered"
+        if (time.time() - pos["opened_ts"]) / 3600 >= s["max_hold_hours"]:
             return "sell:time_limit"
         return None
-    if len(hist) < s["slow"] + 1 or quote["liquidity"] < s["min_liquidity_usd"]:
+    if cur is None or prev is None or quote["liquidity"] < s["min_liquidity_usd"]:
         return None
-    prev = ema(hist[:-1][-s["slow"]:], s["fast"]) > ema(hist[:-1][-s["slow"]:], s["slow"])
-    cur = ema(hist[-s["slow"]:], s["fast"]) > ema(hist[-s["slow"]:], s["slow"])
-    return "buy" if cur and not prev else None
+    if len(state["positions"]) >= s["max_positions"]:
+        return None
+    last_candle = candles[-1][0] if candles else None
+    sig = state.setdefault("last_signal", {})
+    if cur < s["rsi_buy"] <= prev and sig.get(sym) != last_candle:   # crossed below on the last closed candle
+        sig[sym] = last_candle  # one entry per candle even though we check every 15 min
+        return "buy"
+    return None
 
 
 # ---------------------------------------------------------------- broker
@@ -161,7 +184,7 @@ class PaperBroker:
         st, c = self.state, self.cfg["costs"]
         q = st.get("last_quotes", {})
         equity = st["cash_usd"] + sum(p["qty"] * q.get(s_, {}).get("price", p["entry_price"]) for s_, p in st["positions"].items())
-        budget = min(st["cash_usd"], equity / len(self.cfg["watchlist"]))
+        budget = min(st["cash_usd"], equity / self.cfg["strategy"]["max_positions"])
         if budget < 0.5:
             return
         px, fees = fill("buy", quote["price"], budget, quote["liquidity"], c)
@@ -223,18 +246,18 @@ def live_guard_problems(cfg):
 
 # ---------------------------------------------------------------- engine
 def step(cfg, state, quotes):
-    if os.path.exists(STOPFILE) or not cfg["enabled"]:
+    if os.path.exists(STOPFILE) or not cfg["enabled"] or state.get("kill"):
         return "stopped"
     broker = PaperBroker(cfg, state) if cfg["mode"] == "paper" else LiveBroker(cfg, state)
     for sym, q in quotes.items():
         if q.get("closes"):
-            hist = q["closes"] + [q["price"]]
+            hist = q["closes"]
             state["history"][sym] = hist[-HISTORY_LEN:]
         else:
             hist = state["history"].setdefault(sym, [])
             hist.append(q["price"])
             del hist[:-HISTORY_LEN]
-        action = decide(sym, hist, state["positions"].get(sym), cfg["strategy"], q)
+        action = decide(sym, hist, state["positions"].get(sym), cfg["strategy"], q, state)
         if action == "buy":
             broker.buy(sym, q)
         elif action and action.startswith("sell"):
@@ -286,19 +309,19 @@ def write_status(cfg, state):
         positions.append({"symbol": sym, "entry": p["entry_price"], "now": cur, "qty": p["qty"],
                           "cost_usd": round(p["cost_usd"], 4), "opened_ts": p["opened_ts"], "value_usd": round(p["qty"] * cur, 4),
                           "pnl_pct": round(100 * (cur / p["entry_price"] - 1), 2), "opened": p["opened"],
-                          "take_profit": p["entry_price"] * (1 + s_["take_profit_pct"] / 100),
+                          "take_profit": None,
                           "stop_loss": p["entry_price"] * (1 - s_["stop_loss_pct"] / 100)})
     equity = state["cash_usd"] + sum(p["value_usd"] for p in positions)
     watch = []
     for w in cfg["watchlist"]:
         sym = w["symbol"]
         h = state["history"].get(sym, [])
-        fast = ema(h[-s_["slow"]:], s_["fast"]) if len(h) > s_["slow"] else None
-        slow = ema(h[-s_["slow"]:], s_["slow"]) if len(h) > s_["slow"] else None
+        rv = rsi(h, 14)[-1] if len(h) > 15 else None
         watch.append({"symbol": sym, "price": q.get(sym, {}).get("price"), "liquidity": q.get(sym, {}).get("liquidity"),
                       "change_24h": q.get(sym, {}).get("change_24h"), "volume_24h": q.get(sym, {}).get("volume_24h"),
                       "candles": state.get("candles", {}).get(sym, []),
-                      "trend": None if fast is None else ("up" if fast > slow else "down"),
+                      "rsi": None if rv is None else round(rv, 1),
+                      "trend": None if rv is None else ("oversold" if rv < s_["rsi_buy"] else "up" if rv >= 50 else "down"),
                       "holding": sym in state["positions"]})
     trades = read_trades()
     sells = [t for t in trades if t["side"] == "sell"]
@@ -308,13 +331,14 @@ def write_status(cfg, state):
     check_milestones(cfg, state, equity)
     save_json(STATE, state)
     save_json(os.path.join(DATA, "status.json"), {
-        "updated": now(), "mode": cfg["mode"], "stopped": os.path.exists(STOPFILE),
+        "updated": now(), "mode": cfg["mode"], "stopped": os.path.exists(STOPFILE) or bool(state.get("kill")),
         "start_usd": state["start_usd"], "goal_usd": cfg.get("goal_usd"), "equity_usd": round(equity, 4),
         "cash_usd": round(state["cash_usd"], 4), "change_pct": round(100 * (equity / state["start_usd"] - 1), 2),
         "closed_trades": len(sells), "wins": sum(1 for t in sells if t["pnl_usd"] > 0),
         "realized_pnl_usd": round(sum(t["pnl_usd"] for t in sells), 4),
         "fees_usd": round(sum(t["fees_usd"] for t in trades), 4),
-        "strategy": {k: s_[k] for k in ("take_profit_pct", "stop_loss_pct", "max_hold_minutes")},
+        "strategy": {k: s_[k] for k in ("name", "rsi_buy", "rsi_exit", "stop_loss_pct", "max_hold_hours", "max_positions")},
+        "kill": state.get("kill"),
         "positions": positions, "watchlist": watch, "trades": trades[-100:][::-1], "equity_curve": curve[-500:]})
 
 
@@ -334,6 +358,21 @@ def check_milestones(cfg, state, equity):
         msgs.append(("Paper trader is down to ${:.2f}".format(equity),
                      "The paper account fell to ${:.2f} from ${:.0f}. This strategy is losing; "
                      "it should not get real money as-is.".format(equity, state["start_usd"])))
+    # Kill rules (from research/ bear case): stop trading automatically, keep logs.
+    k = cfg.get("kill_rules") or {}
+    peak = state["peak_equity"] = max(state.get("peak_equity", state["start_usd"]), equity)
+    sells = [t for t in read_trades() if t["side"] == "sell"]
+    reason = None
+    if k.get("max_drawdown_pct") and equity <= peak * (1 - k["max_drawdown_pct"] / 100):
+        reason = f"account fell {k['max_drawdown_pct']}% from its high (${peak:.2f} -> ${equity:.2f})"
+    elif k.get("review_after_trades") and len(sells) >= k["review_after_trades"] and sum(t["pnl_usd"] for t in sells) <= 0:
+        reason = f"{len(sells)} closed trades and realized P&L after costs is ${sum(t['pnl_usd'] for t in sells):.2f}"
+    if reason and not state.get("kill"):
+        state["kill"] = {"t": now(), "reason": reason}
+        open(STOPFILE, "w").write(now() + " kill rule: " + reason)
+        msgs.append(("Paper trader stopped by kill rule", "Trading stopped automatically: " + reason +
+                     ". Open positions are left as they are and logs are kept. The strategy has failed its test; "
+                     "it should not get real money."))
     if msgs:
         with open(os.path.join(DATA, "notify.md"), "w") as f:
             title, body = msgs[0]

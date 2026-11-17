@@ -16,7 +16,7 @@ python bot.py reset       # asks you to type RESET; old logs are kept as .bak
 python bot.py simulate    # offline self-test on random prices
 ```
 
-Settings live in `config.json`: watchlist, strategy (EMA momentum with 3% take-profit, 2% stop-loss, 4-hour max hold) and cost assumptions. Every trade is logged to `data/trades.jsonl`, every stop/resume/error to `data/events.jsonl`.
+Settings live in `config.json`. Strategy since Nov 17 2026: **rsi_dip** on closed 1-hour candles: buy when RSI(14) crosses below 20, sell when RSI closes above 50, at an 8% stop, or after 24h; max 6 positions. It replaced EMA momentum, which lost on every setting tested (see `research/`). Kill rules stop trading automatically at a 20% drawdown from the account high, or if P&L after costs is not positive after 30 closed trades. Every trade is logged to `data/trades.jsonl`, every stop/resume/error to `data/events.jsonl`.
 
 ## The $10 live mode (locked)
 

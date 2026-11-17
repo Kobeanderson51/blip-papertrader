@@ -1,0 +1,112 @@
+{
+ "updated": "2026-11-17T18:44:37+00:00",
+ "mint": "AmSY5M9AP3uX8QAfyGVx1N8EXf7DkUpGZzYDHVnRpump",
+ "pool": "4yoz8Meobk2mpkV7tmXSgP2eUuHevZwshLnPHq88TarB",
+ "creator_wallet": "hNtpBGt2WQxR3ZfA9gFw65YapqGVu88eDjxmHQoivuM",
+ "errors": [],
+ "market": {
+  "dex": "pumpfun",
+  "price": 2.094e-06,
+  "market_cap": 2094.27,
+  "liquidity": null,
+  "volume": {
+   "h24": 30.46,
+   "h6": 30.46,
+   "h1": 30.46
+  },
+  "change": {
+   "h1": 3.36,
+   "h6": 3.36,
+   "h24": 3.36
+  },
+  "txns": {
+   "m5": {
+    "buys": 0,
+    "sells": 0
+   },
+   "h1": {
+    "buys": 4,
+    "sells": 0
+   },
+   "h6": {
+    "buys": 4,
+    "sells": 0
+   },
+   "h24": {
+    "buys": 4,
+    "sells": 0
+   }
+  }
+ },
+ "candles_5m": [
+  [
+   1794939900,
+   2.0422454950657404e-06,
+   2.0808557300211665e-06,
+   2.0422454950657404e-06,
+   2.0808557300211665e-06,
+   22.031797640959297
+  ],
+  [
+   1794940200,
+   2.0808557300211665e-06,
+   2.082126020882689e-06,
+   2.0808557300211665e-06,
+   2.082126020882689e-06,
+   8.600545427748866
+  ]
+ ],
+ "holders": {
+  "count": 3,
+  "top": [
+   {
+    "owner": "4yoz8Meobk2mpkV7tmXSgP2eUuHevZwshLnPHq88TarB",
+    "amount": 985178380,
+    "pct": 98.518,
+    "label": "bonding curve"
+   },
+   {
+    "owner": "6bD2YsuNF2MjMdYiLHRzmHswx3BzmtRgkFhJuBF6czBs",
+    "amount": 9012397,
+    "pct": 0.901,
+    "label": ""
+   },
+   {
+    "owner": "hNtpBGt2WQxR3ZfA9gFw65YapqGVu88eDjxmHQoivuM",
+    "amount": 5194027,
+    "pct": 0.519,
+    "label": "you (creator)"
+   },
+   {
+    "owner": "E7y2teR33Cy7bR9QKteJsX9f6Jy914ATNfjVkRQQcvrR",
+    "amount": 615196,
+    "pct": 0.062,
+    "label": ""
+   }
+  ]
+ },
+ "bonding_curve": {
+  "progress_pct": 1.87,
+  "tokens_sold": 14821619.501400948,
+  "graduated": false
+ },
+ "creator_balance": 5194027,
+ "alerts": [
+  {
+   "t": "2026-11-17T18:44:37+00:00",
+   "kind": "info",
+   "level": "info",
+   "msg": "Monitoring started"
+  }
+ ],
+ "history": [
+  {
+   "t": "2026-11-17T18:44:37+00:00",
+   "price": 2.094e-06,
+   "mcap": 2094.27,
+   "holders": 3,
+   "progress": 1.87,
+   "graduated": false
+  }
+ ]
+}

@@ -2,7 +2,7 @@ name: Paper trade
 
 on:
   schedule:
-    - cron: "2,17,32,47 * * * * "   # every 15 min, starting 2 min after each hourly candle closes
+    - cron: "2,17,32,47 * * * *"   # every 15 min, starting 2 min after each hourly candle closes
   workflow_dispatch:          # "Run workflow" button for a manual check
   push:                       # run when code/config changes (the bot's own data commits don't trigger this)
     branches: [main]

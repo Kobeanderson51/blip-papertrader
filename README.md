@@ -37,7 +37,7 @@ On random prices (`simulate`), the bot lost about 72% of its $10, mostly to fees
 
 ## Running on GitHub (this repo)
 
-A scheduled GitHub Action runs `bot.py once` every 15 minutes, so each "tick" is a 15-minute candle. The paper account is carried between runs in the Actions cache.
+A scheduled GitHub Action runs `bot.py once` every 15 minutes, so each "tick" is a 15-minute candle. The paper account and `data/status.json` are committed back to this repo after every run (that also keeps the schedule from going idle).
 
 - **See results:** Actions tab → latest "Paper trade" run → the summary shows the report. The full trade log is attached as `trade-log`.
 - **Run it now:** Actions → Paper trade → Run workflow.

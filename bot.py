@@ -79,6 +79,28 @@ def fetch_quotes(watchlist):
     return {w["symbol"]: best[w["mint"]] for w in watchlist if w["mint"] in best}
 
 
+def fetch_closes(pool, limit=40):
+    """Last `limit` closed 15-minute candle closes from GeckoTerminal (free, no key), oldest first."""
+    url = (f"https://api.geckoterminal.com/api/v2/networks/solana/pools/{pool}/ohlcv/minute"
+           f"?aggregate=15&limit={limit + 1}&currency=usd&token=base")
+    req = urllib.request.Request(url, headers={"User-Agent": "blip-papertrader/1.0", "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        rows = json.load(r)["data"]["attributes"]["ohlcv_list"]
+    rows.sort(key=lambda x: x[0])
+    return [float(x[4]) for x in rows[:-1]]  # drop the still-forming candle
+
+
+def attach_history(quotes, watchlist):
+    for w in watchlist:
+        if w["symbol"] in quotes and w.get("pool"):
+            try:
+                quotes[w["symbol"]]["closes"] = fetch_closes(w["pool"])
+            except Exception as e:
+                log_event("candles_error", symbol=w["symbol"], error=repr(e))
+            time.sleep(2.1)  # stay under GeckoTerminal's 30 calls/minute
+    return quotes
+
+
 # ---------------------------------------------------------------- costs
 def slippage_pct(trade_usd, liquidity_usd, c):
     impact = 100 * c["slippage_liquidity_factor"] * trade_usd / max(liquidity_usd, 1)
@@ -129,7 +151,9 @@ class PaperBroker:
 
     def buy(self, sym, quote):
         st, c = self.state, self.cfg["costs"]
-        budget = st["cash_usd"] * self.cfg["strategy"]["position_fraction"]
+        q = st.get("last_quotes", {})
+        equity = st["cash_usd"] + sum(p["qty"] * q.get(s_, {}).get("price", p["entry_price"]) for s_, p in st["positions"].items())
+        budget = min(st["cash_usd"], equity / len(self.cfg["watchlist"]))
         if budget < 0.5:
             return
         px, fees = fill("buy", quote["price"], budget, quote["liquidity"], c)
@@ -195,15 +219,19 @@ def step(cfg, state, quotes):
         return "stopped"
     broker = PaperBroker(cfg, state) if cfg["mode"] == "paper" else LiveBroker(cfg, state)
     for sym, q in quotes.items():
-        hist = state["history"].setdefault(sym, [])
-        hist.append(q["price"])
-        del hist[:-HISTORY_LEN]
+        if q.get("closes"):
+            hist = q["closes"] + [q["price"]]
+            state["history"][sym] = hist[-HISTORY_LEN:]
+        else:
+            hist = state["history"].setdefault(sym, [])
+            hist.append(q["price"])
+            del hist[:-HISTORY_LEN]
         action = decide(sym, hist, state["positions"].get(sym), cfg["strategy"], q)
         if action == "buy":
             broker.buy(sym, q)
         elif action and action.startswith("sell"):
             broker.sell(sym, q, action.split(":")[1])
-    state["last_quotes"] = quotes
+    state["last_quotes"] = {k: {"price": v["price"], "liquidity": v["liquidity"]} for k, v in quotes.items()}
     state["last_tick"] = now()
     return "ok"
 
@@ -239,6 +267,45 @@ def report(cfg, state):
     return "\n".join(lines)
 
 
+def write_status(cfg, state):
+    """data/status.json: everything the dashboard grid shows."""
+    q = state.get("last_quotes", {})
+    s_ = cfg["strategy"]
+    positions = []
+    for sym, p in state["positions"].items():
+        cur = q.get(sym, {}).get("price", p["entry_price"])
+        positions.append({"symbol": sym, "entry": p["entry_price"], "now": cur, "qty": p["qty"],
+                          "cost_usd": round(p["cost_usd"], 4), "value_usd": round(p["qty"] * cur, 4),
+                          "pnl_pct": round(100 * (cur / p["entry_price"] - 1), 2), "opened": p["opened"],
+                          "take_profit": p["entry_price"] * (1 + s_["take_profit_pct"] / 100),
+                          "stop_loss": p["entry_price"] * (1 - s_["stop_loss_pct"] / 100)})
+    equity = state["cash_usd"] + sum(p["value_usd"] for p in positions)
+    watch = []
+    for w in cfg["watchlist"]:
+        sym = w["symbol"]
+        h = state["history"].get(sym, [])
+        fast = ema(h[-s_["slow"]:], s_["fast"]) if len(h) > s_["slow"] else None
+        slow = ema(h[-s_["slow"]:], s_["slow"]) if len(h) > s_["slow"] else None
+        watch.append({"symbol": sym, "price": q.get(sym, {}).get("price"), "liquidity": q.get(sym, {}).get("liquidity"),
+                      "trend": None if fast is None else ("up" if fast > slow else "down"),
+                      "holding": sym in state["positions"]})
+    trades = read_trades()
+    sells = [t for t in trades if t["side"] == "sell"]
+    curve = state.setdefault("equity_curve", [])
+    curve.append({"t": now(), "equity": round(equity, 4)})
+    del curve[:-2000]
+    save_json(STATE, state)
+    save_json(os.path.join(DATA, "status.json"), {
+        "updated": now(), "mode": cfg["mode"], "stopped": os.path.exists(STOPFILE),
+        "start_usd": state["start_usd"], "goal_usd": cfg.get("goal_usd"), "equity_usd": round(equity, 4),
+        "cash_usd": round(state["cash_usd"], 4), "change_pct": round(100 * (equity / state["start_usd"] - 1), 2),
+        "closed_trades": len(sells), "wins": sum(1 for t in sells if t["pnl_usd"] > 0),
+        "realized_pnl_usd": round(sum(t["pnl_usd"] for t in sells), 4),
+        "fees_usd": round(sum(t["fees_usd"] for t in trades), 4),
+        "strategy": {k: s_[k] for k in ("take_profit_pct", "stop_loss_pct", "max_hold_minutes")},
+        "positions": positions, "watchlist": watch, "trades": trades[-100:][::-1], "equity_curve": curve[-500:]})
+
+
 def main(argv):
     global TRADES
     os.makedirs(DATA, exist_ok=True)
@@ -269,8 +336,9 @@ def main(argv):
     elif cmd in ("once", "run"):
         while True:
             try:
-                status = step(cfg, state, fetch_quotes(cfg["watchlist"]))
+                status = step(cfg, state, attach_history(fetch_quotes(cfg["watchlist"]), cfg["watchlist"]))
                 save_json(STATE, state)
+                write_status(cfg, state)
                 print(f"[{now()}] {status}  equity report:\n{report(cfg, state)}\n")
             except SystemExit:
                 raise

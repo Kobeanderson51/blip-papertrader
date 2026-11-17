@@ -1,20 +1,23 @@
 {
   "enabled": true,
   "mode": "paper",
-  "starting_balance_usd": 10.0,
+  "starting_balance_usd": 50.0,
   "poll_seconds": 900,
   "watchlist": [
     {
       "symbol": "WIF",
-      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
+      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+      "pool": "EP2ib6dYdEeqD8MfE2ezHCxX3kP3K2eLKkirfPm5eyMx"
     },
     {
       "symbol": "JUP",
-      "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN"
+      "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+      "pool": "C8Gr6AUuq9hEdSYJzoEpNcdjpojPZwqG5MtQbeouNNwg"
     },
     {
       "symbol": "BONK",
-      "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
+      "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+      "pool": "5zpyutJu9ee6jFymDGoK7F6S5Kczqtc9FomP3ueKuyA9"
     }
   ],
   "strategy": {
@@ -24,8 +27,8 @@
     "take_profit_pct": 4.0,
     "stop_loss_pct": 2.5,
     "max_hold_minutes": 720,
-    "position_fraction": 0.5,
-    "min_liquidity_usd": 100000
+    "min_liquidity_usd": 100000,
+    "allocation": "equal split of total equity across the watchlist"
   },
   "costs": {
     "swap_fee_pct": 0.25,
@@ -39,5 +42,6 @@
     "max_trade_usd": 5.0,
     "require_paper_trades": 50,
     "require_paper_net_positive": true
-  }
+  },
+  "goal_usd": 100.0
 }

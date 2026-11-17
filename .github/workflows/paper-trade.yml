@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write   # saves data/ (paper account + status.json) back to this repo
 
 jobs:
   tick:
@@ -18,13 +18,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-
-      - name: Restore paper account
-        uses: actions/cache/restore@v4
-        with:
-          path: data
-          key: paper-${{ github.run_id }}
-          restore-keys: paper-
 
       - name: Honor emergency stop
         run: |
@@ -41,18 +34,13 @@ jobs:
           python3 bot.py report >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Save paper account
+      - name: Save paper account to repo
         if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: data
-          key: paper-${{ github.run_id }}
-
-      - name: Upload trade log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: trade-log
-          path: data/
-          retention-days: 7
-          if-no-files-found: ignore
+        run: |
+          git config user.name "paper-trader-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet && exit 0
+          git commit -q -m "tick $(date -u +%FT%TZ)"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; sleep 5; done
+          exit 1

@@ -88,5 +88,17 @@
   "kill_rules": {
     "max_drawdown_pct": 20,
     "review_after_trades": 30
+  },
+  "desk_rules": {
+    "universe": "10 established Solana meme coins (see watchlist)",
+    "min_liquidity_usd": 100000,
+    "stale_data_hours": 2,
+    "mover_pct_24h": 10,
+    "max_open_positions": 6,
+    "max_risk_per_trade_pct": 1.5,
+    "max_daily_loss_pct": 3,
+    "max_consecutive_losses": 3,
+    "pause_hours_after_streak": 24,
+    "off_limits": "pools under $100k liquidity, stale prices, coins already held, anything not on the watchlist (including $BLIP)"
   }
 }

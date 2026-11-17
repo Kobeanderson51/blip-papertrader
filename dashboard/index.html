@@ -32,8 +32,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,12,15,.9);backdrop-fi
 .tabs-top{display:none;gap:4px;margin-left:24px}
 .tabs-top button{padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600;font-size:14px}
 .tabs-top button.on{background:var(--s2);color:var(--ink)}
-nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(14,17,21,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
-nav.bottom button{height:var(--nav);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:600;color:var(--dim)}
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(14,17,21,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:env(safe-area-inset-bottom)}
+nav.bottom button{height:var(--nav);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--dim)}
 nav.bottom button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav.bottom button.on{color:var(--accent)}
 main{max-width:1100px;margin:0 auto;padding:16px 16px calc(var(--nav) + 32px + env(safe-area-inset-bottom))}
@@ -134,6 +134,20 @@ button.row:active{background:var(--s2)}
 .note{font-size:13px;color:var(--muted);margin-top:10px}
 .toast{position:fixed;left:50%;bottom:calc(var(--nav) + 20px);transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);font-weight:700;padding:10px 16px;border-radius:10px;transition:.2s;z-index:60}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+.funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:14px}
+.funnel div{background:var(--s2);border-radius:10px;padding:10px 6px;text-align:center}
+.funnel b{display:block;font-size:22px}.funnel span{font-size:11px;color:var(--muted);font-weight:600}
+.seats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:700px){.seats{grid-template-columns:repeat(2,1fr)}}
+.seat{padding:14px;text-align:left;width:100%}
+.seat .nm{font-weight:800;font-size:15px}.seat .job{font-size:12px;color:var(--muted);margin-top:2px;min-height:32px}
+.seat .last{font-size:12px;color:#cdd5de;margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
+.seat.on{border-color:var(--accent)}
+.logline{padding:11px 16px;border-bottom:1px solid var(--line);font-size:13px}.logline:last-child{border:0}
+.logline .h{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--dim)}
+.logline .seatname{font-weight:800;color:var(--accent)}
+.rules{font-size:14px}.rules div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line)}.rules div:first-child{border:0}
+.rules span:last-child{font-weight:700;text-align:right}
 .banner{display:none;background:rgba(248,113,113,.12);color:var(--down);border:1px solid rgba(248,113,113,.3);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px;margin-bottom:12px}
 </style></head><body>
 
@@ -189,6 +203,19 @@ button.row:active{background:var(--s2)}
     <p class="note">Rules never change after one loss. Repeated patterns get tested on price history first, and you approve any change.</p>
   </section>
 
+  <!-- DESK -->
+  <section class="view" id="v-desk">
+    <h2>Last 24 hours <small id="briefDate"></small></h2>
+    <div class="card"><div class="funnel" id="funnel"></div></div>
+    <h2>The desk <small>tap a seat to filter its log</small></h2>
+    <div class="seats" id="seats"></div>
+    <h2>Desk log <small id="logN"></small></h2>
+    <div class="card list" id="deskLog"></div>
+    <h2>Rulebook</h2>
+    <div class="card pad rules" id="rules"></div>
+    <p class="note">Every coin passes Scout → Chartist → Quant → Risk Manager → Executor. The rules are enforced in code, so no seat can bend them.</p>
+  </section>
+
   <!-- WALLET -->
   <section class="view" id="v-wallet">
     <h2>Real money</h2>
@@ -232,7 +259,7 @@ button.row:active{background:var(--s2)}
 var REPO="Kobeanderson51/blip-papertrader";
 var SRC="https://raw.githubusercontent.com/"+REPO+"/main/data/status.json";
 var LW=window.LightweightCharts, D=null, eqChart=null, eqSeries=null, eqRange="ALL", det=null, detSym=null, detRange="1D", depAmt=5, solUsd=null;
-var TABS=[["home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],["markets","Markets",'<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>'],["activity","Activity",'<path d="M4 6h16M4 12h16M4 18h10"/>'],["lessons","Lessons",'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>'],["wallet","Wallet",'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18"/>']];
+var TABS=[["home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],["markets","Markets",'<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>'],["activity","Activity",'<path d="M4 6h16M4 12h16M4 18h10"/>'],["lessons","Lessons",'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>'],["desk","Desk",'<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/>'],["wallet","Wallet",'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18"/>']];
 function $(i){return document.getElementById(i)}
 function usd(n,d){if(n==null||isNaN(n))return"—";n=+n;d=d==null?2:d;return(n<0?"-":"")+"$"+Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d})}
 function big(n){if(n==null)return"—";n=+n;return n>=1e9?"$"+(n/1e9).toFixed(2)+"B":n>=1e6?"$"+(n/1e6).toFixed(1)+"M":n>=1e3?"$"+(n/1e3).toFixed(0)+"K":"$"+n.toFixed(0)}
@@ -262,6 +289,7 @@ function go(t){if(!TABS.some(function(x){return x[0]===t}))t="home";history.repl
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("on",b.dataset.tab===t)});window.scrollTo(0,0);
   if(t==="wallet")renderWallet()}
 go((location.hash||"#home").slice(1));
+window.addEventListener("hashchange",function(){go((location.hash||"#home").slice(1))});
 
 /* ---- range buttons ---- */
 function rangeBtns(el,list,cur,cb){el.innerHTML=list.map(function(r){return'<button data-r="'+r+'" class="'+(r===cur?"on":"")+'">'+r+"</button>"}).join("");
@@ -316,12 +344,28 @@ function render(d){D=d;
   $("patterns").innerHTML=keys.length?keys.map(function(k){return'<div class="pattern"><span style="flex:0 0 52%;font-size:14px">'+(LBL[k]||k)+'</span><div class="b"><i style="width:'+(100*ls.loss_patterns[k]/mx)+'%"></i></div><span class="n num">'+ls.loss_patterns[k]+"</span></div>"}).join(""):'<div class="empty">No losing trades yet. Each closed trade gets a post-mortem here.</div>';
   $("journal").innerHTML=(d.journal||[]).length?d.journal.map(function(j){return'<div class="pm"><div class="top"><span><b>'+j.symbol+'</b> <span class="tag '+(j.pnl_usd>0?"buy":"sell")+'">'+(j.pnl_usd>0?"WIN":"LOSS")+'</span></span><span class="num '+cl(j.pnl_usd)+'" style="font-weight:700">'+pct(j.pnl_pct)+'</span></div><div class="meta num">'+ago(j.t)+" · held "+j.held_hours+"h · best "+pct(j.best_pct)+" · worst "+pct(j.worst_pct)+"</div><p>"+j.lessons.join(" ")+"</p></div>"}).join(""):'<div class="empty">Nothing yet.</div>';
 
+  renderDesk();
   document.querySelectorAll("[data-coin]").forEach(function(b){b.onclick=function(){openCoin(b.dataset.coin)}});
   if(detSym)drawCoin(detSym,false);
   if($("v-wallet").classList.contains("on"))renderWallet();
 }
 function eqData(){var seen={};return(D.equity_curve||[]).map(function(p){return{time:ts(p.t),value:p.equity}}).filter(function(p){return seen[p.time]?false:(seen[p.time]=1)})}
 function tradeRow(t){return'<div class="row"><div class="coin" style="color:'+(t.side==="buy"?"var(--up)":"var(--down)")+'">'+(t.side==="buy"?"BUY":"SELL")+'</div><div class="rmain"><div class="rt">'+t.symbol+'</div><div class="rs">'+ago(t.t)+" · "+(t.reason?t.reason.replace(/_/g," "):"RSI dip")+' · fee '+usd(t.fees_usd)+'</div></div><div class="rright"><div class="p num">'+usd(t.usd)+'</div><div class="rs num">'+(t.pnl_usd==null?px(t.fill_price):'<span class="'+cl(t.pnl_usd)+'" style="font-weight:700">'+(t.pnl_usd>=0?"+":"")+usd(t.pnl_usd)+"</span>")+"</div></div></div>"}
+
+/* ---- desk ---- */
+var SEATS=[["Scout","Finds tradable coins, skips thin or stale ones"],["Chartist","Spots oversold dips on hourly charts"],["Quant","Writes the plan: entry, stop, size, exit"],
+  ["Risk Manager","Approves or rejects against hard limits"],["Executor","Places approved paper trades only"],["Desk Lead","Daily brief, keeps the log"]],deskSeat=null;
+function renderDesk(){if(!D||!D.desk)return;var dk=D.desk,b=dk.brief,L=dk.log||[];
+  var p=b?b.pipeline_24h:{setups:0,plans:0,approved:0,rejected:0,bought:0};
+  $("briefDate").textContent=b?"brief "+b.date:"first brief after 7:30 AM ET";
+  $("funnel").innerHTML=[["Setups",p.setups],["Plans",p.plans],["Approved",p.approved],["Rejected",p.rejected],["Bought",p.bought]].map(function(x){return"<div><b class=\"num\">"+x[1]+"</b><span>"+x[0]+"</span></div>"}).join("");
+  $("seats").innerHTML=SEATS.map(function(s){var last=L.find(function(e){return e.seat===s[0]});return'<button class="card seat'+(deskSeat===s[0]?" on":"")+'" data-seat="'+s[0]+'"><div class="nm">'+s[0]+'</div><div class="job">'+s[1]+'</div><div class="last">'+(last?"<b>"+last.ticker+"</b> · "+last.idea+' <span class="dim">'+ago(last.t)+"</span>":'<span class="dim">nothing yet</span>')+"</div></button>"}).join("");
+  document.querySelectorAll("[data-seat]").forEach(function(x){x.onclick=function(){deskSeat=deskSeat===x.dataset.seat?null:x.dataset.seat;renderDesk()}});
+  var rows=L.filter(function(e){return!deskSeat||e.seat===deskSeat}).slice(0,40);
+  $("logN").textContent=deskSeat?deskSeat+" only":"latest first";
+  $("deskLog").innerHTML=rows.length?rows.map(function(e){return'<div class="logline"><div class="h"><span class="seatname">'+e.seat+"</span><span>"+ago(e.t)+'</span></div><div style="margin-top:3px"><b>'+e.ticker+"</b> · "+e.idea+' <span class="muted">· '+e.evidence+'</span></div><div class="dim" style="font-size:12px;margin-top:2px">next: '+e.next+"</div></div>"}).join(""):'<div class="empty">No desk activity yet.</div>';
+  var R=dk.rules;$("rules").innerHTML=[["Universe",R.universe],["Max open positions",R.max_open_positions],["Max risk per trade",R.max_risk_per_trade_pct+"% of account"],["Max loss per day",R.max_daily_loss_pct+"%, then no new buys"],
+    ["Losing streak pause",R.max_consecutive_losses+" in a row → "+R.pause_hours_after_streak+"h pause"],["Min pool liquidity",big(R.min_liquidity_usd)],["Off limits",R.off_limits]].map(function(x){return"<div><span class=\"muted\">"+x[0]+"</span><span>"+x[1]+"</span></div>"}).join("")}
 
 /* ---- coin detail ---- */
 function openCoin(sym){detSym=sym;$("sheet").classList.add("on");document.body.style.overflow="hidden";drawCoin(sym,true)}

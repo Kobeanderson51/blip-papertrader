@@ -17,6 +17,7 @@ Commands:
 Standard library only. No keys, no wallets, no network writes.
 """
 import json, os, sys, time, random, urllib.request
+import desk
 from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -302,19 +303,28 @@ def step(cfg, state, quotes):
         if sym in quotes:
             p["peak"] = max(p.get("peak", p["entry_price"]), quotes[sym]["price"])
             p["trough"] = min(p.get("trough", p["entry_price"]), quotes[sym]["price"])
+    run_id = now()
+    rules = cfg["desk_rules"]
     for sym, q in quotes.items():
-        if q.get("closes"):
-            hist = q["closes"]
-            state["history"][sym] = hist[-HISTORY_LEN:]
-        else:
-            hist = state["history"].setdefault(sym, [])
-            hist.append(q["price"])
-            del hist[:-HISTORY_LEN]
-        action = decide(sym, hist, state["positions"].get(sym), cfg["strategy"], q, state)
-        if action == "buy":
-            broker.buy(sym, q)
-        elif action and action.startswith("sell"):
-            broker.sell(sym, q, action.split(":")[1])
+        state["history"][sym] = (q.get("closes") or [])[-HISTORY_LEN:]
+    state["last_quotes"] = {k: {x: v.get(x) for x in ("price", "liquidity", "change_24h", "volume_24h")} for k, v in quotes.items()}
+    # Exits first: every open position is checked against its plan (stop / RSI recovered / time limit).
+    for sym in list(state["positions"]):
+        if sym in quotes:
+            action = decide(sym, None, state["positions"][sym], cfg["strategy"], quotes[sym], state)
+            if action and action.startswith("sell"):
+                broker.sell(sym, quotes[sym], action.split(":")[1])
+                desk.log("Executor", sym, "SOLD (paper)", action.split(":")[1].replace("_", " "), "post-mortem in Lessons", run_id)
+    equity = state["cash_usd"] + sum(p["qty"] * quotes.get(s_, {}).get("price", p["entry_price"]) for s_, p in state["positions"].items())
+    closed = [t for t in read_trades() if t["side"] == "sell"]
+    # New ideas: Scout -> Chartist -> Quant -> Risk Manager -> Executor. No seat is skipped.
+    tickers = desk.scout(quotes, rules, run_id)
+    setups = desk.chartist(tickers, quotes, rsi, cfg["strategy"], state, run_id)
+    plans = desk.quant(setups, quotes, cfg, state, equity, run_id)
+    approved = desk.risk_manager(plans, cfg, state, equity, closed, run_id)
+    desk.executor(approved, quotes, broker, run_id)
+    desk.desk_lead_brief(state, equity, closed, cfg, run_id)
+    desk.trim_log()
     state["last_quotes"] = {k: {x: v.get(x) for x in ("price", "liquidity", "change_24h", "volume_24h")} for k, v in quotes.items()}
     state["candles"] = {k: v["candles"] for k, v in quotes.items() if v.get("candles")}
     state["last_tick"] = now()
@@ -410,6 +420,8 @@ def write_status(cfg, state):
         "fees_usd": round(sum(t["fees_usd"] for t in trades), 4),
         "strategy": {k: s_[k] for k in ("name", "rsi_buy", "rsi_exit", "stop_loss_pct", "max_hold_hours", "max_positions")},
         "kill": state.get("kill"),
+        "desk": {"rules": cfg["desk_rules"], "brief": load_json(os.path.join(DATA, "brief.json"), None),
+                 "log": [json.loads(l) for l in (open(desk.LOG).read().splitlines() if os.path.exists(desk.LOG) else [])[-80:]][::-1]},
         "journal": read_journal()[-30:][::-1], "lesson_stats": lesson_stats(),
         "market_24h": state.get("market_24h"),
         "live": {"unlocked": not live_guard_problems(cfg), "problems": live_guard_problems(cfg),

@@ -54,3 +54,9 @@ When the paper account reaches the goal ($100), or falls to $25, the workflow op
 ## Learning loop
 
 Every closed trade gets a post-mortem in `data/journal.jsonl` (best/worst point while held, market context, what a different exit would have done, and a plain-English lesson). Rules never change automatically from single trades (that is curve-fitting). Instead, a weekly review groups repeated loss patterns, turns them into candidate rule changes, backtests them on the full history with the same honest method as `research/`, and proposes only those that hold up. Changes need the owner's approval.
+
+## The desk
+
+`desk.py` splits every run into six seats that share one rulebook (`desk_rules` in config.json): **Scout** (tradable coins, skips thin/stale pools) → **Chartist** (oversold-dip setups on closed 1h candles) → **Quant** (exact plan: entry, stop, size, exit) → **Risk Manager** (hard limits: positions, risk per trade, daily loss, losing-streak pause, kill switch) → **Executor** (paper trades approved plans only, never chases) and **Desk Lead** (daily brief at 7:30 AM ET in `data/brief.json`). Every handoff is logged to `data/desk_log.jsonl` as SEAT | TICKER | IDEA | EVIDENCE | NEXT STEP. The seats are code, not chat agents, so the rules are walls rather than requests; Claude reviews the desk with you in chat.
+
+Replay of the test period: the desk's extra safety rules (3% daily loss stop, 3-loss pause) cut results from -1.4% to -4.7%, because they block buys right after drops, which is when a dip strategy buys. They are kept for survival; revisit in a weekly review.

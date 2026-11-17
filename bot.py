@@ -176,6 +176,49 @@ def decide(sym, hist, pos, s, quote, state=None):
 
 
 # ---------------------------------------------------------------- broker
+JOURNAL = os.path.join(DATA, "journal.jsonl")
+
+
+def post_mortem(sym, pos, quote, reason, pnl, st, cfg):
+    """What happened in this trade and what would have done better. Lessons are observations,
+    not rule changes: rules only change after a weekly review + backtest + the user's approval."""
+    e = pos["entry_price"]
+    mfe = 100 * (pos.get("peak", e) / e - 1)      # best it got while held
+    mae = 100 * (pos.get("trough", e) / e - 1)    # worst it got while held
+    held_h = (time.time() - pos["opened_ts"]) / 3600
+    mkt = st.get("market_24h")
+    r = rsi(quote.get("closes") or [], 14)
+    lessons, tags = [], []
+    if pnl <= 0:
+        if mfe >= 3:
+            lessons.append(f"Was up {mfe:.1f}% before turning into a loss. A take-profit near +3% or a trailing stop would have locked in a win.")
+            tags.append("gave_back_gains")
+        if mkt is not None and mkt <= -5:
+            lessons.append(f"The whole basket was down {mkt:.1f}% over 24h. Buying a dip during a market-wide selloff tends to keep falling.")
+            tags.append("market_selloff")
+        if reason == "stop_loss" and held_h < 3:
+            lessons.append(f"Hit the stop within {held_h:.1f}h. The dip kept dipping; waiting for RSI to turn back up before buying might have avoided it.")
+            tags.append("falling_knife")
+        if reason == "time_limit":
+            lessons.append("Never recovered within 24h. Dead-cat bounce did not come; a shorter hold or a recovery check could cut these sooner.")
+            tags.append("no_bounce")
+        if not lessons:
+            lessons.append(f"Small loss ({mae:.1f}% worst point). Fees and slippage (~1.1% round trip) ate a move that was too small.")
+            tags.append("fees_ate_it")
+    else:
+        if mfe - 100 * (pnl / pos["cost_usd"]) > 3:
+            lessons.append(f"Won, but it was up {mfe:.1f}% at best. Selling earlier would have made more.")
+            tags.append("left_money")
+        else:
+            lessons.append("Worked as designed: bought the oversold dip and sold on the recovery.")
+            tags.append("clean_win")
+    return {"t": now(), "symbol": sym, "reason": reason, "pnl_usd": round(pnl, 4),
+            "pnl_pct": round(100 * pnl / pos["cost_usd"], 2), "held_hours": round(held_h, 1),
+            "best_pct": round(mfe, 2), "worst_pct": round(mae, 2), "rsi_entry": pos.get("rsi_entry"),
+            "rsi_exit": r[-1] if r and r[-1] is not None else None, "market_24h_entry": pos.get("market_24h_entry"),
+            "market_24h_exit": mkt, "tags": tags, "lessons": lessons}
+
+
 class PaperBroker:
     def __init__(self, cfg, state):
         self.cfg, self.state = cfg, state
@@ -190,8 +233,11 @@ class PaperBroker:
         px, fees = fill("buy", quote["price"], budget, quote["liquidity"], c)
         qty = (budget - fees) / px
         st["cash_usd"] -= budget
+        r = rsi(quote.get("closes") or [], 14)
         st["positions"][sym] = {"qty": qty, "entry_price": px, "cost_usd": budget,
-                                "opened_ts": time.time(), "opened": now()}
+                                "opened_ts": time.time(), "opened": now(), "peak": px, "trough": px,
+                                "rsi_entry": r[-1] if r and r[-1] is not None else None,
+                                "market_24h_entry": st.get("market_24h")}
         append(TRADES, {"t": now(), "mode": "paper", "side": "buy", "symbol": sym, "usd": round(budget, 4),
                         "market_price": quote["price"], "fill_price": px, "fees_usd": round(fees, 4)})
 
@@ -206,6 +252,7 @@ class PaperBroker:
         append(TRADES, {"t": now(), "mode": "paper", "side": "sell", "symbol": sym, "reason": reason,
                         "usd": round(proceeds, 4), "market_price": quote["price"], "fill_price": px,
                         "fees_usd": round(fees, 4), "pnl_usd": round(pnl, 4)})
+        append(JOURNAL, post_mortem(sym, pos, quote, reason, pnl, st, self.cfg))
 
 
 class LiveBroker:
@@ -249,6 +296,12 @@ def step(cfg, state, quotes):
     if os.path.exists(STOPFILE) or not cfg["enabled"] or state.get("kill"):
         return "stopped"
     broker = PaperBroker(cfg, state) if cfg["mode"] == "paper" else LiveBroker(cfg, state)
+    ch = [q.get("change_24h") for q in quotes.values() if q.get("change_24h") is not None]
+    state["market_24h"] = round(sum(ch) / len(ch), 2) if ch else None
+    for sym, p in state["positions"].items():
+        if sym in quotes:
+            p["peak"] = max(p.get("peak", p["entry_price"]), quotes[sym]["price"])
+            p["trough"] = min(p.get("trough", p["entry_price"]), quotes[sym]["price"])
     for sym, q in quotes.items():
         if q.get("closes"):
             hist = q["closes"]
@@ -266,6 +319,24 @@ def step(cfg, state, quotes):
     state["candles"] = {k: v["candles"] for k, v in quotes.items() if v.get("candles")}
     state["last_tick"] = now()
     return "ok"
+
+
+def read_journal():
+    try:
+        with open(JOURNAL) as f:
+            return [json.loads(l) for l in f if l.strip()]
+    except FileNotFoundError:
+        return []
+
+
+def lesson_stats():
+    j = read_journal()
+    losses = [x for x in j if x["pnl_usd"] <= 0]
+    counts = {}
+    for x in losses:
+        for t in x["tags"]:
+            counts[t] = counts.get(t, 0) + 1
+    return {"trades": len(j), "losses": len(losses), "loss_patterns": dict(sorted(counts.items(), key=lambda x: -x[1]))}
 
 
 def read_trades():
@@ -339,6 +410,8 @@ def write_status(cfg, state):
         "fees_usd": round(sum(t["fees_usd"] for t in trades), 4),
         "strategy": {k: s_[k] for k in ("name", "rsi_buy", "rsi_exit", "stop_loss_pct", "max_hold_hours", "max_positions")},
         "kill": state.get("kill"),
+        "journal": read_journal()[-30:][::-1], "lesson_stats": lesson_stats(),
+        "market_24h": state.get("market_24h"),
         "positions": positions, "watchlist": watch, "trades": trades[-100:][::-1], "equity_curve": curve[-500:]})
 
 

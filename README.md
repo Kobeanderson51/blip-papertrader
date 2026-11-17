@@ -50,3 +50,7 @@ GitHub pauses scheduled workflows in public repos after 60 days without commits;
 ## Notifications
 
 When the paper account reaches the goal ($100), or falls to $25, the workflow opens a GitHub issue in this repo once. GitHub notifies you (app/email) because you watch your own repo.
+
+## Learning loop
+
+Every closed trade gets a post-mortem in `data/journal.jsonl` (best/worst point while held, market context, what a different exit would have done, and a plain-English lesson). Rules never change automatically from single trades (that is curve-fitting). Instead, a weekly review groups repeated loss patterns, turns them into candidate rule changes, backtests them on the full history with the same honest method as `research/`, and proposes only those that hold up. Changes need the owner's approval.

@@ -1,0 +1,20 @@
+{
+ "date": "2026-11-17",
+ "equity_usd": 49.9,
+ "change_pct": -0.21,
+ "pipeline_24h": {
+  "setups": 0,
+  "plans": 0,
+  "approved": 0,
+  "rejected": 0,
+  "bought": 0
+ },
+ "closed_24h": 0,
+ "pnl_24h": 0,
+ "open_positions": [
+  "BONK",
+  "FARTCOIN"
+ ],
+ "watching": [],
+ "rejections": []
+}

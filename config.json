@@ -76,7 +76,9 @@
     "max_capital_usd": 10.0,
     "max_trade_usd": 5.0,
     "require_paper_trades": 50,
-    "require_paper_net_positive": true
+    "require_paper_net_positive": true,
+    "burner_address": "",
+    "note": "burner_address: PUBLIC address of the separate burner wallet (never a key). Keys go only in GitHub Secrets."
   },
   "goal_usd": 100.0,
   "notify": {

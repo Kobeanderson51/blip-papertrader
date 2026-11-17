@@ -355,7 +355,7 @@ def report(cfg, state):
     fees = sum(t["fees_usd"] for t in read_trades())
     wins = sum(1 for t in sells if t["pnl_usd"] > 0)
     lines = [
-        "PAPER TRADER" + ("  [EMERGENCY STOP ACTIVE]" if os.path.exists(STOPFILE) else ""),
+        "DIPWATCH (paper)" + ("  [EMERGENCY STOP ACTIVE]" if os.path.exists(STOPFILE) else ""),
         f"Mode: {cfg['mode']}   Live trading: {'UNLOCKED' if not live_guard_problems(cfg) else 'locked'}",
         f"Started with: ${state['start_usd']:.2f}   Now worth: ${equity:.2f}   "
         f"Change: {equity - state['start_usd']:+.2f} ({100 * (equity / state['start_usd'] - 1):+.1f}%)",
@@ -412,6 +412,9 @@ def write_status(cfg, state):
         "kill": state.get("kill"),
         "journal": read_journal()[-30:][::-1], "lesson_stats": lesson_stats(),
         "market_24h": state.get("market_24h"),
+        "live": {"unlocked": not live_guard_problems(cfg), "problems": live_guard_problems(cfg),
+                 "burner_address": (cfg["live"].get("burner_address") or None), "max_capital_usd": cfg["live"]["max_capital_usd"],
+                 "max_trade_usd": cfg["live"]["max_trade_usd"], "require_paper_trades": cfg["live"]["require_paper_trades"]},
         "positions": positions, "watchlist": watch, "trades": trades[-100:][::-1], "equity_curve": curve[-500:]})
 
 
@@ -422,13 +425,13 @@ def check_milestones(cfg, state, equity):
     msgs = []
     if n.get("goal_usd") and equity >= n["goal_usd"] and not done.get("goal"):
         done["goal"] = now()
-        msgs.append(("Paper trader hit the goal: ${:.2f}".format(equity),
+        msgs.append(("Dipwatch hit the goal: ${:.2f}".format(equity),
                      "The paper account reached ${:.2f} (goal ${:.0f}). This is simulated money.\n\n"
                      "Before any real money: review the trade log, win rate and fees on the dashboard, "
                      "and remember a good run can be luck. Live mode stays locked until you decide.".format(equity, n["goal_usd"])))
     if n.get("warn_below_usd") and equity <= n["warn_below_usd"] and not done.get("warn"):
         done["warn"] = now()
-        msgs.append(("Paper trader is down to ${:.2f}".format(equity),
+        msgs.append(("Dipwatch is down to ${:.2f}".format(equity),
                      "The paper account fell to ${:.2f} from ${:.0f}. This strategy is losing; "
                      "it should not get real money as-is.".format(equity, state["start_usd"])))
     # Paper test complete: 50 closed trades -> tell the user whether it passed.
@@ -463,7 +466,7 @@ def check_milestones(cfg, state, equity):
     if reason and not state.get("kill"):
         state["kill"] = {"t": now(), "reason": reason}
         open(STOPFILE, "w").write(now() + " kill rule: " + reason)
-        msgs.append(("Paper trader stopped by kill rule", "Trading stopped automatically: " + reason +
+        msgs.append(("Dipwatch stopped by kill rule", "Trading stopped automatically: " + reason +
                      ". Open positions are left as they are and logs are kept. The strategy has failed its test; "
                      "it should not get real money."))
     if msgs:

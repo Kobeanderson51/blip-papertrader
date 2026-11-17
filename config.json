@@ -1,0 +1,43 @@
+{
+  "enabled": true,
+  "mode": "paper",
+  "starting_balance_usd": 10.0,
+  "poll_seconds": 900,
+  "watchlist": [
+    {
+      "symbol": "WIF",
+      "mint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
+    },
+    {
+      "symbol": "JUP",
+      "mint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN"
+    },
+    {
+      "symbol": "BONK",
+      "mint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
+    }
+  ],
+  "strategy": {
+    "name": "ema_momentum",
+    "fast": 4,
+    "slow": 16,
+    "take_profit_pct": 4.0,
+    "stop_loss_pct": 2.5,
+    "max_hold_minutes": 720,
+    "position_fraction": 0.5,
+    "min_liquidity_usd": 100000
+  },
+  "costs": {
+    "swap_fee_pct": 0.25,
+    "network_fee_usd": 0.01,
+    "min_slippage_pct": 0.3,
+    "slippage_liquidity_factor": 1.0
+  },
+  "live": {
+    "enabled": false,
+    "max_capital_usd": 10.0,
+    "max_trade_usd": 5.0,
+    "require_paper_trades": 50,
+    "require_paper_net_positive": true
+  }
+}

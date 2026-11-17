@@ -1,0 +1,58 @@
+name: Paper trade
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes (GitHub may delay scheduled runs)
+  workflow_dispatch:          # "Run workflow" button for a manual check
+
+concurrency:
+  group: paper-trader
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore paper account
+        uses: actions/cache/restore@v4
+        with:
+          path: data
+          key: paper-${{ github.run_id }}
+          restore-keys: paper-
+
+      - name: Honor emergency stop
+        run: |
+          mkdir -p data
+          if [ -f EMERGENCY_STOP ]; then date -u > data/EMERGENCY_STOP; else rm -f data/EMERGENCY_STOP; fi
+
+      - name: Check prices and paper-trade
+        run: python3 bot.py once
+
+      - name: Report
+        if: always()
+        run: |
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          python3 bot.py report >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Save paper account
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data
+          key: paper-${{ github.run_id }}
+
+      - name: Upload trade log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-log
+          path: data/
+          retention-days: 7
+          if-no-files-found: ignore

@@ -43,5 +43,10 @@
     "require_paper_trades": 50,
     "require_paper_net_positive": true
   },
-  "goal_usd": 100.0
+  "goal_usd": 100.0,
+  "blip": {
+    "mint": "AmSY5M9AP3uX8QAfyGVx1N8EXf7DkUpGZzYDHVnRpump",
+    "pool": "4yoz8Meobk2mpkV7tmXSgP2eUuHevZwshLnPHq88TarB",
+    "creator_wallet": "hNtpBGt2WQxR3ZfA9gFw65YapqGVu88eDjxmHQoivuM"
+  }
 }

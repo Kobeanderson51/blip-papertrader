@@ -305,6 +305,7 @@ def write_status(cfg, state):
     curve = state.setdefault("equity_curve", [])
     curve.append({"t": now(), "equity": round(equity, 4)})
     del curve[:-2000]
+    check_milestones(cfg, state, equity)
     save_json(STATE, state)
     save_json(os.path.join(DATA, "status.json"), {
         "updated": now(), "mode": cfg["mode"], "stopped": os.path.exists(STOPFILE),
@@ -315,6 +316,28 @@ def write_status(cfg, state):
         "fees_usd": round(sum(t["fees_usd"] for t in trades), 4),
         "strategy": {k: s_[k] for k in ("take_profit_pct", "stop_loss_pct", "max_hold_minutes")},
         "positions": positions, "watchlist": watch, "trades": trades[-100:][::-1], "equity_curve": curve[-500:]})
+
+
+def check_milestones(cfg, state, equity):
+    """Queue a one-time notification (data/notify.md) when the goal is hit or half the account is gone."""
+    n = cfg.get("notify") or {}
+    done = state.setdefault("notified", {})
+    msgs = []
+    if n.get("goal_usd") and equity >= n["goal_usd"] and not done.get("goal"):
+        done["goal"] = now()
+        msgs.append(("Paper trader hit the goal: ${:.2f}".format(equity),
+                     "The paper account reached ${:.2f} (goal ${:.0f}). This is simulated money.\n\n"
+                     "Before any real money: review the trade log, win rate and fees on the dashboard, "
+                     "and remember a good run can be luck. Live mode stays locked until you decide.".format(equity, n["goal_usd"])))
+    if n.get("warn_below_usd") and equity <= n["warn_below_usd"] and not done.get("warn"):
+        done["warn"] = now()
+        msgs.append(("Paper trader is down to ${:.2f}".format(equity),
+                     "The paper account fell to ${:.2f} from ${:.0f}. This strategy is losing; "
+                     "it should not get real money as-is.".format(equity, state["start_usd"])))
+    if msgs:
+        with open(os.path.join(DATA, "notify.md"), "w") as f:
+            title, body = msgs[0]
+            f.write(title + "\n" + body + "".join("\n\n---\n" + t + "\n" + b for t, b in msgs[1:]))
 
 
 def main(argv):

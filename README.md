@@ -1,6 +1,6 @@
 # Paper Trader
 
-Trades **fake money** against **live Solana prices** (DexScreener, free, no key) and charges realistic costs (0.25% swap fee, network fee, slippage scaled to pool liquidity). The point is to find out whether a strategy makes money *after costs* before any real money is involved.
+Trades **fake money** ($50 start, $100 goal) across 10 Solana meme coins (WIF, BONK, FARTCOIN, PENGU, POPCAT, MEW, BOME, PNUT, MOODENG, GOAT) against **live prices** (DexScreener, free, no key) and charges realistic costs (0.25% swap fee, network fee, slippage scaled to pool liquidity). The point is to find out whether a strategy makes money *after costs* before any real money is involved.
 
 ## Run it
 
@@ -49,3 +49,7 @@ GitHub pauses scheduled workflows in public repos after 60 days without commits;
 ## $BLIP monitor (read-only)
 
 `blip_monitor.py` runs in the same job and writes `data/blip.json`: price, market cap, volume, holders, top wallets, bonding-curve progress and alerts (20%+ price moves, any wallet buying or selling 1%+ of supply, holder jumps, curve milestones, graduation). It never trades or signs anything. Settings are under `blip` in `config.json`.
+
+## Notifications
+
+When the paper account reaches the goal ($100), or falls to $25, the workflow opens a GitHub issue in this repo once. GitHub notifies you (app/email) because you watch your own repo.

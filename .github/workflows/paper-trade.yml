@@ -14,6 +14,7 @@ concurrency:
 
 permissions:
   contents: write   # saves data/ (paper account + status.json) back to this repo
+  issues: write     # opens an issue (GitHub notifies you) when the $100 goal is hit
 
 jobs:
   tick:
@@ -40,6 +41,16 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           python3 bot.py report >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify (goal reached / big loss)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s data/notify.md ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$(head -1 data/notify.md)" --body "$(tail -n +2 data/notify.md)"
+            rm data/notify.md
+          fi
 
       - name: Save paper account to repo
         if: always()

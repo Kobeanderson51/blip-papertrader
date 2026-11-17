@@ -2,8 +2,7 @@
  "holders": {
   "hNtpBGt2WQxR3ZfA9gFw65YapqGVu88eDjxmHQoivuM": 5194026.672137,
   "E7y2teR33Cy7bR9QKteJsX9f6Jy914ATNfjVkRQQcvrR": 615195.835576,
-  "4yoz8Meobk2mpkV7tmXSgP2eUuHevZwshLnPHq88TarB": 985178380.498599,
-  "6bD2YsuNF2MjMdYiLHRzmHswx3BzmtRgkFhJuBF6czBs": 9012396.993688
+  "4yoz8Meobk2mpkV7tmXSgP2eUuHevZwshLnPHq88TarB": 994190777.492287
  },
  "history": [
   {
@@ -20,6 +19,14 @@
    "mcap": 2094.27,
    "holders": 3,
    "progress": 1.87,
+   "graduated": false
+  },
+  {
+   "t": "2026-11-17T19:06:41+00:00",
+   "price": 2.04e-06,
+   "mcap": 2040.68,
+   "holders": 2,
+   "progress": 0.73,
    "graduated": false
   }
  ],

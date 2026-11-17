@@ -358,6 +358,26 @@ def check_milestones(cfg, state, equity):
         msgs.append(("Paper trader is down to ${:.2f}".format(equity),
                      "The paper account fell to ${:.2f} from ${:.0f}. This strategy is losing; "
                      "it should not get real money as-is.".format(equity, state["start_usd"])))
+    # Paper test complete: 50 closed trades -> tell the user whether it passed.
+    closed = [t for t in read_trades() if t["side"] == "sell"]
+    if len(closed) >= 50 and not done.get("test_complete"):
+        done["test_complete"] = now()
+        pnl = sum(t["pnl_usd"] for t in closed)
+        wins = sum(1 for t in closed if t["pnl_usd"] > 0)
+        fees = sum(t["fees_usd"] for t in read_trades())
+        by = {}
+        for t in closed:
+            by[t["symbol"]] = by.get(t["symbol"], 0) + t["pnl_usd"]
+        best = max(by.items(), key=lambda x: x[1])
+        passed = pnl > 0 and not state.get("kill")
+        msgs.append(("Paper test complete: " + ("PASSED" if passed else "FAILED") + " (${:+.2f} after costs over {} trades)".format(pnl, len(closed)),
+                     "Closed trades: {}\nWins: {} ({:.0f}%)\nRealized P&L after costs: ${:+.2f}\nFees paid: ${:.2f}\nAccount now: ${:.2f}\n"
+                     "Best coin: {} (${:+.2f}){}\n\n{}".format(
+                         len(closed), wins, 100 * wins / len(closed), pnl, fees, equity, best[0], best[1],
+                         " - most of the profit came from one coin, so treat it as possible luck" if pnl > 0 and best[1] > pnl * 0.6 else "",
+                         "Next step: review together, then the live $10 setup needs your explicit APPROVE LIVE."
+                         if passed else "This strategy should not get real money. Paper trading continues; nothing live was turned on.")))
+
     # Kill rules (from research/ bear case): stop trading automatically, keep logs.
     k = cfg.get("kill_rules") or {}
     peak = state["peak_equity"] = max(state.get("peak_equity", state["start_usd"]), equity)

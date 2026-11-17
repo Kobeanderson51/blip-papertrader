@@ -75,11 +75,13 @@ def fetch_quotes(watchlist):
         mint = p["baseToken"]["address"]
         liq = (p.get("liquidity") or {}).get("usd") or 0
         if p.get("priceUsd") and (mint not in best or liq > best[mint]["liquidity"]):
-            best[mint] = {"price": float(p["priceUsd"]), "liquidity": float(liq)}
+            best[mint] = {"price": float(p["priceUsd"]), "liquidity": float(liq),
+                          "change_24h": (p.get("priceChange") or {}).get("h24"),
+                          "volume_24h": (p.get("volume") or {}).get("h24")}
     return {w["symbol"]: best[w["mint"]] for w in watchlist if w["mint"] in best}
 
 
-def fetch_closes(pool, limit=40):
+def fetch_candles(pool, limit=96):
     """Last `limit` closed 15-minute candle closes from GeckoTerminal (free, no key), oldest first."""
     url = (f"https://api.geckoterminal.com/api/v2/networks/solana/pools/{pool}/ohlcv/minute"
            f"?aggregate=15&limit={limit + 1}&currency=usd&token=base")
@@ -87,14 +89,20 @@ def fetch_closes(pool, limit=40):
     with urllib.request.urlopen(req, timeout=15) as r:
         rows = json.load(r)["data"]["attributes"]["ohlcv_list"]
     rows.sort(key=lambda x: x[0])
-    return [float(x[4]) for x in rows[:-1]]  # drop the still-forming candle
+    return rows[:-1]  # [ts, open, high, low, close, volume], oldest first; drop the still-forming candle
 
 
 def attach_history(quotes, watchlist):
     for w in watchlist:
         if w["symbol"] in quotes and w.get("pool"):
             try:
-                quotes[w["symbol"]]["closes"] = fetch_closes(w["pool"])
+                try:
+                    rows = fetch_candles(w["pool"])
+                except Exception:
+                    time.sleep(6)  # usually a rate limit; one retry
+                    rows = fetch_candles(w["pool"])
+                quotes[w["symbol"]]["closes"] = [float(r[4]) for r in rows]
+                quotes[w["symbol"]]["candles"] = [[int(r[0])] + [float(x) for x in r[1:5]] for r in rows]
             except Exception as e:
                 log_event("candles_error", symbol=w["symbol"], error=repr(e))
             time.sleep(2.1)  # stay under GeckoTerminal's 30 calls/minute
@@ -231,7 +239,8 @@ def step(cfg, state, quotes):
             broker.buy(sym, q)
         elif action and action.startswith("sell"):
             broker.sell(sym, q, action.split(":")[1])
-    state["last_quotes"] = {k: {"price": v["price"], "liquidity": v["liquidity"]} for k, v in quotes.items()}
+    state["last_quotes"] = {k: {x: v.get(x) for x in ("price", "liquidity", "change_24h", "volume_24h")} for k, v in quotes.items()}
+    state["candles"] = {k: v["candles"] for k, v in quotes.items() if v.get("candles")}
     state["last_tick"] = now()
     return "ok"
 
@@ -275,7 +284,7 @@ def write_status(cfg, state):
     for sym, p in state["positions"].items():
         cur = q.get(sym, {}).get("price", p["entry_price"])
         positions.append({"symbol": sym, "entry": p["entry_price"], "now": cur, "qty": p["qty"],
-                          "cost_usd": round(p["cost_usd"], 4), "value_usd": round(p["qty"] * cur, 4),
+                          "cost_usd": round(p["cost_usd"], 4), "opened_ts": p["opened_ts"], "value_usd": round(p["qty"] * cur, 4),
                           "pnl_pct": round(100 * (cur / p["entry_price"] - 1), 2), "opened": p["opened"],
                           "take_profit": p["entry_price"] * (1 + s_["take_profit_pct"] / 100),
                           "stop_loss": p["entry_price"] * (1 - s_["stop_loss_pct"] / 100)})
@@ -287,6 +296,8 @@ def write_status(cfg, state):
         fast = ema(h[-s_["slow"]:], s_["fast"]) if len(h) > s_["slow"] else None
         slow = ema(h[-s_["slow"]:], s_["slow"]) if len(h) > s_["slow"] else None
         watch.append({"symbol": sym, "price": q.get(sym, {}).get("price"), "liquidity": q.get(sym, {}).get("liquidity"),
+                      "change_24h": q.get(sym, {}).get("change_24h"), "volume_24h": q.get(sym, {}).get("volume_24h"),
+                      "candles": state.get("candles", {}).get(sym, []),
                       "trend": None if fast is None else ("up" if fast > slow else "down"),
                       "holding": sym in state["positions"]})
     trades = read_trades()

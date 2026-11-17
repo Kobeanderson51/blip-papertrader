@@ -6,7 +6,7 @@ on:
   workflow_dispatch:          # "Run workflow" button for a manual check
   push:                       # run when code/config changes (the bot's own data commits don't trigger this)
     branches: [main]
-    paths-ignore: ["data/**"]
+    paths-ignore: ["data/**", "dashboard/**"]
 
 concurrency:
   group: paper-trader

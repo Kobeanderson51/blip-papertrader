@@ -31,11 +31,17 @@ jobs:
       - name: Check prices and paper-trade
         run: python3 bot.py once
 
+      - name: Stocks paper account (separate, fake money)
+        continue-on-error: true
+        run: |
+          [ -f data/EMERGENCY_STOP ] && echo "emergency stop on" || python3 stocks.py
+
       - name: Report
         if: always()
         run: |
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           python3 bot.py report >> "$GITHUB_STEP_SUMMARY"
+          python3 stocks.py report >> "$GITHUB_STEP_SUMMARY" || true
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Notify (goal reached / big loss)

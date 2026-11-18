@@ -70,3 +70,12 @@ all 27 +2.9% (89 trades; -0.8% at 2x costs). Caveat: the new coins were -1.8% on
 ## Automatic coin scanner (every run)
 
 `universe.py` (Scout) checks GeckoTerminal's trending and top-volume Solana pools every ~15 minutes and adds a coin only if it passes the same safety filters as the base 27: liquidity >= $200k, 24h volume >= $100k, market cap >= $2M, oldest pool >= 30 days, volume not wildly above market cap, quoted in SOL/USDC/USDT, and not a stablecoin, major, staked/wrapped token or tokenized stock. Up to 100 coins total. Auto-added coins (tagged NEW in the app) are dropped after failing the filters on 3 separate days, never while held. Pump.fun's own site is not scanned (it blocks automated access); coins that started there show up once they trade on DEXes, and brand-new launches are excluded on purpose.
+
+## Stocks paper account (added Nov 18, 2026)
+
+`stocks.py` runs a **separate $50 paper account** on 15 large US stocks (SPY, QQQ, AAPL, MSFT, NVDA, TSLA, AMZN, META, GOOGL, AMD, NFLX, PLTR, COIN, JPM, XOM). Fake money only; there is no live mode in this file.
+
+- Rule: hourly RSI(14) on closed bars crosses below 15 → buy (1/6 of equity, max 6). Sell when RSI > 50, price −4% from entry, or after 48 market hours. Trades only while the US market is open. Data from Yahoo Finance.
+- Why this one: the Nov 18 test (2 years hourly, tuned on first 60%, checked on last 40%, 216 variants counted) — stock dip buying made +2.8% on unseen data over 17 trades, 86% of settings profitable, still positive at 2.5× costs. Buy-and-hold made +11.2% over the same stretch, so it is not proven better than holding. 17 trades is a small sample.
+- Same kill rules (20% drawdown, or no profit after 30 trades) and the same 50-trade test. Results on the dashboard's **Stocks** tab.
+- Also tested and rejected the same day: currencies (USD/JPY, EUR/USD, GBP/USD, AUD/USD, USD/CAD; every strategy lost on unseen data) and crypto majors (BTC, ETH, SOL, XRP, DOGE; nothing survived higher costs).

@@ -1322,64 +1322,64 @@
   "created": "2026-11-17T18:44:30+00:00",
   "last_quotes": {
     "WIF": {
-      "price": 0.1339,
-      "liquidity": 103677.5,
-      "change_24h": -0.95,
-      "volume_24h": 84460.83
+      "price": 0.1342,
+      "liquidity": 103771.73,
+      "change_24h": -0.57,
+      "volume_24h": 84201.05
     },
     "BONK": {
-      "price": 2.365e-06,
-      "liquidity": 234607.2,
-      "change_24h": -1.32,
-      "volume_24h": 115440.83
+      "price": 2.362e-06,
+      "liquidity": 234180.0,
+      "change_24h": -1.12,
+      "volume_24h": 112982.07
     },
     "FARTCOIN": {
-      "price": 0.08786,
-      "liquidity": 4952835.34,
-      "change_24h": -5.88,
-      "volume_24h": 383202.85
+      "price": 0.08824,
+      "liquidity": 4966285.41,
+      "change_24h": -5.18,
+      "volume_24h": 382723.8
     },
     "PENGU": {
-      "price": 0.004786,
-      "liquidity": 2233817.9,
-      "change_24h": 0.71,
-      "volume_24h": 880090.23
+      "price": 0.004808,
+      "liquidity": 2238675.03,
+      "change_24h": 1.43,
+      "volume_24h": 890544.03
     },
     "POPCAT": {
-      "price": 0.02756,
-      "liquidity": 2341513.27,
-      "change_24h": -3.32,
-      "volume_24h": 100441.13
+      "price": 0.02776,
+      "liquidity": 2351525.56,
+      "change_24h": -2.24,
+      "volume_24h": 100414.75
     },
     "MEW": {
-      "price": 0.0003089,
-      "liquidity": 6456869.47,
-      "change_24h": 0.9,
-      "volume_24h": 103976.54
+      "price": 0.0003088,
+      "liquidity": 6458028.37,
+      "change_24h": 0.31,
+      "volume_24h": 110473.44
     },
     "BOME": {
-      "price": 0.0005097,
-      "liquidity": 10185178.78,
-      "change_24h": 0.6,
-      "volume_24h": 352500.82
+      "price": 0.0005075,
+      "liquidity": 10150074.85,
+      "change_24h": 0.71,
+      "volume_24h": 358766.9
     },
     "PNUT": {
-      "price": 0.02917,
-      "liquidity": 2158559.76,
-      "change_24h": -1.64,
-      "volume_24h": 69577.04
+      "price": 0.02923,
+      "liquidity": 2161421.72,
+      "change_24h": -1.13,
+      "volume_24h": 68461.03
     },
     "MOODENG": {
-      "price": 0.02786,
-      "liquidity": 1875299.94,
-      "change_24h": 2.16,
-      "volume_24h": 126742.81
+      "price": 0.02793,
+      "liquidity": 1879071.84,
+      "change_24h": 2.1,
+      "volume_24h": 124319.16
     },
     "GOAT": {
-      "price": 0.01128,
-      "liquidity": 1099822.69,
-      "change_24h": 3.16,
-      "volume_24h": 62359.63
+      "price": 0.01131,
+      "liquidity": 1101284.58,
+      "change_24h": 3.46,
+      "volume_24h": 63220.19
     }
   },
   "candles": {
@@ -9796,7 +9796,7 @@
       ]
     ]
   },
-  "last_tick": "2026-11-18T13:16:05+00:00",
+  "last_tick": "2026-11-18T13:31:07+00:00",
   "equity_curve": [
     {
       "t": "2026-11-17T18:44:37+00:00",
@@ -10073,15 +10073,19 @@
     {
       "t": "2026-11-18T13:16:05+00:00",
       "equity": 50.0149
+    },
+    {
+      "t": "2026-11-18T13:31:07+00:00",
+      "equity": 50.0149
     }
   ],
   "notified": {},
   "last_signal": {},
   "peak_equity": 50.08650630707194,
-  "market_24h": -0.56,
+  "market_24h": -0.22,
   "day": {
     "date": "2026-11-18",
     "start_equity": 50.01485902888672
   },
-  "brief_date": "2026-11-17"
+  "brief_date": "2026-11-18"
 }

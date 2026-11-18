@@ -185,6 +185,7 @@ button.row:active{background:var(--s2)}
       <div class="card stat"><div class="l">Profit after fees</div><div class="v num" id="sPnl">—</div><div class="s" id="sFees"></div></div>
       <div class="card stat"><div class="l">Cash</div><div class="v num" id="sCash">—</div><div class="s" id="sCashS"></div></div>
     </div>
+    <div id="playBox"></div>
     <div class="grid2">
       <div><h2>Holding now <small id="holdN"></small></h2><div class="card list" id="holdList"></div></div>
       <div><h2>Closest to a buy <small id="nearHint">RSI under 20 = buy</small></h2><div class="card list" id="nearList"></div></div>
@@ -358,6 +359,7 @@ function render(d){D=d;var stk=d.kind==="stocks";
   $("actN").textContent=d.trades.length+" orders";
   $("actList").innerHTML=d.trades.length?d.trades.map(tradeRow).join(""):'<div class="empty">No trades yet.</div>';
 
+  renderPlay(stk?d.play:null);
   if(stk){document.querySelectorAll("[data-coin]").forEach(function(b){b.onclick=function(){openCoin(b.dataset.coin)}});if(detSym)drawCoin(detSym,false);return}
   // lessons
   var LBL={gave_back_gains:"Was green, ended red",market_selloff:"Bought during a market-wide selloff",falling_knife:"Stopped out within hours",no_bounce:"Never bounced within 24h",fees_ate_it:"Fees ate a small move",left_money:"Won but sold late",clean_win:"Clean win"};
@@ -371,6 +373,9 @@ function render(d){D=d;var stk=d.kind==="stocks";
   if(detSym)drawCoin(detSym,false);
   if($("v-wallet").classList.contains("on"))renderWallet();
 }
+function renderPlay(p){var el=$("playBox");if(!p){el.innerHTML="";return}var g=p.equity_usd-p.start_usd;
+  el.innerHTML='<h2>Free play <small>separate $50 · not part of the test</small></h2><div class="card list"><div class="row"><div class="rmain"><div class="rt num">'+usd(p.equity_usd)+'</div><div class="rs">your picks · sells at +4%, −4%, or after 48 market hours</div></div><div class="rright num '+cl(g)+'" style="font-weight:700">'+(g>=0?"+":"")+usd(g)+"</div></div>"+
+  (p.positions.length?p.positions.map(function(x){var u=x.value_usd-x.cost_usd;return'<button class="row" data-coin="'+x.symbol+'"><div class="coin">'+x.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+x.symbol+' <span class="tag">PLAY</span></div><div class="rs num">bought '+usd(x.entry)+" · target "+usd(x.target)+" · stop "+usd(x.stop_loss)+'</div></div><div class="rright"><div class="p num">'+usd(x.value_usd)+'</div><div class="num '+cl(u)+'" style="font-size:13px;font-weight:700">'+pct(x.pnl_pct)+"</div></div></button>"}).join(""):'<div class="empty">'+(p.closed?p.closed+" picks closed, "+p.wins+" won.":"Picks get bought on the next check while the market is open.")+"</div>")+"</div>"}
 function eqData(){var seen={};return(D.equity_curve||[]).map(function(p){return{time:ts(p.t),value:p.equity}}).filter(function(p){return seen[p.time]?false:(seen[p.time]=1)})}
 function tradeRow(t){return'<div class="row"><div class="coin" style="color:'+(t.side==="buy"?"var(--up)":"var(--down)")+'">'+(t.side==="buy"?"BUY":"SELL")+'</div><div class="rmain"><div class="rt">'+t.symbol+'</div><div class="rs">'+ago(t.t)+" · "+(t.reason?t.reason.replace(/_/g," "):"RSI dip")+' · fee '+usd(t.fees_usd)+'</div></div><div class="rright"><div class="p num">'+usd(t.usd)+'</div><div class="rs num">'+(t.pnl_usd==null?px(t.fill_price):'<span class="'+cl(t.pnl_usd)+'" style="font-weight:700">'+(t.pnl_usd>=0?"+":"")+usd(t.pnl_usd)+"</span>")+"</div></div></div>"}
 

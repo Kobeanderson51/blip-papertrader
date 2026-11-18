@@ -19,6 +19,8 @@ STATE = os.path.join(DATA, "stocks_state.json")
 STATUS = os.path.join(DATA, "stocks_status.json")
 STOPFILE = os.path.join(DATA, "EMERGENCY_STOP")
 NOTIFY = os.path.join(DATA, "notify.md")
+PLAY_ORDERS = os.path.join(ROOT, "play_orders.json")   # free-play picks: ["JPM", "XOM"]; separate $50 paper pot, not part of the 50-trade test
+PLAY = dict(start_usd=50.0, target_pct=0.04, stop_pct=0.04, max_hold_bars=48)
 
 SYMBOLS = ("SPY QQQ AAPL MSFT NVDA TSLA AMZN META GOOGL AMD NFLX PLTR COIN JPM XOM "   # first 15 (Nov 18 test)
            "AVGO ORCL CRM ADBE INTC QCOM MU UBER SHOP SNOW CRWD PANW ABNB PYPL HOOD SOFI RIVN F GM DIS NKE SBUX "
@@ -131,6 +133,33 @@ def step():
             s["trades"].append(dict(t=now_iso(t), side="buy", symbol=sym, fill_price=px, usd=round(usd, 2), fees_usd=round(fee, 4), reason=f"RSI {r[-1]:.0f}"))
             print(f"BUY {sym} at {px} RSI {r[-1]:.1f}")
 
+    # ---- free play pot (separate fake $50, does not count toward the test) ----
+    pl = s.setdefault("play", dict(cash=PLAY["start_usd"], positions={}, trades=[], closed=0, wins=0, realized=0.0, done=[]))
+    def pl_sell(sym, why):
+        p = pl["positions"].pop(sym); px = info[sym]["price"]; gross = p["qty"] * px; fee = gross * P["cost_per_side"]
+        pnl = gross - fee - p["cost"]; pl["cash"] += gross - fee; pl["realized"] += pnl; pl["closed"] += 1; pl["wins"] += pnl > 0
+        pl["trades"].append(dict(t=now_iso(t), side="sell", symbol=sym, fill_price=px, usd=round(gross, 2), fees_usd=round(fee, 4),
+                                 pnl_usd=round(pnl, 4), pnl_pct=round(100 * pnl / p["cost"], 2), reason="play_" + why))
+        print(f"PLAY SELL {sym} {why} pnl {pnl:+.2f}")
+    if market_open and not os.path.exists(STOPFILE):
+        for sym in list(pl["positions"]):
+            if sym not in info: continue
+            p = pl["positions"][sym]; px = info[sym]["price"]; held = sum(1 for b in info[sym]["bars"] if b[0] >= p["entry_bar"])
+            if px >= p["entry"] * (1 + PLAY["target_pct"]): pl_sell(sym, "target")
+            elif px <= p["entry"] * (1 - PLAY["stop_pct"]): pl_sell(sym, "stop_loss")
+            elif held >= PLAY["max_hold_bars"]: pl_sell(sym, "time_limit")
+        orders = json.load(open(PLAY_ORDERS)) if os.path.exists(PLAY_ORDERS) else []
+        todo = [o for o in orders if o in info and o not in pl["done"] and o not in pl["positions"]]
+        for i, sym in enumerate(todo):
+            usd = pl["cash"] / (len(todo) - i) / (1 + P["cost_per_side"]); fee = usd * P["cost_per_side"]; px = info[sym]["price"]
+            if usd < 1: break
+            pl["cash"] -= usd + fee; pl["done"].append(sym)
+            pl["positions"][sym] = dict(qty=usd / px, entry=px, cost=usd + fee, opened=now_iso(t), entry_bar=int(t - t % 3600))
+            pl["trades"].append(dict(t=now_iso(t), side="buy", symbol=sym, fill_price=px, usd=round(usd, 2), fees_usd=round(fee, 4), reason="play pick"))
+            print(f"PLAY BUY {sym} at {px}")
+    pl_val = lambda k, p: p["qty"] * info.get(k, {"price": p["entry"]})["price"]
+    pl_eq = pl["cash"] + sum(pl_val(k, p) for k, p in pl["positions"].items())
+
     eq = equity(); s["peak"] = max(s["peak"], eq)
     if market_open:
         s["equity_curve"].append(dict(t=now_iso(t), equity=round(eq, 4))); s["equity_curve"] = s["equity_curve"][-3000:]
@@ -164,6 +193,11 @@ def step():
                              for k, p in s["positions"].items()],
                   trades=s["trades"][-60:][::-1], equity_curve=s["equity_curve"][-1500:],
                   kind="stocks", buy_rsi=P["rsi_buy"],
+                  play=dict(start_usd=PLAY["start_usd"], equity_usd=round(pl_eq, 4), realized_pnl_usd=round(pl["realized"], 4), closed=pl["closed"], wins=pl["wins"],
+                            positions=[dict(symbol=k, entry=p["entry"], opened=p["opened"], cost_usd=round(p["cost"], 4), value_usd=round(pl_val(k, p), 4),
+                                            pnl_pct=round(100 * (pl_val(k, p) / p["cost"] - 1), 2), target=round(p["entry"] * (1 + PLAY["target_pct"]), 2),
+                                            stop_loss=round(p["entry"] * (1 - PLAY["stop_pct"]), 2)) for k, p in pl["positions"].items()],
+                            trades=pl["trades"][-20:][::-1]),
                   watchlist=[dict(symbol=k, price=I["price"], rsi=None if I["rsi"][-1] is None else round(I["rsi"][-1], 1),
                                   change_24h=None if not I["prev"] else round(100 * (I["price"] / I["prev"] - 1), 2),
                                   candles=[[b[0], round(b[1], 3), round(b[2], 3), round(b[3], 3), round(b[4], 3)] for b in I["bars"][-110:]],

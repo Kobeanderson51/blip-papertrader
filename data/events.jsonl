@@ -142,3 +142,7 @@
 {"t": "2026-11-18T06:30:40+00:00", "event": "candles_error", "symbol": "BOME", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-18T06:30:48+00:00", "event": "candles_error", "symbol": "PNUT", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-18T06:30:56+00:00", "event": "candles_error", "symbol": "MOODENG", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-18T06:45:29+00:00", "event": "candles_error", "symbol": "MEW", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-18T06:45:37+00:00", "event": "candles_error", "symbol": "BOME", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-18T06:45:45+00:00", "event": "candles_error", "symbol": "PNUT", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-18T06:45:54+00:00", "event": "candles_error", "symbol": "MOODENG", "error": "<HTTPError 429: 'Too Many Requests'>"}

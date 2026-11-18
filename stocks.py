@@ -22,7 +22,7 @@ NOTIFY = os.path.join(DATA, "notify.md")
 
 SYMBOLS = ("SPY QQQ AAPL MSFT NVDA TSLA AMZN META GOOGL AMD NFLX PLTR COIN JPM XOM "   # first 15 (Nov 18 test)
            "AVGO ORCL CRM ADBE INTC QCOM MU UBER SHOP SNOW CRWD PANW ABNB PYPL HOOD SOFI RIVN F GM DIS NKE SBUX "
-           "MCD WMT COST TGT HD LOW KO PEP PG JNJ PFE MRK LLY UNH BAC WFC GS MS V MA CVX BA CAT GE IWM DIA SMH").split()  # +48, checked on unseen data first
+           "MCD WMT COST TGT HD LOW KO PEP PG JNJ PFE MRK LLY UNH BAC WFC GS MS V MA CVX BA CAT GE IWM DIA SMH").split()  # +49, checked on unseen data first
 P = dict(start_usd=50.0, goal_usd=100.0, rsi_buy=15, rsi_sell=50, stop_pct=0.04, max_hold_bars=48,
          max_positions=6, cost_per_side=0.0003, test_trades=50,
          kill_drawdown_pct=20, kill_after_trades=30)

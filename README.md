@@ -1,6 +1,6 @@
 # Paper Trader
 
-Trades **fake money** ($50 start, $100 goal) across 10 Solana meme coins (WIF, BONK, FARTCOIN, PENGU, POPCAT, MEW, BOME, PNUT, MOODENG, GOAT) against **live prices** (DexScreener, free, no key) and charges realistic costs (0.25% swap fee, network fee, slippage scaled to pool liquidity). The point is to find out whether a strategy makes money *after costs* before any real money is involved.
+Trades **fake money** ($50 start, $100 goal) across 27 Solana meme coins (screened Nov 18: $200k+ liquidity, 30+ days old, real volume; see config.json) against **live prices** (DexScreener, free, no key) and charges realistic costs (0.25% swap fee, network fee, slippage scaled to pool liquidity). The point is to find out whether a strategy makes money *after costs* before any real money is involved.
 
 ## Run it
 
@@ -60,3 +60,9 @@ Every closed trade gets a post-mortem in `data/journal.jsonl` (best/worst point 
 `desk.py` splits every run into six seats that share one rulebook (`desk_rules` in config.json): **Scout** (tradable coins, skips thin/stale pools) → **Chartist** (oversold-dip setups on closed 1h candles) → **Quant** (exact plan: entry, stop, size, exit) → **Risk Manager** (hard limits: positions, risk per trade, daily loss, losing-streak pause, kill switch) → **Executor** (paper trades approved plans only, never chases) and **Desk Lead** (daily brief at 7:30 AM ET in `data/brief.json`). Every handoff is logged to `data/desk_log.jsonl` as SEAT | TICKER | IDEA | EVIDENCE | NEXT STEP. The seats are code, not chat agents, so the rules are walls rather than requests; Claude reviews the desk with you in chat.
 
 Replay of the test period: the desk's extra safety rules (3% daily loss stop, 3-loss pause) cut results from -1.4% to -4.7%, because they block buys right after drops, which is when a dip strategy buys. They are kept for survival; revisit in a weekly review.
+
+## Nov 18: universe widened to 27 coins
+
+Same rsi_dip rules, no re-tuning. Held-out test period (Aug 26 → Nov 18), 0.55%/side costs:
+original 10 coins +0.5% (36 trades); 17 new coins +4.3% (53 trades, PF 1.71; +0.8% at 2x costs) while simply holding them lost 21.5%;
+all 27 +2.9% (89 trades; -0.8% at 2x costs). Caveat: the new coins were -1.8% on the earlier (train) period, so the edge is small and inconsistent.

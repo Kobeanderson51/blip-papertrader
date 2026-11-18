@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18T14:46:05+00:00",
+  "updated": "2026-11-18T15:01:04+00:00",
   "mode": "paper",
   "stopped": false,
   "start_usd": 50.0,
@@ -51,6 +51,42 @@
       "rejections": []
     },
     "log": [
+      {
+        "t": "2026-11-18T15:01:04+00:00",
+        "run": "2026-11-18T15:01:04+00:00",
+        "seat": "Scout",
+        "ticker": "MOODENG",
+        "idea": "skip",
+        "evidence": "no trades in the last 99.0h (thin or stale)",
+        "next": "none"
+      },
+      {
+        "t": "2026-11-18T15:01:04+00:00",
+        "run": "2026-11-18T15:01:04+00:00",
+        "seat": "Scout",
+        "ticker": "PNUT",
+        "idea": "skip",
+        "evidence": "no trades in the last 99.0h (thin or stale)",
+        "next": "none"
+      },
+      {
+        "t": "2026-11-18T15:01:04+00:00",
+        "run": "2026-11-18T15:01:04+00:00",
+        "seat": "Scout",
+        "ticker": "BOME",
+        "idea": "skip",
+        "evidence": "no trades in the last 99.0h (thin or stale)",
+        "next": "none"
+      },
+      {
+        "t": "2026-11-18T15:01:04+00:00",
+        "run": "2026-11-18T15:01:04+00:00",
+        "seat": "Scout",
+        "ticker": "MEW",
+        "idea": "skip",
+        "evidence": "no trades in the last 99.0h (thin or stale)",
+        "next": "none"
+      },
       {
         "t": "2026-11-18T14:46:05+00:00",
         "run": "2026-11-18T14:46:05+00:00",
@@ -734,42 +770,6 @@
         "idea": "skip",
         "evidence": "no trades in the last 99.0h (thin or stale)",
         "next": "none"
-      },
-      {
-        "t": "2026-11-18T10:31:03+00:00",
-        "run": "2026-11-18T10:31:03+00:00",
-        "seat": "Scout",
-        "ticker": "PNUT",
-        "idea": "skip",
-        "evidence": "no trades in the last 99.0h (thin or stale)",
-        "next": "none"
-      },
-      {
-        "t": "2026-11-18T10:31:03+00:00",
-        "run": "2026-11-18T10:31:03+00:00",
-        "seat": "Scout",
-        "ticker": "BOME",
-        "idea": "skip",
-        "evidence": "no trades in the last 99.0h (thin or stale)",
-        "next": "none"
-      },
-      {
-        "t": "2026-11-18T10:31:03+00:00",
-        "run": "2026-11-18T10:31:03+00:00",
-        "seat": "Scout",
-        "ticker": "MEW",
-        "idea": "skip",
-        "evidence": "no trades in the last 99.0h (thin or stale)",
-        "next": "none"
-      },
-      {
-        "t": "2026-11-18T10:16:06+00:00",
-        "run": "2026-11-18T10:16:06+00:00",
-        "seat": "Scout",
-        "ticker": "MOODENG",
-        "idea": "skip",
-        "evidence": "no trades in the last 99.0h (thin or stale)",
-        "next": "none"
       }
     ]
   },
@@ -822,7 +822,7 @@
       "fees_ate_it": 1
     }
   },
-  "market_24h": -1.25,
+  "market_24h": -0.54,
   "live": {
     "unlocked": false,
     "problems": [
@@ -839,10 +839,10 @@
   "watchlist": [
     {
       "symbol": "WIF",
-      "price": 0.1332,
-      "liquidity": 103008.81,
-      "change_24h": -0.99,
-      "volume_24h": 82512.86,
+      "price": 0.1336,
+      "liquidity": 103350.97,
+      "change_24h": -0.47,
+      "volume_24h": 83083.83,
       "candles": [
         [
           1794286800,
@@ -2251,18 +2251,11 @@
     },
     {
       "symbol": "BONK",
-      "price": 2.336e-06,
-      "liquidity": 231789.32,
-      "change_24h": -1.98,
-      "volume_24h": 115190.01,
+      "price": 2.346e-06,
+      "liquidity": 232873.75,
+      "change_24h": -1.17,
+      "volume_24h": 115902.95,
       "candles": [
-        [
-          1794290400,
-          2.827933000862607e-06,
-          2.834937159045953e-06,
-          2.808353030136561e-06,
-          2.8262276229870612e-06
-        ],
         [
           1794294000,
           2.8262276229870612e-06,
@@ -3655,22 +3648,29 @@
           2.370476397021615e-06,
           2.3491417619373125e-06,
           2.3634299385797895e-06
+        ],
+        [
+          1795010400,
+          2.3634299385797895e-06,
+          2.3670077595793403e-06,
+          2.325441110518336e-06,
+          2.34653747868235e-06
         ]
       ],
-      "rsi": 49.1,
+      "rsi": 44.5,
       "trend": "down",
       "holding": false
     },
     {
       "symbol": "FARTCOIN",
-      "price": 0.08687,
-      "liquidity": 4905549.51,
-      "change_24h": -5.8,
-      "volume_24h": 400602,
+      "price": 0.08705,
+      "liquidity": 4924561.59,
+      "change_24h": -5.62,
+      "volume_24h": 412546.17,
       "candles": [
         [
           1794290400,
-          0.11864629051347572,
+          0.11837372575233078,
           0.11923544301028813,
           0.11811087704323284,
           0.11923544301028813
@@ -5075,10 +5075,10 @@
     },
     {
       "symbol": "PENGU",
-      "price": 0.004709,
-      "liquidity": 2201235.07,
-      "change_24h": 0.59,
-      "volume_24h": 899834.07,
+      "price": 0.004744,
+      "liquidity": 2216835.94,
+      "change_24h": 2.27,
+      "volume_24h": 902866.33,
       "candles": [
         [
           1794268800,
@@ -6487,14 +6487,14 @@
     },
     {
       "symbol": "POPCAT",
-      "price": 0.02744,
-      "liquidity": 2327317.94,
-      "change_24h": -5.36,
-      "volume_24h": 100688.98,
+      "price": 0.02777,
+      "liquidity": 2348764.15,
+      "change_24h": -3.83,
+      "volume_24h": 100775.71,
       "candles": [
         [
           1794290400,
-          0.03426910470862112,
+          0.03447519580165579,
           0.03450764148523298,
           0.03413646790622799,
           0.03450764148523298
@@ -7899,10 +7899,10 @@
     },
     {
       "symbol": "MEW",
-      "price": 0.0003079,
-      "liquidity": 6436714.9,
-      "change_24h": -0.37,
-      "volume_24h": 113209.76,
+      "price": 0.0003084,
+      "liquidity": 6445488.68,
+      "change_24h": 0.3,
+      "volume_24h": 112700.89,
       "candles": [],
       "rsi": null,
       "trend": null,
@@ -7910,10 +7910,10 @@
     },
     {
       "symbol": "BOME",
-      "price": 0.0005119,
-      "liquidity": 10216642.75,
-      "change_24h": 1.41,
-      "volume_24h": 362951.05,
+      "price": 0.0005028,
+      "liquidity": 10062626.75,
+      "change_24h": -0.52,
+      "volume_24h": 359339.92,
       "candles": [],
       "rsi": null,
       "trend": null,
@@ -7921,10 +7921,10 @@
     },
     {
       "symbol": "PNUT",
-      "price": 0.02909,
-      "liquidity": 2147100.13,
-      "change_24h": -1.98,
-      "volume_24h": 67535.86,
+      "price": 0.02928,
+      "liquidity": 2160743.09,
+      "change_24h": -0.8,
+      "volume_24h": 67980.19,
       "candles": [],
       "rsi": null,
       "trend": null,
@@ -7932,10 +7932,10 @@
     },
     {
       "symbol": "MOODENG",
-      "price": 0.02761,
-      "liquidity": 1859339.94,
-      "change_24h": 0.24,
-      "volume_24h": 123417.95,
+      "price": 0.02778,
+      "liquidity": 1870369.45,
+      "change_24h": 1.17,
+      "volume_24h": 122419.14,
       "candles": [],
       "rsi": null,
       "trend": null,
@@ -7943,10 +7943,10 @@
     },
     {
       "symbol": "GOAT",
-      "price": 0.01116,
-      "liquidity": 1091356.18,
-      "change_24h": 1.76,
-      "volume_24h": 65166.18,
+      "price": 0.01126,
+      "liquidity": 1097161.85,
+      "change_24h": 3.27,
+      "volume_24h": 66315.01,
       "candles": [
         [
           1794286800,
@@ -9699,6 +9699,10 @@
     },
     {
       "t": "2026-11-18T14:46:05+00:00",
+      "equity": 50.0149
+    },
+    {
+      "t": "2026-11-18T15:01:04+00:00",
       "equity": 50.0149
     }
   ]

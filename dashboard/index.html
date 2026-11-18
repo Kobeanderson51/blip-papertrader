@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0a0c0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Dipwatch</title>
+<title>Rebound · paper trading</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312161b'/%3E%3Cpolyline points='6,9 14,22 19,15 26,10' fill='none' stroke='%235eead4' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='14' cy='22' r='2.6' fill='%23fbbf24'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
@@ -32,7 +32,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,12,15,.9);backdrop-fi
 .tabs-top{display:none;gap:4px;margin-left:24px}
 .tabs-top button{padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600;font-size:14px}
 .tabs-top button.on{background:var(--s2);color:var(--ink)}
-nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(14,17,21,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(7,1fr);padding-bottom:env(safe-area-inset-bottom)}
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(14,17,21,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
 nav.bottom button{height:var(--nav);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--dim)}
 nav.bottom button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav.bottom button.on{color:var(--accent)}
@@ -149,10 +149,19 @@ button.row:active{background:var(--s2)}
 .rules{font-size:14px}.rules div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line)}.rules div:first-child{border:0}
 .rules span:last-child{font-weight:700;text-align:right}
 .banner{display:none;background:rgba(248,113,113,.12);color:var(--down);border:1px solid rgba(248,113,113,.3);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px;margin-bottom:12px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:14px}
+.seg button{display:flex;flex-direction:column;align-items:flex-start;padding:9px 12px;border-radius:10px;color:var(--muted);font-weight:700;font-size:13px}
+.seg button b{font-size:17px;color:var(--ink);margin-top:2px}
+.seg button.on{background:var(--s3);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(94,234,212,.35)}
+.seg.hide{display:none}
+.mk{font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;margin-left:6px;vertical-align:2px}
+.mk.open{background:rgba(74,222,128,.14);color:var(--up)}.mk.closed{background:var(--s3);color:var(--dim)}
+.big{height:min(62vh,600px)}
+.ranges.zoom button{min-width:46px}
 </style></head><body>
 
 <header><div class="hbar">
-  <div class="brand"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#12161b"/><polyline points="6,9 14,22 19,15 26,10" fill="none" stroke="#5eead4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="22" r="2.6" fill="#fbbf24"/></svg>Dipwatch</div>
+  <div class="brand"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#12161b"/><polyline points="6,9 14,22 19,15 26,10" fill="none" stroke="#5eead4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="22" r="2.6" fill="#fbbf24"/></svg>Rebound</div>
   <span class="pill" id="modepill">PAPER</span>
   <div class="tabs-top" id="tabsTop"></div>
   <div class="status"><span class="dot" id="dot"></span><span id="st">connecting…</span></div>
@@ -160,11 +169,12 @@ button.row:active{background:var(--s2)}
 
 <main>
   <div class="banner" id="banner"></div>
+  <div class="seg" id="seg"><button data-m="crypto"><span>Meme coins</span><b class="num" id="segC">—</b></button><button data-m="stocks"><span>Stocks</span><b class="num" id="segS">—</b></button></div>
 
   <!-- HOME -->
   <section class="view" id="v-home">
     <div class="card">
-      <div class="hero"><div class="lab">Paper balance</div><div class="bal num" id="bal">—</div><div class="chg num" id="chg"></div></div>
+      <div class="hero"><div class="lab"><span id="acctName">Meme coins</span> · paper balance<span class="mk" id="mkt"></span></div><div class="bal num" id="bal">—</div><div class="chg num" id="chg"></div></div>
       <div class="ranges" id="eqRanges"></div>
       <div class="eqc" id="eqchart"></div>
       <div class="goal"><div class="row"><span>Goal <span class="num" id="goalLab">$50 → $100</span></span><span class="num" id="goalPct">0%</span></div><div class="bar"><i id="goalBar" style="width:0"></i></div></div>
@@ -177,36 +187,15 @@ button.row:active{background:var(--s2)}
     </div>
     <div class="grid2">
       <div><h2>Holding now <small id="holdN"></small></h2><div class="card list" id="holdList"></div></div>
-      <div><h2>Closest to a buy <small>RSI under 20 = buy</small></h2><div class="card list" id="nearList"></div></div>
+      <div><h2>Closest to a buy <small id="nearHint">RSI under 20 = buy</small></h2><div class="card list" id="nearList"></div></div>
     </div>
   </section>
 
   <!-- MARKETS -->
   <section class="view" id="v-markets">
-    <h2>Markets <small>tap a coin for its chart</small></h2>
+    <h2><span id="mktTitle">Markets</span> <small>tap one for its candle chart</small></h2>
     <div class="card list" id="mktList"></div>
-    <p class="note">Prices from DexScreener and GeckoTerminal. Updated about every 15 minutes.</p>
-  </section>
-
-  <!-- STOCKS -->
-  <section class="view" id="v-stocks">
-    <div class="card">
-      <div class="hero"><div class="lab">Stocks paper balance <span class="tag" id="mkState"></span></div><div class="bal num" id="kBal">—</div><div class="chg num" id="kChg"></div></div>
-      <div class="goal"><div class="row"><span>Goal <span class="num">$50 → $100</span></span><span class="num" id="kGoalPct">0%</span></div><div class="bar"><i id="kGoalBar" style="width:0"></i></div></div>
-    </div>
-    <div class="stats">
-      <div class="card stat"><div class="l">Paper test</div><div class="v num" id="kTest">0/50</div><div class="s">closed trades</div></div>
-      <div class="card stat"><div class="l">Win rate</div><div class="v num" id="kWin">—</div><div class="s" id="kWinS">no trades yet</div></div>
-      <div class="card stat"><div class="l">Profit after fees</div><div class="v num" id="kPnl">—</div><div class="s" id="kFees"></div></div>
-      <div class="card stat"><div class="l">Cash</div><div class="v num" id="kCash">—</div><div class="s">separate from crypto</div></div>
-    </div>
-    <div class="grid2">
-      <div><h2>Holding now</h2><div class="card list" id="kHold"></div></div>
-      <div><h2>Watching <small>RSI under 15 = buy</small></h2><div class="card list" id="kWatch"></div></div>
-    </div>
-    <h2>Stock trades</h2>
-    <div class="card list" id="kTrades"></div>
-    <p class="note">Fake money only. Buys when a stock's hourly RSI drops under 15; sells when RSI is back over 50, it falls 4%, or after 48 market hours. Trades only while the US market is open. Prices from Yahoo Finance.</p>
+    <p class="note" id="mktNote">Prices from DexScreener and GeckoTerminal. Updated about every 15 minutes.</p>
   </section>
 
   <!-- ACTIVITY -->
@@ -217,15 +206,21 @@ button.row:active{background:var(--s2)}
 
   <!-- LESSONS -->
   <section class="view" id="v-lessons">
-    <h2>What's going wrong <small id="lsN"></small></h2>
+    <h2>Meme coin mistakes <small id="lsN"></small></h2>
     <div class="card list" id="patterns"></div>
     <h2>Trade post-mortems</h2>
     <div class="card list" id="journal"></div>
     <p class="note">Rules never change after one loss. Repeated patterns get tested on price history first, and you approve any change.</p>
-  </section>
-
-  <!-- DESK -->
-  <section class="view" id="v-desk">
+    <h2>Tested and skipped <small>why these aren't traded</small></h2>
+    <div class="card pad rules">
+      <div><span>Currencies (USD/JPY, EUR/USD + 3 more)</span><span class="down">lost in every test</span></div>
+      <div><span>Bitcoin, Ethereum, Solana, XRP, Doge</span><span class="down">nothing survived fees</span></div>
+      <div><span>Trend following / breakouts</span><span class="down">lost on unseen data</span></div>
+      <div><span>"Buy at the best hour" (BTC)</span><span class="down">52.9% up, a coin flip</span></div>
+      <div><span>Prediction markets</span><span class="muted">no history to test</span></div>
+      <div><span>Buying hard dips, selling the bounce</span><span class="up">passed: running now</span></div>
+    </div>
+    <p class="note">Every idea is tested on 2 years of hourly prices: tuned on the first 60%, judged on the last 40% it never saw, with extra fees as a stress test.</p>
     <h2>Last 24 hours <small id="briefDate"></small></h2>
     <div class="card"><div class="funnel" id="funnel"></div></div>
     <h2>The desk <small>tap a seat to filter its log</small></h2>
@@ -234,7 +229,7 @@ button.row:active{background:var(--s2)}
     <div class="card list" id="deskLog"></div>
     <h2>Rulebook</h2>
     <div class="card pad rules" id="rules"></div>
-    <p class="note">Every coin passes Scout → Chartist → Quant → Risk Manager → Executor. The rules are enforced in code, so no seat can bend them.</p>
+    <p class="note">Meme coins: every coin passes Scout → Chartist → Quant → Risk Manager → Executor. The rules are enforced in code, so no seat can bend them.</p>
   </section>
 
   <!-- WALLET -->
@@ -278,19 +273,19 @@ button.row:active{background:var(--s2)}
 
 <script>
 var REPO="Kobeanderson51/blip-papertrader";
-var SRC="https://raw.githubusercontent.com/"+REPO+"/main/data/status.json";
-var LW=window.LightweightCharts, D=null, eqChart=null, eqSeries=null, eqRange="ALL", det=null, detSym=null, detRange="1D", depAmt=5, solUsd=null;
-var TABS=[["home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],["markets","Markets",'<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>'],["stocks","Stocks",'<rect x="4" y="10" width="3" height="8"/><rect x="10.5" y="5" width="3" height="13"/><rect x="17" y="8" width="3" height="10"/><path d="M5.5 10V7M12 5V3M18.5 8V6M5.5 18v2M12 18v3M18.5 18v2"/>'],["activity","Activity",'<path d="M4 6h16M4 12h16M4 18h10"/>'],["lessons","Lessons",'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>'],["desk","Desk",'<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/>'],["wallet","Wallet",'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18"/>']];
+var SRC=(location.search.indexOf("local")>=0?"data/":"https://raw.githubusercontent.com/"+REPO+"/main/data/")+"status.json";
+var LW=window.LightweightCharts, D=null, DC=null, DS=null, MODE=(function(){try{return localStorage.getItem("rb_mode")||"crypto"}catch(e){return"crypto"}})(), eqChart=null, eqSeries=null, eqRange="ALL", det=null, detSym=null, detRange="Z1", depAmt=5, solUsd=null;
+var TABS=[["home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],["markets","Markets",'<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>'],["activity","Activity",'<path d="M4 6h16M4 12h16M4 18h10"/>'],["lessons","Learn",'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>'],["wallet","Wallet",'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18"/>']];
 function $(i){return document.getElementById(i)}
 function usd(n,d){if(n==null||isNaN(n))return"—";n=+n;d=d==null?2:d;return(n<0?"-":"")+"$"+Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d})}
 function big(n){if(n==null)return"—";n=+n;return n>=1e9?"$"+(n/1e9).toFixed(2)+"B":n>=1e6?"$"+(n/1e6).toFixed(1)+"M":n>=1e3?"$"+(n/1e3).toFixed(0)+"K":"$"+n.toFixed(0)}
-function px(p){p=+p;if(!p)return"—";return"$"+(p<0.0001?p.toPrecision(4):p<1?p.toFixed(5):p.toFixed(4))}
+function px(p){p=+p;if(!p)return"—";return"$"+(p<0.0001?p.toPrecision(4):p<1?p.toFixed(5):p<20?p.toFixed(4):p.toFixed(2))}
 function pct(n){if(n==null||isNaN(n))return"—";return(n>=0?"+":"")+(+n).toFixed(2)+"%"}
 function cl(n){return n>=0?"up":"down"}
 function ago(t){var s=(Date.now()-new Date(t))/1000;return s<90?"just now":s<5400?Math.round(s/60)+"m ago":s<172800?Math.round(s/3600)+"h ago":Math.round(s/86400)+"d ago"}
 function ts(t){return Math.floor(new Date(t).getTime()/1000)}
 function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(function(){t.classList.remove("show")},1600)}
-function prec(p){return p<0.0001?{type:"price",precision:9,minMove:1e-9}:p<1?{type:"price",precision:5,minMove:1e-5}:{type:"price",precision:4,minMove:1e-4}}
+function prec(p){return p<0.0001?{type:"price",precision:9,minMove:1e-9}:p<1?{type:"price",precision:5,minMove:1e-5}:p<20?{type:"price",precision:4,minMove:1e-4}:{type:"price",precision:2,minMove:.01}}
 function chartOpts(){return{autoSize:true,layout:{background:{type:"solid",color:"transparent"},textColor:"#8b97a5",fontFamily:"JetBrains Mono, ui-monospace, monospace",fontSize:11},
   grid:{vertLines:{color:"rgba(35,43,53,.6)"},horzLines:{color:"rgba(35,43,53,.6)"}},rightPriceScale:{borderVisible:false},
   timeScale:{borderVisible:false,timeVisible:true,secondsVisible:false,rightOffset:3},crosshair:{mode:1},
@@ -299,7 +294,8 @@ function rsiCalc(c,n){n=n||14;var o=new Array(c.length).fill(null);if(c.length<=
   for(i=n+1;i<c.length;i++){d=c[i]-c[i-1];g=(g*(n-1)+Math.max(d,0))/n;l=(l*(n-1)+Math.max(-d,0))/n;o[i]=l?100-100/(1+g/l):100}return o}
 function spark(c){c=c.slice(-48);if(c.length<2)return"";var lo=Math.min.apply(0,c),hi=Math.max.apply(0,c),r=hi-lo||1;var pts=c.map(function(v,i){return(72*i/(c.length-1)).toFixed(1)+","+(28-26*(v-lo)/r).toFixed(1)}).join(" ");
   return'<svg class="spark" viewBox="0 0 72 30"><polyline points="'+pts+'" fill="none" stroke="'+(c[c.length-1]>=c[0]?"#4ade80":"#f87171")+'" stroke-width="1.6" stroke-linejoin="round"/></svg>'}
-function rsiChip(r){if(r==null)return'<span class="rsi-chip">RSI —</span>';return'<span class="rsi-chip '+(r<20?"buy":r<30?"hot":"")+'">RSI '+r.toFixed(0)+"</span>"}
+function TH(){return D&&D.buy_rsi||20}
+function rsiChip(r){if(r==null)return'<span class="rsi-chip">RSI —</span>';return'<span class="rsi-chip '+(r<TH()?"buy":r<TH()+10?"hot":"")+'">RSI '+r.toFixed(0)+"</span>"}
 
 /* ---- tabs ---- */
 function tabBtns(el,cls){el.innerHTML=TABS.map(function(t){return'<button data-tab="'+t[0]+'">'+(cls?'<svg viewBox="0 0 24 24">'+t[2]+"</svg>":"")+t[1]+"</button>"}).join("");
@@ -308,7 +304,7 @@ tabBtns($("tabsTop"),false);tabBtns($("tabsBottom"),true);
 function go(t){if(!TABS.some(function(x){return x[0]===t}))t="home";history.replaceState(null,"","#"+t);
   document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("on",v.id==="v-"+t)});
   document.querySelectorAll("[data-tab]").forEach(function(b){b.classList.toggle("on",b.dataset.tab===t)});window.scrollTo(0,0);
-  if(t==="wallet")renderWallet();if(t==="stocks")loadStocks()}
+  $("seg").classList.toggle("hide",t==="wallet"||t==="lessons");if(t==="wallet")renderWallet()}
 go((location.hash||"#home").slice(1));
 window.addEventListener("hashchange",function(){go((location.hash||"#home").slice(1))});
 
@@ -319,7 +315,11 @@ function applyRange(chart,data,r){if(!data.length)return;var last=data[data.leng
   if(!h){chart.timeScale().fitContent();return}chart.timeScale().setVisibleRange({from:last-h*3600,to:last+1800})}
 
 /* ---- render ---- */
-function render(d){D=d;
+function render(d){D=d;var stk=d.kind==="stocks";
+  $("acctName").textContent=stk?"Stocks":"Meme coins";$("mktTitle").textContent=stk?"Stocks":"Meme coins";
+  $("nearHint").textContent="RSI under "+TH()+" = buy";
+  $("mkt").className="mk "+(stk?(d.market_open?"open":"closed"):"");$("mkt").textContent=stk?(d.market_open?"MARKET OPEN":"MARKET CLOSED"):"";
+  $("mktNote").textContent=stk?"Prices from Yahoo Finance. Trades only while the US market is open (7:30am–2pm Denver).":"Prices from DexScreener and GeckoTerminal. Updated about every 15 minutes.";
   var stale=(Date.now()-new Date(d.updated))>50*60000;
   $("dot").className="dot "+(d.stopped?"stop":stale?"stale":"live");
   $("st").textContent=d.stopped?"stopped":(stale?"delayed · ":"")+ago(d.updated);
@@ -346,9 +346,9 @@ function render(d){D=d;
   // holding + nearest to buy
   var W={};d.watchlist.forEach(function(w){w.rsiNow=w.rsi;W[w.symbol]=w});
   $("holdN").textContent=d.positions.length?d.positions.length+" open":"";
-  $("holdList").innerHTML=d.positions.length?d.positions.map(function(p){var u=p.value_usd-p.cost_usd;return'<button class="row" data-coin="'+p.symbol+'"><div class="coin">'+p.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+p.symbol+'</div><div class="rs">bought '+ago(p.opened)+" at "+px(p.entry)+'</div></div><div class="rright"><div class="p num">'+usd(p.value_usd)+'</div><div class="num '+cl(u)+'" style="font-size:13px;font-weight:700">'+(u>=0?"+":"")+usd(u)+" ("+pct(p.pnl_pct)+")</div></div></button>"}).join(""):'<div class="empty">Nothing held. The bot waits for a coin to crash hard (RSI under 20), then buys the dip.</div>';
+  $("holdList").innerHTML=d.positions.length?d.positions.map(function(p){var u=p.value_usd-p.cost_usd;return'<button class="row" data-coin="'+p.symbol+'"><div class="coin">'+p.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+p.symbol+'</div><div class="rs">bought '+ago(p.opened)+" at "+px(p.entry)+'</div></div><div class="rright"><div class="p num">'+usd(p.value_usd)+'</div><div class="num '+cl(u)+'" style="font-size:13px;font-weight:700">'+(u>=0?"+":"")+usd(u)+" ("+pct(p.pnl_pct)+")</div></div></button>"}).join(""):'<div class="empty">Nothing held. The bot waits for '+(D.kind==="stocks"?"a stock":"a coin")+' to crash hard (RSI under 20), then buys the dip.</div>';
   var near=d.watchlist.filter(function(w){return w.rsi!=null&&!w.holding}).sort(function(a,b){return a.rsi-b.rsi}).slice(0,4);
-  $("nearList").innerHTML=near.map(function(w){return'<button class="row" data-coin="'+w.symbol+'"><div class="coin">'+w.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+w.symbol+'</div><div class="rs">'+px(w.price)+'</div></div><div class="rright">'+rsiChip(w.rsi)+'<div class="rs">'+(w.rsi<20?"buy signal":Math.max(0,w.rsi-20).toFixed(0)+" pts away")+"</div></div></button>"}).join("")||'<div class="empty">Warming up…</div>';
+  $("nearList").innerHTML=near.map(function(w){return'<button class="row" data-coin="'+w.symbol+'"><div class="coin">'+w.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+w.symbol+'</div><div class="rs">'+px(w.price)+'</div></div><div class="rright">'+rsiChip(w.rsi)+'<div class="rs">'+(w.rsi<TH()?"buy signal":Math.max(0,w.rsi-TH()).toFixed(0)+" pts away")+"</div></div></button>"}).join("")||'<div class="empty">Warming up…</div>';
 
   // markets
   $("mktList").innerHTML=d.watchlist.map(function(w){var c=(w.candles||[]).map(function(r){return r[4]}),ch=w.change_24h||0;
@@ -358,6 +358,7 @@ function render(d){D=d;
   $("actN").textContent=d.trades.length+" orders";
   $("actList").innerHTML=d.trades.length?d.trades.map(tradeRow).join(""):'<div class="empty">No trades yet.</div>';
 
+  if(stk){document.querySelectorAll("[data-coin]").forEach(function(b){b.onclick=function(){openCoin(b.dataset.coin)}});if(detSym)drawCoin(detSym,false);return}
   // lessons
   var LBL={gave_back_gains:"Was green, ended red",market_selloff:"Bought during a market-wide selloff",falling_knife:"Stopped out within hours",no_bounce:"Never bounced within 24h",fees_ate_it:"Fees ate a small move",left_money:"Won but sold late",clean_win:"Clean win"};
   var ls=d.lesson_stats||{trades:0,losses:0,loss_patterns:{}},keys=Object.keys(ls.loss_patterns||{}),mx=Math.max.apply(0,keys.map(function(k){return ls.loss_patterns[k]}).concat([1]));
@@ -370,17 +371,6 @@ function render(d){D=d;
   if(detSym)drawCoin(detSym,false);
   if($("v-wallet").classList.contains("on"))renderWallet();
 }
-function loadStocks(){fetch(SRC.replace("status.json","stocks_status.json")+"?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(renderStocks).catch(function(){$("kHold").innerHTML='<div class="empty">Starting up. First stock check runs on the next 15-minute tick.</div>'})}
-function renderStocks(k){var pnl=k.equity_usd-k.start_usd,n=k.closed_trades,prog=Math.max(0,Math.min(100,100*pnl/(k.goal_usd-k.start_usd)));
-  $("mkState").textContent=k.market_open?"MARKET OPEN":"MARKET CLOSED";$("mkState").className="tag "+(k.market_open?"buy":"");
-  $("kBal").textContent=usd(k.equity_usd);$("kChg").innerHTML='<span class="'+cl(pnl)+'">'+(pnl>=0?"▲ +":"▼ ")+usd(Math.abs(pnl))+" ("+pct(k.change_pct)+')</span> <span class="dim">updated '+ago(k.updated)+"</span>"+(k.kill?' <span class="down">· stopped: '+k.kill.reason+"</span>":"");
-  $("kGoalPct").textContent=prog.toFixed(1)+"%";$("kGoalBar").style.width=prog+"%";
-  $("kTest").textContent=Math.min(n,50)+"/50";$("kWin").textContent=n?Math.round(100*k.wins/n)+"%":"—";$("kWinS").textContent=n?k.wins+" wins · "+(n-k.wins)+" losses":"no closed trades yet";
-  $("kPnl").innerHTML='<span class="'+cl(k.realized_pnl_usd)+'">'+(k.realized_pnl_usd>=0?"+":"")+usd(k.realized_pnl_usd)+"</span>";$("kFees").textContent=usd(k.fees_usd)+" in costs";$("kCash").textContent=usd(k.cash_usd);
-  $("kHold").innerHTML=k.positions.length?k.positions.map(function(p){var u=p.value_usd-p.cost_usd;return'<div class="row"><div class="coin">'+p.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+p.symbol+'</div><div class="rs">bought '+ago(p.opened)+" at "+usd(p.entry)+'</div></div><div class="rright"><div class="p num">'+usd(p.value_usd)+'</div><div class="num '+cl(u)+'" style="font-size:13px;font-weight:700">'+pct(p.pnl_pct)+"</div></div></div>"}).join(""):'<div class="empty">Nothing held. Waiting for a stock to drop hard.</div>';
-  var w=k.watchlist.slice().sort(function(a,b){return(a.rsi==null?99:a.rsi)-(b.rsi==null?99:b.rsi)});
-  $("kWatch").innerHTML=w.map(function(x){var ch=x.change_day||0;return'<div class="row"><div class="coin">'+x.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+x.symbol+(x.holding?' <span class="tag hold">HOLDING</span>':"")+'</div><div class="rs">'+(x.rsi==null?'<span class="rsi-chip">RSI —</span>':'<span class="rsi-chip '+(x.rsi<15?"buy":x.rsi<25?"hot":"")+'">RSI '+x.rsi.toFixed(0)+"</span>")+"</div></div>"+spark(x.closes||[])+'<div class="rright" style="min-width:86px"><div class="p num">'+usd(x.price)+'</div><span class="chip num '+cl(ch)+'">'+pct(ch)+"</span></div></div>"}).join("");
-  $("kTrades").innerHTML=k.trades.length?k.trades.map(tradeRow).join(""):'<div class="empty">No stock trades yet.</div>'}
 function eqData(){var seen={};return(D.equity_curve||[]).map(function(p){return{time:ts(p.t),value:p.equity}}).filter(function(p){return seen[p.time]?false:(seen[p.time]=1)})}
 function tradeRow(t){return'<div class="row"><div class="coin" style="color:'+(t.side==="buy"?"var(--up)":"var(--down)")+'">'+(t.side==="buy"?"BUY":"SELL")+'</div><div class="rmain"><div class="rt">'+t.symbol+'</div><div class="rs">'+ago(t.t)+" · "+(t.reason?t.reason.replace(/_/g," "):"RSI dip")+' · fee '+usd(t.fees_usd)+'</div></div><div class="rright"><div class="p num">'+usd(t.usd)+'</div><div class="rs num">'+(t.pnl_usd==null?px(t.fill_price):'<span class="'+cl(t.pnl_usd)+'" style="font-weight:700">'+(t.pnl_usd>=0?"+":"")+usd(t.pnl_usd)+"</span>")+"</div></div></div>"}
 
@@ -395,7 +385,7 @@ function renderDesk(){if(!D||!D.desk)return;var dk=D.desk,b=dk.brief,L=dk.log||[
   document.querySelectorAll("[data-seat]").forEach(function(x){x.onclick=function(){deskSeat=deskSeat===x.dataset.seat?null:x.dataset.seat;renderDesk()}});
   var rows=L.filter(function(e){return!deskSeat||e.seat===deskSeat}).slice(0,40);
   $("logN").textContent=deskSeat?deskSeat+" only":"latest first";
-  $("deskLog").innerHTML=rows.length?rows.map(function(e){return'<div class="logline"><div class="h"><span class="seatname">'+e.seat+"</span><span>"+ago(e.t)+'</span></div><div style="margin-top:3px"><b>'+e.ticker+"</b> · "+e.idea+' <span class="muted">· '+e.evidence+'</span></div><div class="dim" style="font-size:12px;margin-top:2px">next: '+e.next+"</div></div>"}).join(""):'<div class="empty">No desk activity yet.</div>';
+  $("deskLog").innerHTML=rows.length?rows.slice(0,20).map(function(e){return'<div class="logline"><div class="h"><span class="seatname">'+e.seat+"</span><span>"+ago(e.t)+'</span></div><div style="margin-top:3px"><b>'+e.ticker+"</b> · "+e.idea+' <span class="muted">· '+e.evidence+'</span></div><div class="dim" style="font-size:12px;margin-top:2px">next: '+e.next+"</div></div>"}).join(""):'<div class="empty">No desk activity yet.</div>';
   var R=dk.rules;$("rules").innerHTML=[["Universe",R.universe],["Max open positions",R.max_open_positions],["Max risk per trade",R.max_risk_per_trade_pct+"% of account"],["Max loss per day",R.max_daily_loss_pct+"%, then no new buys"],
     ["Losing streak pause",R.max_consecutive_losses+" in a row → "+R.pause_hours_after_streak+"h pause"],["Min pool liquidity",big(R.min_liquidity_usd)],["Off limits",R.off_limits]].map(function(x){return"<div><span class=\"muted\">"+x[0]+"</span><span>"+x[1]+"</span></div>"}).join("")}
 
@@ -405,19 +395,19 @@ $("back").onclick=function(){$("sheet").classList.remove("on");document.body.sty
 function drawCoin(sym,fresh){var w=D.watchlist.find(function(x){return x.symbol===sym});if(!w)return;
   var pos=D.positions.find(function(p){return p.symbol===sym}),ch=w.change_24h||0;
   $("dCoin").textContent=sym.slice(0,4);$("dSym").textContent=sym;$("dSub").innerHTML=(pos?'<span class="tag hold">HOLDING</span> ':"")+rsiChip(w.rsi);
-  $("dPrice").textContent=px(w.price);$("dChg").innerHTML='<span class="'+cl(ch)+'">'+(ch>=0?"▲ ":"▼ ")+pct(ch)+'</span> <span class="dim">24h</span>';
+  $("dPrice").textContent=px(w.price);$("dChg").innerHTML='<span class="'+cl(ch)+'">'+(ch>=0?"▲ ":"▼ ")+pct(ch)+'</span> <span class="dim">'+(D.kind==="stocks"?"today":"24h")+'</span>';
   var cs=(w.candles||[]).map(function(r){return{time:r[0],open:r[1],high:r[2],low:r[3],close:r[4]}});
   if(fresh||!det){
     if(det){det.c.remove();det.r.remove()}
     var c=LW.createChart($("dChart"),chartOpts()),r=LW.createChart($("dRsi"),Object.assign(chartOpts(),{timeScale:{visible:false},rightPriceScale:{borderVisible:false,scaleMargins:{top:.08,bottom:.08}},handleScroll:false,handleScale:false}));
     var cand=c.addCandlestickSeries({upColor:"#4ade80",downColor:"#f87171",borderUpColor:"#4ade80",borderDownColor:"#f87171",wickUpColor:"#4ade80",wickDownColor:"#f87171",priceFormat:prec(w.price)});
     var rl=r.addLineSeries({color:"#5eead4",lineWidth:2,priceLineVisible:false,lastValueVisible:true,priceFormat:{type:"price",precision:0,minMove:1}});
-    rl.createPriceLine({price:20,color:"#fbbf24",lineStyle:2,lineWidth:1,axisLabelVisible:true,title:"buy"});
+    rl.createPriceLine({price:TH(),color:"#fbbf24",lineStyle:2,lineWidth:1,axisLabelVisible:true,title:"buy"});
     rl.createPriceLine({price:50,color:"#5d6875",lineStyle:2,lineWidth:1,axisLabelVisible:true,title:"sell"});
     c.timeScale().subscribeVisibleLogicalRangeChange(function(rg){if(rg)r.timeScale().setVisibleLogicalRange(rg)});
     c.subscribeCrosshairMove(function(p){var v=p&&p.seriesData&&p.seriesData.get(cand);$("dOhlc").textContent=v?"O "+px(v.open)+"  H "+px(v.high)+"  L "+px(v.low)+"  C "+px(v.close):"Drag to scroll back · pinch or scroll to zoom"});
     det={c:c,r:r,cand:cand,rl:rl,lines:[]};
-    rangeBtns($("dRanges"),["12H","1D","3D","ALL"],detRange,function(x){detRange=x;applyRange(det.c,cs,x)});
+    zoomBtns(cs);
   }
   det.cand.setData(cs);
   var closes=cs.map(function(x){return x.close}),rv=rsiCalc(closes);
@@ -427,15 +417,20 @@ function drawCoin(sym,fresh){var w=D.watchlist.find(function(x){return x.symbol=
   det.lines.forEach(function(l){det.cand.removePriceLine(l)});det.lines=[];
   if(pos){det.lines.push(det.cand.createPriceLine({price:pos.entry,color:"#eef2f6",lineStyle:2,lineWidth:1,title:"bought"}));
     det.lines.push(det.cand.createPriceLine({price:pos.stop_loss,color:"#f87171",lineStyle:1,lineWidth:1,title:"stop"}))}
-  if(fresh)applyRange(det.c,cs,detRange);
+  if(fresh){zoomBtns(cs);applyZoom(det.c,cs,detRange)}
   $("dKv").innerHTML=pos?kv("Bought at",px(pos.entry))+kv("Worth now",usd(pos.value_usd))+kv("P&L",'<span class="'+cl(pos.pnl_pct)+'">'+pct(pos.pnl_pct)+"</span>")
-    :kv("Liquidity",big(w.liquidity))+kv("24h volume",big(w.volume_24h))+kv("Signal",w.rsi!=null&&w.rsi<20?'<span style="color:var(--accent)">buy zone</span>':"waiting");
+    :D.kind==="stocks"?kv("Day change",'<span class="'+cl(w.change_24h||0)+'">'+pct(w.change_24h)+"</span>")+kv("RSI now",w.rsi==null?"—":w.rsi.toFixed(0))+kv("Signal",w.rsi!=null&&w.rsi<TH()?'<span style="color:var(--accent)">buy zone</span>':"waiting"):kv("Liquidity",big(w.liquidity))+kv("24h volume",big(w.volume_24h))+kv("Signal",w.rsi!=null&&w.rsi<TH()?'<span style="color:var(--accent)">buy zone</span>':"waiting");
   var tr=D.trades.filter(function(t){return t.symbol===sym});$("dTrades").innerHTML=tr.length?tr.map(tradeRow).join(""):'<div class="empty">No trades in '+sym+" yet.</div>";
 }
+function ZL(){return D.kind==="stocks"?[["Z1","1D",7],["Z2","3D",21],["Z3","1W",35],["ALL","ALL",0]]:[["Z1","12H",12],["Z2","1D",24],["Z3","3D",72],["ALL","ALL",0]]}
+function zoomBtns(cs){var el=$("dRanges");el.classList.add("zoom");el.innerHTML=ZL().map(function(z){return'<button data-r="'+z[0]+'" class="'+(z[0]===detRange?"on":"")+'">'+z[1]+"</button>"}).join("");
+  el.querySelectorAll("button").forEach(function(b){b.onclick=function(){detRange=b.dataset.r;el.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b)});applyZoom(det.c,cs,detRange)}})}
+function applyZoom(chart,cs,r){if(!cs.length)return;var z=ZL().find(function(x){return x[0]===r});if(!z||!z[2]){chart.timeScale().fitContent();return}
+  var n=cs.length;chart.timeScale().setVisibleLogicalRange({from:Math.max(-.5,n-z[2]-.5),to:n+1.5})}
 function kv(l,v){return'<div class="card"><div class="l">'+l+'</div><div class="v num">'+v+"</div></div>"}
 
 /* ---- wallet ---- */
-function renderWallet(){if(!D)return;var L=D.live||{},n=D.closed_trades,need=L.require_paper_trades||50,probs=L.problems||[];
+function renderWallet(){var D=DC;if(!D)return;var L=D.live||{},n=D.closed_trades,need=L.require_paper_trades||50,probs=L.problems||[];
   var has=function(s){return probs.some(function(p){return p.indexOf(s)>=0})};
   var steps=[[n>=need,"Finish the paper test: "+Math.min(n,need)+" of "+need+" trades"],[!has("P&L"),"Be profitable after fees on paper ("+(D.realized_pnl_usd>=0?"+":"")+usd(D.realized_pnl_usd)+" so far)"],
     [!!L.burner_address,"Create a separate burner wallet in Phantom and send me its public address"],[!has("live.enabled")&&!has("LIVE_TRADING"),"You reply APPROVE LIVE and add the burner's key to GitHub Secrets yourself"]];
@@ -448,7 +443,7 @@ function renderWallet(){if(!D)return;var L=D.live||{},n=D.closed_trades,need=L.r
   dep.innerHTML='<div class="note" style="margin-top:0">Bot wallet balance: <b class="num" id="bBal">checking…</b> (limit '+usd(cap,0)+')</div><div class="amts" id="amts">'+[2,5,10].filter(function(a){return a<=cap}).map(function(a){return'<button class="'+(a===depAmt?"on":"")+'" data-a="'+a+'">$'+a+"</button>"}).join("")+'</div><div class="qr" id="qr"></div><a class="btn primary" id="payBtn">Send from Phantom</a><div class="addr num" style="margin-top:12px"><span style="flex:1">'+addr+'</span><button id="cpy">Copy</button></div><p class="note">Withdraw anytime: it\'s your wallet, so open it in Phantom and send the SOL back to your main account.</p>';
   $("cpy").onclick=function(){navigator.clipboard.writeText(addr).then(function(){toast("Address copied")})};
   dep.querySelectorAll("[data-a]").forEach(function(b){b.onclick=function(){depAmt=+b.dataset.a;renderWallet()}});
-  var setPay=function(){var sol=solUsd?(depAmt/solUsd):null,uri="solana:"+addr+(sol?"?amount="+sol.toFixed(4):"")+(sol?"&":"?")+"label=Dipwatch%20bot&message=Deposit%20"+depAmt+"%20USD";
+  var setPay=function(){var sol=solUsd?(depAmt/solUsd):null,uri="solana:"+addr+(sol?"?amount="+sol.toFixed(4):"")+(sol?"&":"?")+"label=Rebound%20bot&message=Deposit%20"+depAmt+"%20USD";
     $("payBtn").href=uri;var q=qrcode(0,"M");q.addData(uri);q.make();$("qr").innerHTML=q.createSvgTag({cellSize:4,margin:2})};
   setPay();
   if(!solUsd)fetch("https://api.dexscreener.com/latest/dex/tokens/So11111111111111111111111111111111111111112").then(function(r){return r.json()}).then(function(j){var p=j.pairs.find(function(x){return x.quoteToken&&/USD/.test(x.quoteToken.symbol)});if(p){solUsd=+p.priceUsd;setPay()}}).catch(function(){});
@@ -457,6 +452,12 @@ function renderWallet(){if(!D)return;var L=D.live||{},n=D.closed_trades,need=L.r
 $("stopBtn").href="https://github.com/"+REPO+"/new/main?filename=EMERGENCY_STOP&value="+encodeURIComponent("stop");
 
 /* ---- load ---- */
-function load(){if($("v-stocks")&&$("v-stocks").classList.contains("on"))loadStocks();fetch(SRC+"?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(render).catch(function(){$("st").textContent="offline";$("dot").className="dot stale"})}
+function getJ(u){return fetch(u+"?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()})}
+function show(){var d=MODE==="stocks"?DS:DC;document.querySelectorAll("#seg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===MODE)});
+  if(DC)$("segC").textContent=usd(DC.equity_usd);if(DS)$("segS").textContent=usd(DS.equity_usd);if(DC&&d!==DC)render(DC);if(d)render(d)}
+document.querySelectorAll("#seg button").forEach(function(b){b.onclick=function(){if(MODE===b.dataset.m)return;MODE=b.dataset.m;try{localStorage.setItem("rb_mode",MODE)}catch(e){}
+  if(det){det.c.remove();det.r.remove();det=null}if(detSym){$("sheet").classList.remove("on");document.body.style.overflow="";detSym=null}show()}});
+function load(){getJ(SRC).then(function(j){DC=j;show()}).catch(function(){$("st").textContent="offline";$("dot").className="dot stale"});
+  getJ(SRC.replace("status.json","stocks_status.json")).then(function(j){DS=j;show()}).catch(function(){})}
 load();setInterval(load,60000);
 </script></body></html>

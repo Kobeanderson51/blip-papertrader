@@ -1,4 +1,4 @@
-"""The Dipwatch trading desk: six seats, one rulebook (config.json "desk_rules").
+"""The Rebound trading desk: six seats, one rulebook (config.json "desk_rules").
 
 Every idea moves Scout -> Chartist -> Quant -> Risk Manager -> Executor, and no idea skips a seat.
 The Desk Lead writes the daily brief and the log. Each seat is plain code, so the rules are

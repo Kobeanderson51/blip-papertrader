@@ -467,13 +467,13 @@ def check_milestones(cfg, state, equity):
     msgs = []
     if n.get("goal_usd") and equity >= n["goal_usd"] and not done.get("goal"):
         done["goal"] = now()
-        msgs.append(("Dipwatch hit the goal: ${:.2f}".format(equity),
+        msgs.append(("Rebound hit the goal: ${:.2f}".format(equity),
                      "The paper account reached ${:.2f} (goal ${:.0f}). This is simulated money.\n\n"
                      "Before any real money: review the trade log, win rate and fees on the dashboard, "
                      "and remember a good run can be luck. Live mode stays locked until you decide.".format(equity, n["goal_usd"])))
     if n.get("warn_below_usd") and equity <= n["warn_below_usd"] and not done.get("warn"):
         done["warn"] = now()
-        msgs.append(("Dipwatch is down to ${:.2f}".format(equity),
+        msgs.append(("Rebound is down to ${:.2f}".format(equity),
                      "The paper account fell to ${:.2f} from ${:.0f}. This strategy is losing; "
                      "it should not get real money as-is.".format(equity, state["start_usd"])))
     # Paper test complete: 50 closed trades -> tell the user whether it passed.
@@ -508,7 +508,7 @@ def check_milestones(cfg, state, equity):
     if reason and not state.get("kill"):
         state["kill"] = {"t": now(), "reason": reason}
         open(STOPFILE, "w").write(now() + " kill rule: " + reason)
-        msgs.append(("Dipwatch stopped by kill rule", "Trading stopped automatically: " + reason +
+        msgs.append(("Rebound stopped by kill rule", "Trading stopped automatically: " + reason +
                      ". Open positions are left as they are and logs are kept. The strategy has failed its test; "
                      "it should not get real money."))
     if msgs:

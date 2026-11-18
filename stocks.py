@@ -1,4 +1,4 @@
-"""Dipwatch stocks: a separate PAPER account that dip-buys big US stocks.
+"""Rebound stocks: a separate PAPER account that dip-buys big US stocks.
 
 Strategy (the one that passed the Nov 18 backtest on unseen data, see research/README.md):
   - hourly candles, RSI(14) on CLOSED bars
@@ -91,7 +91,9 @@ def step():
     for sym, v in ok.items():
         bars = [b for b in v["bars"] if not (market_open and b[0] > t - 3600)]
         closes = [b[4] for b in bars]; r = rsi(closes)
-        info[sym] = dict(bars=bars, closes=closes, rsi=r, price=v["price"], prev=v["prev"])
+        day = lambda ts: time.strftime("%Y-%m-%d", time.gmtime(ts - 5 * 3600))   # ~US Eastern date
+        today = day(v["bars"][-1][0]); prior = [b[4] for b in v["bars"] if day(b[0]) < today]
+        info[sym] = dict(bars=bars, closes=closes, rsi=r, price=v["price"], prev=prior[-1] if prior else None)
 
     def equity():
         return s["cash"] + sum(p["qty"] * info.get(k, {"price": p["entry"]})["price"] for k, p in s["positions"].items())
@@ -142,12 +144,12 @@ def step():
         elif s["closed"] >= P["kill_after_trades"] and s["realized"] <= 0:
             s["kill"] = dict(t=now_iso(t), reason=f"no profit after {s['closed']} stock trades")
         if s["kill"]:
-            notify(s, "kill", "Dipwatch stocks stopped", "The stocks paper account stopped itself: " + s["kill"]["reason"])
+            notify(s, "kill", "Rebound stocks stopped", "The stocks paper account stopped itself: " + s["kill"]["reason"])
     if eq >= P["goal_usd"]:
-        notify(s, "goal", "Dipwatch stocks hit $100 (paper)", f"Stocks paper account reached ${eq:.2f}.")
+        notify(s, "goal", "Rebound stocks hit $100 (paper)", f"Stocks paper account reached ${eq:.2f}.")
     if s["closed"] >= P["test_trades"]:
         verdict = "PASSED" if s["realized"] > 0 else "FAILED"
-        notify(s, "test", f"Dipwatch stocks 50-trade test {verdict}", f"{s['closed']} closed trades, P&L ${s['realized']:+.2f}, {s['wins']} wins.")
+        notify(s, "test", f"Rebound stocks 50-trade test {verdict}", f"{s['closed']} closed trades, P&L ${s['realized']:+.2f}, {s['wins']} wins.")
 
     json.dump(s, open(STATE, "w"), separators=(",", ":"))
 
@@ -157,12 +159,15 @@ def step():
                   realized_pnl_usd=round(s["realized"], 4), fees_usd=round(s["fees"], 4), params=P,
                   positions=[dict(symbol=k, entry=p["entry"], opened=p["opened"], cost_usd=round(p["cost"], 4),
                                   value_usd=round(p["qty"] * info.get(k, {"price": p["entry"]})["price"], 4),
-                                  pnl_pct=round(100 * (p["qty"] * info.get(k, {"price": p["entry"]})["price"] / p["cost"] - 1), 2))
+                                  pnl_pct=round(100 * (p["qty"] * info.get(k, {"price": p["entry"]})["price"] / p["cost"] - 1), 2),
+                                  stop_loss=round(p["entry"] * (1 - P["stop_pct"]), 4))
                              for k, p in s["positions"].items()],
                   trades=s["trades"][-60:][::-1], equity_curve=s["equity_curve"][-1500:],
+                  kind="stocks", buy_rsi=P["rsi_buy"],
                   watchlist=[dict(symbol=k, price=I["price"], rsi=None if I["rsi"][-1] is None else round(I["rsi"][-1], 1),
-                                  change_day=None if not I["prev"] else round(100 * (I["price"] / I["prev"] - 1), 2),
-                                  closes=[round(c, 4) for c in I["closes"][-48:]], holding=k in s["positions"])
+                                  change_24h=None if not I["prev"] else round(100 * (I["price"] / I["prev"] - 1), 2),
+                                  candles=[[b[0], round(b[1], 3), round(b[2], 3), round(b[3], 3), round(b[4], 3)] for b in I["bars"][-110:]],
+                                  holding=k in s["positions"])
                              for k, I in info.items()])
     json.dump(status, open(STATUS, "w"), separators=(",", ":"))
     print(f"stocks: market {'OPEN' if market_open else 'closed'} | equity ${eq:.2f} | {len(s['positions'])} open | {s['closed']} closed | {len(ok)}/{len(SYMBOLS)} quotes")

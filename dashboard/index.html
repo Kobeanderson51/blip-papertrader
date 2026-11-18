@@ -158,13 +158,18 @@ button.row:active{background:var(--s2)}
 .mk.open{background:rgba(74,222,128,.14);color:var(--up)}.mk.closed{background:var(--s3);color:var(--dim)}
 .big{height:min(62vh,600px)}
 .ranges.zoom button{min-width:46px}
+.rf{width:34px;height:34px;border-radius:10px;background:var(--s2);display:flex;align-items:center;justify-content:center;margin-left:4px}
+.rf svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.rf.spin svg{animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.ptr{position:fixed;left:50%;top:calc(64px + env(safe-area-inset-top));z-index:30;transform:translate(-50%,-60px);width:38px;height:38px;border-radius:50%;background:var(--s2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s}
+.ptr svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2.4;stroke-linecap:round}
 </style></head><body>
 
 <header><div class="hbar">
   <div class="brand"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#12161b"/><polyline points="6,9 14,22 19,15 26,10" fill="none" stroke="#5eead4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="22" r="2.6" fill="#fbbf24"/></svg>Rebound</div>
   <span class="pill" id="modepill">PAPER</span>
   <div class="tabs-top" id="tabsTop"></div>
-  <div class="status"><span class="dot" id="dot"></span><span id="st">connecting…</span></div>
+  <div class="status"><span class="dot" id="dot"></span><span id="st">connecting…</span><button class="rf" id="rf" aria-label="Refresh"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><polyline points="20,4 20,11 13,11"/></svg></button></div>
 </div></header>
 
 <main>
@@ -249,6 +254,7 @@ button.row:active{background:var(--s2)}
 </main>
 
 <nav class="bottom" id="tabsBottom"></nav>
+<div class="ptr" id="ptr"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><polyline points="20,4 20,11 13,11"/></svg></div>
 
 <!-- coin detail sheet -->
 <div class="sheet" id="sheet">
@@ -462,7 +468,20 @@ function show(){var d=MODE==="stocks"?DS:DC;document.querySelectorAll("#seg butt
   if(DC)$("segC").textContent=usd(DC.equity_usd);if(DS)$("segS").textContent=usd(DS.equity_usd);if(DC&&d!==DC)render(DC);if(d)render(d)}
 document.querySelectorAll("#seg button").forEach(function(b){b.onclick=function(){if(MODE===b.dataset.m)return;MODE=b.dataset.m;try{localStorage.setItem("rb_mode",MODE)}catch(e){}
   if(det){det.c.remove();det.r.remove();det=null}if(detSym){$("sheet").classList.remove("on");document.body.style.overflow="";detSym=null}show()}});
-function load(){getJ(SRC).then(function(j){DC=j;show()}).catch(function(){$("st").textContent="offline";$("dot").className="dot stale"});
-  getJ(SRC.replace("status.json","stocks_status.json")).then(function(j){DS=j;show()}).catch(function(){})}
+function load(sha){var base=sha?SRC.replace("/main/","/"+sha+"/"):SRC;
+  return Promise.all([getJ(base).then(function(j){DC=j;show()}).catch(function(){$("st").textContent="offline";$("dot").className="dot stale"}),
+    getJ(base.replace("status.json","stocks_status.json")).then(function(j){DS=j;show()}).catch(function(){})])}
+var busy=false;
+function refresh(){if(busy)return;busy=true;$("rf").classList.add("spin");
+  var done=function(){busy=false;$("rf").classList.remove("spin");var u=(MODE==="stocks"?DS:DC);toast("Updated · bot last checked "+(u?ago(u.updated):"—"))};
+  if(location.search.indexOf("local")>=0){load().then(done);return}
+  fetch("https://api.github.com/repos/"+REPO+"/commits/main",{headers:{Accept:"application/vnd.github.sha"},cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()})
+    .then(function(sha){return load(sha.trim())}).catch(function(){return load()}).then(done)}
+$("rf").onclick=refresh;
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")refresh()});
+(function(){var y0=null,dy=0,P=$("ptr");
+  window.addEventListener("touchstart",function(e){y0=(window.scrollY<=0&&!$("sheet").classList.contains("on"))?e.touches[0].clientY:null;dy=0},{passive:true});
+  window.addEventListener("touchmove",function(e){if(y0==null)return;dy=e.touches[0].clientY-y0;if(dy>0){var k=Math.min(dy,110);P.style.opacity=Math.min(1,k/70);P.style.transform="translate(-50%,"+(k*.6-60)+"px) rotate("+k*3+"deg)"}},{passive:true});
+  window.addEventListener("touchend",function(){if(y0!=null&&dy>70)refresh();y0=null;P.style.opacity=0;P.style.transform="translate(-50%,-60px)"})})();
 load();setInterval(load,60000);
 </script></body></html>

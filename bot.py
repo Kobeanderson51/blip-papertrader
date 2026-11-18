@@ -50,6 +50,14 @@ def save_json(path, obj):
     os.replace(tmp, path)
 
 
+def save_compact(path, obj):
+    """status.json is fetched by the app every minute: keep it small (no indentation)."""
+    tmp = path + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(obj, f, separators=(",", ":"))
+    os.replace(tmp, path)
+
+
 def append(path, obj):
     with open(path, "a") as f:
         f.write(json.dumps(obj) + "\n")
@@ -127,7 +135,7 @@ def attach_history(quotes, watchlist):
         if rows:
             quotes[sym]["closes"] = [r[4] for r in rows]
             quotes[sym]["candles"] = rows
-    save_json(CANDLE_CACHE, cache)
+    save_compact(CANDLE_CACHE, cache)
     return quotes
 
 
@@ -347,7 +355,7 @@ def step(cfg, state, quotes):
     desk.desk_lead_brief(state, equity, closed, cfg, run_id)
     desk.trim_log()
     state["last_quotes"] = {k: {x: v.get(x) for x in ("price", "liquidity", "change_24h", "volume_24h")} for k, v in quotes.items()}
-    state["candles"] = {k: v["candles"] for k, v in quotes.items() if v.get("candles")}
+    state.pop("candles", None)  # candles live only in candles_cache.json
     state["last_tick"] = now()
     return "ok"
 
@@ -403,6 +411,7 @@ def report(cfg, state):
 
 def write_status(cfg, state):
     """data/status.json: everything the dashboard grid shows."""
+    cache = load_json(CANDLE_CACHE, {})
     q = state.get("last_quotes", {})
     s_ = cfg["strategy"]
     positions = []
@@ -421,7 +430,7 @@ def write_status(cfg, state):
         rv = rsi(h, 14)[-1] if len(h) > 15 else None
         watch.append({"symbol": sym, "auto": bool(w.get("auto")), "price": q.get(sym, {}).get("price"), "liquidity": q.get(sym, {}).get("liquidity"),
                       "change_24h": q.get(sym, {}).get("change_24h"), "volume_24h": q.get(sym, {}).get("volume_24h"),
-                      "candles": state.get("candles", {}).get(sym, []),
+                      "candles": [[r[0]] + [float(f"{v:.6g}") for v in r[1:5]] for r in (cache.get(sym, {}).get("rows") or [])[-120:]],
                       "rsi": None if rv is None else round(rv, 1),
                       "trend": None if rv is None else ("oversold" if rv < s_["rsi_buy"] else "up" if rv >= 50 else "down"),
                       "holding": sym in state["positions"]})
@@ -431,8 +440,8 @@ def write_status(cfg, state):
     curve.append({"t": now(), "equity": round(equity, 4)})
     del curve[:-2000]
     check_milestones(cfg, state, equity)
-    save_json(STATE, state)
-    save_json(os.path.join(DATA, "status.json"), {
+    save_compact(STATE, state)
+    save_compact(os.path.join(DATA, "status.json"), {
         "updated": now(), "mode": cfg["mode"], "stopped": os.path.exists(STOPFILE) or bool(state.get("kill")),
         "start_usd": state["start_usd"], "goal_usd": cfg.get("goal_usd"), "equity_usd": round(equity, 4),
         "cash_usd": round(state["cash_usd"], 4), "change_pct": round(100 * (equity / state["start_usd"] - 1), 2),
@@ -543,7 +552,7 @@ def main(argv):
                 except Exception as e:
                     log_event("universe_error", error=repr(e))
                 status = step(cfg, state, attach_history(fetch_quotes(cfg["watchlist"]), cfg["watchlist"]))
-                save_json(STATE, state)
+                save_compact(STATE, state)
                 write_status(cfg, state)
                 print(f"[{now()}] {status}  equity report:\n{report(cfg, state)}\n")
             except SystemExit:

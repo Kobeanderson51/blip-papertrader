@@ -73,7 +73,7 @@ all 27 +2.9% (89 trades; -0.8% at 2x costs). Caveat: the new coins were -1.8% on
 
 ## Stocks paper account (added Nov 18, 2026)
 
-`stocks.py` runs a **separate $50 paper account** on 15 large US stocks (SPY, QQQ, AAPL, MSFT, NVDA, TSLA, AMZN, META, GOOGL, AMD, NFLX, PLTR, COIN, JPM, XOM). Fake money only; there is no live mode in this file.
+`stocks.py` runs a **separate $50 paper account** on 63 large US stocks and ETFs (started with 15 (SPY, QQQ, AAPL, MSFT, NVDA, TSLA, AMZN, META, GOOGL, AMD, NFLX, PLTR, COIN, JPM, XOM); 48 more added after the unchanged rule stayed positive on them too: +0.5% on unseen data over 54 trades, 57% won, still positive at 2.5x costs, 29 of 36 settings profitable). Fake money only; there is no live mode in this file.
 
 - Rule: hourly RSI(14) on closed bars crosses below 15 → buy (1/6 of equity, max 6). Sell when RSI > 50, price −4% from entry, or after 48 market hours. Trades only while the US market is open. Data from Yahoo Finance.
 - Why this one: the Nov 18 test (2 years hourly, tuned on first 60%, checked on last 40%, 216 variants counted) — stock dip buying made +2.8% on unseen data over 17 trades, 86% of settings profitable, still positive at 2.5× costs. Buy-and-hold made +11.2% over the same stretch, so it is not proven better than holding. 17 trades is a small sample.

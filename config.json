@@ -175,7 +175,7 @@
     "review_after_trades": 30
   },
   "desk_rules": {
-    "universe": "27 screened base coins + up to 23 more added automatically from trending/top Solana pools when they pass the same safety filters",
+    "universe": "27 screened base coins + up to 73 more added automatically from trending/top Solana pools when they pass the same safety filters",
     "min_liquidity_usd": 100000,
     "stale_data_hours": 2,
     "mover_pct_24h": 10,
@@ -185,7 +185,7 @@
     "max_consecutive_losses": 3,
     "pause_hours_after_streak": 24,
     "off_limits": "pools under $100k liquidity, stale prices, coins already held, anything not on the watchlist (including $BLIP)",
-    "max_universe": 50,
+    "max_universe": 100,
     "min_liquidity_usd_new": 200000,
     "min_volume_usd_new": 100000,
     "min_age_days_new": 30,

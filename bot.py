@@ -93,20 +93,39 @@ def fetch_candles(pool, limit=200):
     return rows[:-1]  # [ts, open, high, low, close, volume], oldest first; drop the still-forming candle
 
 
+CANDLE_CACHE = os.path.join(DATA, "candles_cache.json")
+
+
 def attach_history(quotes, watchlist):
+    """Hourly candles change once an hour, so keep them cached and only re-download a coin when a
+    newer closed candle should exist. That is ~1 call per coin per hour instead of 4, which keeps
+    27+ coins under GeckoTerminal's free rate limit. Failed fetches back off and fall back to cache."""
+    cache = load_json(CANDLE_CACHE, {})
+    nowt = time.time()
     for w in watchlist:
-        if w["symbol"] in quotes and w.get("pool"):
-            try:
+        sym = w["symbol"]
+        if sym not in quotes or not w.get("pool"):
+            continue
+        rows = cache.get(sym, {}).get("rows") or []
+        stale = not rows or nowt >= rows[-1][0] + 2 * 3600 + 60   # next candle has closed
+        if stale:
+            for wait in (0, 8, 20):
+                if wait:
+                    time.sleep(wait)
                 try:
-                    rows = fetch_candles(w["pool"])
-                except Exception:
-                    time.sleep(6)  # usually a rate limit; one retry
-                    rows = fetch_candles(w["pool"])
-                quotes[w["symbol"]]["closes"] = [float(r[4]) for r in rows]
-                quotes[w["symbol"]]["candles"] = [[int(r[0])] + [float(x) for x in r[1:5]] for r in rows]
-            except Exception as e:
-                log_event("candles_error", symbol=w["symbol"], error=repr(e))
-            time.sleep(2.1)  # stay under GeckoTerminal's 30 calls/minute
+                    fresh = fetch_candles(w["pool"])
+                    rows = [[int(r[0])] + [float(x) for x in r[1:5]] for r in fresh]
+                    cache[sym] = {"rows": rows[-200:], "fetched": nowt}
+                    break
+                except Exception as e:
+                    err = repr(e)
+            else:
+                log_event("candles_error", symbol=sym, error=err)
+            time.sleep(2.5)  # stay under 30 calls/minute
+        if rows:
+            quotes[sym]["closes"] = [r[4] for r in rows]
+            quotes[sym]["candles"] = rows
+    save_json(CANDLE_CACHE, cache)
     return quotes
 
 

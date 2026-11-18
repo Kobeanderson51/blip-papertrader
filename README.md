@@ -66,3 +66,7 @@ Replay of the test period: the desk's extra safety rules (3% daily loss stop, 3-
 Same rsi_dip rules, no re-tuning. Held-out test period (Aug 26 → Nov 18), 0.55%/side costs:
 original 10 coins +0.5% (36 trades); 17 new coins +4.3% (53 trades, PF 1.71; +0.8% at 2x costs) while simply holding them lost 21.5%;
 all 27 +2.9% (89 trades; -0.8% at 2x costs). Caveat: the new coins were -1.8% on the earlier (train) period, so the edge is small and inconsistent.
+
+## Automatic coin scanner (every run)
+
+`universe.py` (Scout) checks GeckoTerminal's trending and top-volume Solana pools every ~15 minutes and adds a coin only if it passes the same safety filters as the base 27: liquidity >= $200k, 24h volume >= $100k, market cap >= $2M, oldest pool >= 30 days, volume not wildly above market cap, quoted in SOL/USDC/USDT, and not a stablecoin, major, staked/wrapped token or tokenized stock. Up to 50 coins total. Auto-added coins (tagged NEW in the app) are dropped after failing the filters on 3 separate days, never while held. Pump.fun's own site is not scanned (it blocks automated access); coins that started there show up once they trade on DEXes, and brand-new launches are excluded on purpose.

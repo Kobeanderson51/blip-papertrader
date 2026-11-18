@@ -18,6 +18,7 @@ Standard library only. No keys, no wallets, no network writes.
 """
 import json, os, sys, time, random, urllib.request
 import desk
+import universe
 from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -65,20 +66,21 @@ def new_state(cfg):
 
 # ---------------------------------------------------------------- prices
 def fetch_quotes(watchlist):
-    """Return {symbol: {"price": float, "liquidity": float}} from DexScreener (free, no key)."""
-    mints = ",".join(w["mint"] for w in watchlist)
-    req = urllib.request.Request(f"https://api.dexscreener.com/tokens/v1/solana/{mints}",
-                                 headers={"User-Agent": "blip-papertrader/1.0"})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        pairs = json.load(r)
+    """Return {symbol: {"price", "liquidity", ...}} from DexScreener (free, no key; max 30 mints per call)."""
     best = {}
-    for p in pairs:
-        mint = p["baseToken"]["address"]
-        liq = (p.get("liquidity") or {}).get("usd") or 0
-        if p.get("priceUsd") and (mint not in best or liq > best[mint]["liquidity"]):
-            best[mint] = {"price": float(p["priceUsd"]), "liquidity": float(liq),
-                          "change_24h": (p.get("priceChange") or {}).get("h24"),
-                          "volume_24h": (p.get("volume") or {}).get("h24")}
+    for i in range(0, len(watchlist), 30):
+        mints = ",".join(w["mint"] for w in watchlist[i:i + 30])
+        req = urllib.request.Request(f"https://api.dexscreener.com/tokens/v1/solana/{mints}",
+                                     headers={"User-Agent": "blip-papertrader/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            pairs = json.load(r)
+        for p in pairs:
+            mint = p["baseToken"]["address"]
+            liq = (p.get("liquidity") or {}).get("usd") or 0
+            if p.get("priceUsd") and (mint not in best or liq > best[mint]["liquidity"]):
+                best[mint] = {"price": float(p["priceUsd"]), "liquidity": float(liq),
+                              "change_24h": (p.get("priceChange") or {}).get("h24"),
+                              "volume_24h": (p.get("volume") or {}).get("h24")}
     return {w["symbol"]: best[w["mint"]] for w in watchlist if w["mint"] in best}
 
 
@@ -417,7 +419,7 @@ def write_status(cfg, state):
         sym = w["symbol"]
         h = state["history"].get(sym, [])
         rv = rsi(h, 14)[-1] if len(h) > 15 else None
-        watch.append({"symbol": sym, "price": q.get(sym, {}).get("price"), "liquidity": q.get(sym, {}).get("liquidity"),
+        watch.append({"symbol": sym, "auto": bool(w.get("auto")), "price": q.get(sym, {}).get("price"), "liquidity": q.get(sym, {}).get("liquidity"),
                       "change_24h": q.get(sym, {}).get("change_24h"), "volume_24h": q.get(sym, {}).get("volume_24h"),
                       "candles": state.get("candles", {}).get(sym, []),
                       "rsi": None if rv is None else round(rv, 1),
@@ -536,6 +538,10 @@ def main(argv):
     elif cmd in ("once", "run"):
         while True:
             try:
+                try:
+                    cfg["watchlist"] = universe.refresh(cfg, state["positions"], desk.log, now())
+                except Exception as e:
+                    log_event("universe_error", error=repr(e))
                 status = step(cfg, state, attach_history(fetch_quotes(cfg["watchlist"]), cfg["watchlist"]))
                 save_json(STATE, state)
                 write_status(cfg, state)

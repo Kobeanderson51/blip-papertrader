@@ -331,7 +331,7 @@ function render(d){D=d;
 
   // markets
   $("mktList").innerHTML=d.watchlist.map(function(w){var c=(w.candles||[]).map(function(r){return r[4]}),ch=w.change_24h||0;
-    return'<button class="row" data-coin="'+w.symbol+'"><div class="coin">'+w.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+w.symbol+(w.holding?' <span class="tag hold">HOLDING</span>':"")+'</div><div class="rs">'+rsiChip(w.rsi)+"</div></div>"+spark(c)+'<div class="rright" style="min-width:92px"><div class="p num">'+px(w.price)+'</div><span class="chip num '+cl(ch)+'">'+pct(ch)+"</span></div></button>"}).join("");
+    return'<button class="row" data-coin="'+w.symbol+'"><div class="coin">'+w.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+w.symbol+(w.holding?' <span class="tag hold">HOLDING</span>':"")+(w.auto?' <span class="tag buy">NEW</span>':"")+'</div><div class="rs">'+rsiChip(w.rsi)+"</div></div>"+spark(c)+'<div class="rright" style="min-width:92px"><div class="p num">'+px(w.price)+'</div><span class="chip num '+cl(ch)+'">'+pct(ch)+"</span></div></button>"}).join("");
 
   // activity
   $("actN").textContent=d.trades.length+" orders";

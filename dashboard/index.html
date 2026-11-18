@@ -324,7 +324,7 @@ function applyRange(chart,data,r){if(!data.length)return;var last=data[data.leng
 /* ---- render ---- */
 function render(d){D=d;var stk=!!d.kind,fx=d.kind==="fx",NM=fx?"Currency":stk?"Stocks":"Meme coins";
   $("acctName").textContent=NM;$("mktTitle").textContent=NM;
-  $("nearHint").textContent="RSI under "+TH()+" = buy"+(fx?" · over 80 = short":"");
+  $("nearHint").textContent="RSI under "+TH()+" = buy"+(fx?" · over 85 = short":"");
   $("mkt").className="mk "+(stk?(d.market_open?"open":"closed"):"");$("mkt").textContent=stk?(d.market_open?"MARKET OPEN":"MARKET CLOSED"):"";
   $("mktNote").textContent=fx?"Prices from Yahoo Finance. Bets both ways: buys after sharp drops, shorts after sharp jumps. Heads up: currencies lost money in every test.":stk?"Prices from Yahoo Finance. Trades only while the US market is open (7:30am–2pm Denver).":"Prices from DexScreener and GeckoTerminal. Updated about every 15 minutes.";
   var stale=(Date.now()-new Date(d.updated))>50*60000;

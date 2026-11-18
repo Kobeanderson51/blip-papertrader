@@ -82,4 +82,4 @@ all 27 +2.9% (89 trades; -0.8% at 2x costs). Caveat: the new coins were -1.8% on
 
 ## Currency paper pot (added Nov 18, 2026, at the user's request)
 
-`fx.py`: a separate $50 fake-money pot on USD/JPY, EUR/USD, GBP/USD, AUD/USD and USD/CAD. Trades both ways with the least-bad strategy from the currency test (RSI mean reversion: buy when RSI(14) crosses below 20, short when it crosses above 80, close at RSI 50, 1% stop, 24h max). **That strategy lost -0.9% on unseen data in testing**, so this pot is for watching, not because it is expected to win. Same kill rules and 50-trade test. Shows under **Currency** in the app.
+`fx.py`: a separate $50 fake-money pot on USD/JPY, EUR/USD, GBP/USD, AUD/USD and USD/CAD. Trades both ways with the least-bad strategy from the currency test (RSI mean reversion: buy when RSI(14) crosses below 15, short when it crosses above 85 (changed from 20/80 the same day: 15/85 lost −0.41% on unseen data vs −0.89%), close at RSI 50, 1% stop, 24h max). **That strategy lost -0.9% on unseen data in testing**, so this pot is for watching, not because it is expected to win. Same kill rules and 50-trade test. Shows under **Currency** in the app.

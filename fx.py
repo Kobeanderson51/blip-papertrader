@@ -4,7 +4,8 @@ Honest note: in the Nov 18 test every currency strategy LOST money on unseen dat
 least-bad one (RSI mean reversion, test result -0.9%) so you can watch it live. Expect it to struggle.
 
 Rule (both directions, hourly candles, closed bars only):
-  - RSI(14) crosses below 20 -> buy (bet it goes up);  RSI crosses above 80 -> short (bet it goes down)
+  - RSI(14) crosses below 15 -> buy (bet it goes up);  RSI crosses above 85 -> short (bet it goes down)
+    (moved from 20/80 on Nov 18: 15/85 lost less on unseen data, -0.41% vs -0.89%, still not profitable)
   - close when RSI crosses back past 50, price moves 1% against us, or after 24 hours
   - one position per pair, each 1/5 of equity, 0.02% cost per side assumed
 """
@@ -16,7 +17,7 @@ DATA = os.path.join(ROOT, "data")
 STATE = os.path.join(DATA, "fx_state.json")
 STATUS = os.path.join(DATA, "fx_status.json")
 PAIRS = {"USDJPY": "USDJPY=X", "EURUSD": "EURUSD=X", "GBPUSD": "GBPUSD=X", "AUDUSD": "AUDUSD=X", "USDCAD": "USDCAD=X"}
-P = dict(start_usd=50.0, goal_usd=100.0, rsi_buy=20, rsi_short=80, rsi_exit=50, stop_pct=0.01, max_hold_bars=24,
+P = dict(start_usd=50.0, goal_usd=100.0, rsi_buy=15, rsi_short=85, rsi_exit=50, stop_pct=0.01, max_hold_bars=24,
          cost_per_side=0.0002, test_trades=50, kill_drawdown_pct=20, kill_after_trades=30)
 
 

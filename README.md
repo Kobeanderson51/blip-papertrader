@@ -79,3 +79,7 @@ all 27 +2.9% (89 trades; -0.8% at 2x costs). Caveat: the new coins were -1.8% on
 - Why this one: the Nov 18 test (2 years hourly, tuned on first 60%, checked on last 40%, 216 variants counted) — stock dip buying made +2.8% on unseen data over 17 trades, 86% of settings profitable, still positive at 2.5× costs. Buy-and-hold made +11.2% over the same stretch, so it is not proven better than holding. 17 trades is a small sample.
 - Same kill rules (20% drawdown, or no profit after 30 trades) and the same 50-trade test. Results on the dashboard's **Stocks** tab.
 - Also tested and rejected the same day: currencies (USD/JPY, EUR/USD, GBP/USD, AUD/USD, USD/CAD; every strategy lost on unseen data) and crypto majors (BTC, ETH, SOL, XRP, DOGE; nothing survived higher costs).
+
+## Currency paper pot (added Nov 18, 2026, at the user's request)
+
+`fx.py`: a separate $50 fake-money pot on USD/JPY, EUR/USD, GBP/USD, AUD/USD and USD/CAD. Trades both ways with the least-bad strategy from the currency test (RSI mean reversion: buy when RSI(14) crosses below 20, short when it crosses above 80, close at RSI 50, 1% stop, 24h max). **That strategy lost -0.9% on unseen data in testing**, so this pot is for watching, not because it is expected to win. Same kill rules and 50-trade test. Shows under **Currency** in the app.

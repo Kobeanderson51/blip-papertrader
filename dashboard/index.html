@@ -149,7 +149,7 @@ button.row:active{background:var(--s2)}
 .rules{font-size:14px}.rules div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line)}.rules div:first-child{border:0}
 .rules span:last-child{font-weight:700;text-align:right}
 .banner{display:none;background:rgba(248,113,113,.12);color:var(--down);border:1px solid rgba(248,113,113,.3);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px;margin-bottom:12px}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:14px}
+.seg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:14px}
 .seg button{display:flex;flex-direction:column;align-items:flex-start;padding:9px 12px;border-radius:10px;color:var(--muted);font-weight:700;font-size:13px}
 .seg button b{font-size:17px;color:var(--ink);margin-top:2px}
 .seg button.on{background:var(--s3);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(94,234,212,.35)}
@@ -174,7 +174,7 @@ button.row:active{background:var(--s2)}
 
 <main>
   <div class="banner" id="banner"></div>
-  <div class="seg" id="seg"><button data-m="crypto"><span>Meme coins</span><b class="num" id="segC">—</b></button><button data-m="stocks"><span>Stocks</span><b class="num" id="segS">—</b></button></div>
+  <div class="seg" id="seg"><button data-m="crypto"><span>Meme coins</span><b class="num" id="segC">—</b></button><button data-m="stocks"><span>Stocks</span><b class="num" id="segS">—</b></button><button data-m="fx"><span>Currency</span><b class="num" id="segF">—</b></button></div>
 
   <!-- HOME -->
   <section class="view" id="v-home">
@@ -219,7 +219,7 @@ button.row:active{background:var(--s2)}
     <p class="note">Rules never change after one loss. Repeated patterns get tested on price history first, and you approve any change.</p>
     <h2>Tested and skipped <small>why these aren't traded</small></h2>
     <div class="card pad rules">
-      <div><span>Currencies (USD/JPY, EUR/USD + 3 more)</span><span class="down">lost in every test</span></div>
+      <div><span>Currencies (USD/JPY, EUR/USD + 3 more)</span><span class="down">lost every test · on paper anyway</span></div>
       <div><span>Bitcoin, Ethereum, Solana, XRP, Doge</span><span class="down">nothing survived fees</span></div>
       <div><span>Trend following / breakouts</span><span class="down">lost on unseen data</span></div>
       <div><span>"Buy at the best hour" (BTC)</span><span class="down">52.9% up, a coin flip</span></div>
@@ -281,7 +281,7 @@ button.row:active{background:var(--s2)}
 <script>
 var REPO="Kobeanderson51/blip-papertrader";
 var SRC=(location.search.indexOf("local")>=0?"data/":"https://raw.githubusercontent.com/"+REPO+"/main/data/")+"status.json";
-var LW=window.LightweightCharts, D=null, DC=null, DS=null, MODE=(function(){try{return localStorage.getItem("rb_mode")||"crypto"}catch(e){return"crypto"}})(), eqChart=null, eqSeries=null, eqRange="ALL", det=null, detSym=null, detRange="Z1", depAmt=5, solUsd=null;
+var LW=window.LightweightCharts, D=null, DC=null, DS=null, DF=null, MODE=(function(){try{return localStorage.getItem("rb_mode")||"crypto"}catch(e){return"crypto"}})(), eqChart=null, eqSeries=null, eqRange="ALL", det=null, detSym=null, detRange="Z1", depAmt=5, solUsd=null;
 var TABS=[["home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],["markets","Markets",'<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>'],["activity","Activity",'<path d="M4 6h16M4 12h16M4 18h10"/>'],["lessons","Learn",'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>'],["wallet","Wallet",'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18"/>']];
 function $(i){return document.getElementById(i)}
 function usd(n,d){if(n==null||isNaN(n))return"—";n=+n;d=d==null?2:d;return(n<0?"-":"")+"$"+Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -322,11 +322,11 @@ function applyRange(chart,data,r){if(!data.length)return;var last=data[data.leng
   if(!h){chart.timeScale().fitContent();return}chart.timeScale().setVisibleRange({from:last-h*3600,to:last+1800})}
 
 /* ---- render ---- */
-function render(d){D=d;var stk=d.kind==="stocks";
-  $("acctName").textContent=stk?"Stocks":"Meme coins";$("mktTitle").textContent=stk?"Stocks":"Meme coins";
-  $("nearHint").textContent="RSI under "+TH()+" = buy";
+function render(d){D=d;var stk=!!d.kind,fx=d.kind==="fx",NM=fx?"Currency":stk?"Stocks":"Meme coins";
+  $("acctName").textContent=NM;$("mktTitle").textContent=NM;
+  $("nearHint").textContent="RSI under "+TH()+" = buy"+(fx?" · over 80 = short":"");
   $("mkt").className="mk "+(stk?(d.market_open?"open":"closed"):"");$("mkt").textContent=stk?(d.market_open?"MARKET OPEN":"MARKET CLOSED"):"";
-  $("mktNote").textContent=stk?"Prices from Yahoo Finance. Trades only while the US market is open (7:30am–2pm Denver).":"Prices from DexScreener and GeckoTerminal. Updated about every 15 minutes.";
+  $("mktNote").textContent=fx?"Prices from Yahoo Finance. Bets both ways: buys after sharp drops, shorts after sharp jumps. Heads up: currencies lost money in every test.":stk?"Prices from Yahoo Finance. Trades only while the US market is open (7:30am–2pm Denver).":"Prices from DexScreener and GeckoTerminal. Updated about every 15 minutes.";
   var stale=(Date.now()-new Date(d.updated))>50*60000;
   $("dot").className="dot "+(d.stopped?"stop":stale?"stale":"live");
   $("st").textContent=d.stopped?"stopped":(stale?"delayed · ":"")+ago(d.updated);
@@ -353,7 +353,7 @@ function render(d){D=d;var stk=d.kind==="stocks";
   // holding + nearest to buy
   var W={};d.watchlist.forEach(function(w){w.rsiNow=w.rsi;W[w.symbol]=w});
   $("holdN").textContent=d.positions.length?d.positions.length+" open":"";
-  $("holdList").innerHTML=d.positions.length?d.positions.map(function(p){var u=p.value_usd-p.cost_usd;return'<button class="row" data-coin="'+p.symbol+'"><div class="coin">'+p.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+p.symbol+'</div><div class="rs">bought '+ago(p.opened)+" at "+px(p.entry)+'</div></div><div class="rright"><div class="p num">'+usd(p.value_usd)+'</div><div class="num '+cl(u)+'" style="font-size:13px;font-weight:700">'+(u>=0?"+":"")+usd(u)+" ("+pct(p.pnl_pct)+")</div></div></button>"}).join(""):'<div class="empty">Nothing held. The bot waits for '+(D.kind==="stocks"?"a stock":"a coin")+' to crash hard (RSI under 20), then buys the dip.</div>';
+  $("holdList").innerHTML=d.positions.length?d.positions.map(function(p){var u=p.value_usd-p.cost_usd;return'<button class="row" data-coin="'+p.symbol+'"><div class="coin">'+p.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+p.symbol+(p.dir==="short"?' <span class="tag sell">SHORT</span>':"")+'</div><div class="rs">'+(p.dir==="short"?"shorted ":"bought ")+ago(p.opened)+" at "+px(p.entry)+'</div></div><div class="rright"><div class="p num">'+usd(p.value_usd)+'</div><div class="num '+cl(u)+'" style="font-size:13px;font-weight:700">'+(u>=0?"+":"")+usd(u)+" ("+pct(p.pnl_pct)+")</div></div></button>"}).join(""):'<div class="empty">Nothing held. The bot waits for '+(D.kind==="stocks"?"a stock":"a coin")+' to crash hard (RSI under 20), then buys the dip.</div>';
   var near=d.watchlist.filter(function(w){return w.rsi!=null&&!w.holding}).sort(function(a,b){return a.rsi-b.rsi}).slice(0,4);
   $("nearList").innerHTML=near.map(function(w){return'<button class="row" data-coin="'+w.symbol+'"><div class="coin">'+w.symbol.slice(0,4)+'</div><div class="rmain"><div class="rt">'+w.symbol+'</div><div class="rs">'+px(w.price)+'</div></div><div class="rright">'+rsiChip(w.rsi)+'<div class="rs">'+(w.rsi<TH()?"buy signal":Math.max(0,w.rsi-TH()).toFixed(0)+" pts away")+"</div></div></button>"}).join("")||'<div class="empty">Warming up…</div>';
 
@@ -430,7 +430,7 @@ function drawCoin(sym,fresh){var w=D.watchlist.find(function(x){return x.symbol=
     det.lines.push(det.cand.createPriceLine({price:pos.stop_loss,color:"#f87171",lineStyle:1,lineWidth:1,title:"stop"}))}
   if(fresh){zoomBtns(cs);applyZoom(det.c,cs,detRange)}
   $("dKv").innerHTML=pos?kv("Bought at",px(pos.entry))+kv("Worth now",usd(pos.value_usd))+kv("P&L",'<span class="'+cl(pos.pnl_pct)+'">'+pct(pos.pnl_pct)+"</span>")
-    :D.kind==="stocks"?kv("Day change",'<span class="'+cl(w.change_24h||0)+'">'+pct(w.change_24h)+"</span>")+kv("RSI now",w.rsi==null?"—":w.rsi.toFixed(0))+kv("Signal",w.rsi!=null&&w.rsi<TH()?'<span style="color:var(--accent)">buy zone</span>':"waiting"):kv("Liquidity",big(w.liquidity))+kv("24h volume",big(w.volume_24h))+kv("Signal",w.rsi!=null&&w.rsi<TH()?'<span style="color:var(--accent)">buy zone</span>':"waiting");
+    :D.kind?kv(D.kind==="fx"?"24h change":"Day change",'<span class="'+cl(w.change_24h||0)+'">'+pct(w.change_24h)+"</span>")+kv("RSI now",w.rsi==null?"—":w.rsi.toFixed(0))+kv("Signal",w.rsi!=null&&w.rsi<TH()?'<span style="color:var(--accent)">buy zone</span>':"waiting"):kv("Liquidity",big(w.liquidity))+kv("24h volume",big(w.volume_24h))+kv("Signal",w.rsi!=null&&w.rsi<TH()?'<span style="color:var(--accent)">buy zone</span>':"waiting");
   var tr=D.trades.filter(function(t){return t.symbol===sym});$("dTrades").innerHTML=tr.length?tr.map(tradeRow).join(""):'<div class="empty">No trades in '+sym+" yet.</div>";
 }
 function ZL(){return D.kind==="stocks"?[["Z1","1D",7],["Z2","3D",21],["Z3","1W",35],["ALL","ALL",0]]:[["Z1","12H",12],["Z2","1D",24],["Z3","3D",72],["ALL","ALL",0]]}
@@ -464,16 +464,16 @@ $("stopBtn").href="https://github.com/"+REPO+"/new/main?filename=EMERGENCY_STOP&
 
 /* ---- load ---- */
 function getJ(u){return fetch(u+"?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()})}
-function show(){var d=MODE==="stocks"?DS:DC;document.querySelectorAll("#seg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===MODE)});
-  if(DC)$("segC").textContent=usd(DC.equity_usd);if(DS)$("segS").textContent=usd(DS.equity_usd);if(DC&&d!==DC)render(DC);if(d)render(d)}
+function show(){var d=MODE==="stocks"?DS:MODE==="fx"?DF:DC;document.querySelectorAll("#seg button").forEach(function(b){b.classList.toggle("on",b.dataset.m===MODE)});
+  if(DC)$("segC").textContent=usd(DC.equity_usd);if(DS)$("segS").textContent=usd(DS.equity_usd);if(DF)$("segF").textContent=usd(DF.equity_usd);if(DC&&d!==DC)render(DC);if(d)render(d)}
 document.querySelectorAll("#seg button").forEach(function(b){b.onclick=function(){if(MODE===b.dataset.m)return;MODE=b.dataset.m;try{localStorage.setItem("rb_mode",MODE)}catch(e){}
   if(det){det.c.remove();det.r.remove();det=null}if(detSym){$("sheet").classList.remove("on");document.body.style.overflow="";detSym=null}show()}});
 function load(sha){var base=sha?SRC.replace("/main/","/"+sha+"/"):SRC;
   return Promise.all([getJ(base).then(function(j){DC=j;show()}).catch(function(){$("st").textContent="offline";$("dot").className="dot stale"}),
-    getJ(base.replace("status.json","stocks_status.json")).then(function(j){DS=j;show()}).catch(function(){})])}
+    getJ(base.replace("status.json","stocks_status.json")).then(function(j){DS=j;show()}).catch(function(){}),getJ(base.replace("status.json","fx_status.json")).then(function(j){DF=j;show()}).catch(function(){})])}
 var busy=false;
 function refresh(){if(busy)return;busy=true;$("rf").classList.add("spin");
-  var done=function(){busy=false;$("rf").classList.remove("spin");var u=(MODE==="stocks"?DS:DC);toast("Updated · bot last checked "+(u?ago(u.updated):"—"))};
+  var done=function(){busy=false;$("rf").classList.remove("spin");var u=(MODE==="stocks"?DS:MODE==="fx"?DF:DC);toast("Updated · bot last checked "+(u?ago(u.updated):"—"))};
   if(location.search.indexOf("local")>=0){load().then(done);return}
   fetch("https://api.github.com/repos/"+REPO+"/commits/main",{headers:{Accept:"application/vnd.github.sha"},cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()})
     .then(function(sha){return load(sha.trim())}).catch(function(){return load()}).then(done)}

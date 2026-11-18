@@ -36,12 +36,18 @@ jobs:
         run: |
           [ -f data/EMERGENCY_STOP ] && echo "emergency stop on" || python3 stocks.py
 
+      - name: Currency paper pot (separate, fake money)
+        continue-on-error: true
+        run: |
+          [ -f data/EMERGENCY_STOP ] && echo "emergency stop on" || python3 fx.py
+
       - name: Report
         if: always()
         run: |
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           python3 bot.py report >> "$GITHUB_STEP_SUMMARY"
           python3 stocks.py report >> "$GITHUB_STEP_SUMMARY" || true
+          python3 fx.py report >> "$GITHUB_STEP_SUMMARY" || true
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Notify (goal reached / big loss)

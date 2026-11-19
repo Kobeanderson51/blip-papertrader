@@ -1,5 +1,5 @@
 {
- "date": "2026-11-18",
+ "date": "2026-11-19",
  "equity_usd": 50.01,
  "change_pct": 0.03,
  "pipeline_24h": {
@@ -9,9 +9,15 @@
   "rejected": 0,
   "bought": 0
  },
- "closed_24h": 2,
- "pnl_24h": 0.01,
+ "closed_24h": 0,
+ "pnl_24h": 0,
  "open_positions": [],
- "watching": [],
+ "watching": [
+  "GATO",
+  "GATO",
+  "GATO",
+  "GATO",
+  "GATO"
+ ],
  "rejections": []
 }

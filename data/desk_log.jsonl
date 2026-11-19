@@ -530,3 +530,7 @@
 {"t": "2026-11-19T02:00:24+00:00", "run": "2026-11-19T02:00:24+00:00", "seat": "Scout", "ticker": "CATE", "idea": "big mover", "evidence": "-10.2% in 24h, liquidity $1,308,908", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T02:00:24+00:00", "run": "2026-11-19T02:00:24+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-29.4% in 24h, liquidity $215,031", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T02:00:24+00:00", "run": "2026-11-19T02:00:24+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-11.3% in 24h, liquidity $1,879,276", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T02:22:04+00:00", "run": "2026-11-19T02:22:04+00:00", "seat": "Scout", "ticker": "PIPPIN", "idea": "big mover", "evidence": "+60.7% in 24h, liquidity $3,331,333", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T02:22:04+00:00", "run": "2026-11-19T02:22:04+00:00", "seat": "Scout", "ticker": "CATE", "idea": "big mover", "evidence": "-10.7% in 24h, liquidity $1,307,532", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T02:22:04+00:00", "run": "2026-11-19T02:22:04+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-33.7% in 24h, liquidity $210,733", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T02:22:04+00:00", "run": "2026-11-19T02:22:04+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-12.4% in 24h, liquidity $1,869,639", "next": "Chartist: check for a dip setup"}

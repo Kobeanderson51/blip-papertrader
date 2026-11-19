@@ -550,3 +550,10 @@
 {"t": "2026-11-19T03:00:29+00:00", "run": "2026-11-19T03:00:29+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-36.7% in 24h, liquidity $204,295", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T03:00:29+00:00", "run": "2026-11-19T03:00:29+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-12.0% in 24h, liquidity $1,867,168", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T03:00:29+00:00", "run": "2026-11-19T03:00:29+00:00", "seat": "Chartist", "ticker": "BERT", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Scout", "ticker": "PENGU", "idea": "skip", "evidence": "no trades in the last 2.4h (thin or stale)", "next": "none"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Scout", "ticker": "SPX", "idea": "skip", "evidence": "no trades in the last 2.4h (thin or stale)", "next": "none"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Scout", "ticker": "PIPPIN", "idea": "big mover", "evidence": "+63.8% in 24h, liquidity $3,351,174", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Scout", "ticker": "CATE", "idea": "big mover", "evidence": "-13.7% in 24h, liquidity $1,302,220", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-37.7% in 24h, liquidity $200,379", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-12.7% in 24h, liquidity $1,871,403", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T03:21:51+00:00", "run": "2026-11-19T03:21:51+00:00", "seat": "Chartist", "ticker": "BERT", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}

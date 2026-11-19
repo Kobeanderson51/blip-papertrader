@@ -691,3 +691,8 @@
 {"t": "2026-11-19T11:00:27+00:00", "run": "2026-11-19T11:00:27+00:00", "seat": "Scout", "ticker": "CATE", "idea": "big mover", "evidence": "-14.4% in 24h, liquidity $1,358,190", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T11:00:27+00:00", "run": "2026-11-19T11:00:27+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-74.2% in 24h, liquidity $131,856", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T11:00:27+00:00", "run": "2026-11-19T11:00:27+00:00", "seat": "Chartist", "ticker": "GATO", "idea": "watch", "evidence": "RSI 25, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-19T11:21:25+00:00", "run": "2026-11-19T11:21:25+00:00", "seat": "Scout", "ticker": "MELANIA", "idea": "skip", "evidence": "no trades in the last 5.4h (thin or stale)", "next": "none"}
+{"t": "2026-11-19T11:21:25+00:00", "run": "2026-11-19T11:21:25+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "-14.1% in 24h, liquidity $353,776", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T11:21:25+00:00", "run": "2026-11-19T11:21:25+00:00", "seat": "Scout", "ticker": "CATE", "idea": "big mover", "evidence": "-14.3% in 24h, liquidity $1,348,783", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T11:21:25+00:00", "run": "2026-11-19T11:21:25+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-76.5% in 24h, liquidity $128,706", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T11:21:25+00:00", "run": "2026-11-19T11:21:25+00:00", "seat": "Chartist", "ticker": "GATO", "idea": "watch", "evidence": "RSI 25, needs to cross below 20", "next": "keep watching"}

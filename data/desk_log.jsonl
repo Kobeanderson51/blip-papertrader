@@ -861,3 +861,7 @@
 {"t": "2026-11-19T21:00:27+00:00", "run": "2026-11-19T21:00:27+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-47.0% in 24h, liquidity $152,529", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T21:00:27+00:00", "run": "2026-11-19T21:00:27+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-10.2% in 24h, liquidity $1,758,868", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-19T21:00:27+00:00", "run": "2026-11-19T21:00:27+00:00", "seat": "Chartist", "ticker": "STONK", "idea": "watch", "evidence": "RSI 24, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-19T21:22:06+00:00", "run": "2026-11-19T21:22:06+00:00", "seat": "Scout", "ticker": "VINE", "idea": "big mover", "evidence": "+37.2% in 24h, liquidity $1,462,150", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T21:22:06+00:00", "run": "2026-11-19T21:22:06+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-54.6% in 24h, liquidity $143,675", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-19T21:22:06+00:00", "run": "2026-11-19T21:22:06+00:00", "seat": "Chartist", "ticker": "JELLYJELLY", "idea": "watch", "evidence": "RSI 27, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-19T21:22:06+00:00", "run": "2026-11-19T21:22:06+00:00", "seat": "Chartist", "ticker": "STONK", "idea": "watch", "evidence": "RSI 24, needs to cross below 20", "next": "keep watching"}

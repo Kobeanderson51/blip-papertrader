@@ -3,3 +3,8 @@
 {"t": "2026-11-17T21:11:24+00:00", "mode": "paper", "side": "sell", "symbol": "BONK", "reason": "rsi_recovered", "usd": 4.9843, "market_price": 2.369e-06, "fill_price": 2.3618930000000002e-06, "fees_usd": 0.0226, "pnl_usd": -0.0157}
 {"t": "2026-11-18T00:16:06+00:00", "mode": "paper", "side": "sell", "symbol": "FARTCOIN", "reason": "rsi_recovered", "usd": 5.0247, "market_price": 0.09147, "fill_price": 0.09119558999999999, "fees_usd": 0.0227, "pnl_usd": 0.0305}
 {"t": "2026-11-20T12:22:20+00:00", "mode": "paper", "side": "buy", "symbol": "SPX", "usd": 8.3358, "market_price": 0.2708, "fill_price": 0.2716124, "fees_usd": 0.0308}
+{"t": "2026-11-20T16:22:49+00:00", "mode": "paper", "side": "buy", "symbol": "BONK", "usd": 8.2909, "market_price": 2.094e-06, "fill_price": 2.100282e-06, "fees_usd": 0.0307}
+{"t": "2026-11-20T16:22:49+00:00", "mode": "paper", "side": "buy", "symbol": "POPCAT", "usd": 8.2816, "market_price": 0.0243, "fill_price": 0.024372899999999996, "fees_usd": 0.0307}
+{"t": "2026-11-20T16:22:49+00:00", "mode": "paper", "side": "buy", "symbol": "MEW", "usd": 8.2724, "market_price": 0.000279, "fill_price": 0.00027983699999999996, "fees_usd": 0.0307}
+{"t": "2026-11-20T16:22:49+00:00", "mode": "paper", "side": "buy", "symbol": "BOME", "usd": 8.2632, "market_price": 0.000443, "fill_price": 0.0004443289999999999, "fees_usd": 0.0307}
+{"t": "2026-11-20T16:22:49+00:00", "mode": "paper", "side": "buy", "symbol": "GOAT", "usd": 8.254, "market_price": 0.01009, "fill_price": 0.010120269999999999, "fees_usd": 0.0306}

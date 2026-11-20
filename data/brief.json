@@ -1,23 +1,25 @@
 {
- "date": "2026-11-19",
- "equity_usd": 50.01,
- "change_pct": 0.03,
+ "date": "2026-11-20",
+ "equity_usd": 49.96,
+ "change_pct": -0.08,
  "pipeline_24h": {
-  "setups": 0,
-  "plans": 0,
-  "approved": 0,
+  "setups": 1,
+  "plans": 1,
+  "approved": 1,
   "rejected": 0,
-  "bought": 0
+  "bought": 1
  },
  "closed_24h": 0,
  "pnl_24h": 0,
- "open_positions": [],
+ "open_positions": [
+  "SPX"
+ ],
  "watching": [
-  "GATO",
-  "GATO",
-  "GATO",
-  "GATO",
-  "GATO"
+  "TRUMP",
+  "GRIFFAIN",
+  "USELESS",
+  "STONK",
+  "ANSEM"
  ],
  "rejections": []
 }

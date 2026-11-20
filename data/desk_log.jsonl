@@ -1038,3 +1038,11 @@
 {"t": "2026-11-20T04:22:25+00:00", "run": "2026-11-20T04:22:25+00:00", "seat": "Chartist", "ticker": "JELLYJELLY", "idea": "watch", "evidence": "RSI 30, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-20T04:22:25+00:00", "run": "2026-11-20T04:22:25+00:00", "seat": "Chartist", "ticker": "BERT", "idea": "watch", "evidence": "RSI 23, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-20T04:22:25+00:00", "run": "2026-11-20T04:22:25+00:00", "seat": "Chartist", "ticker": "STONK", "idea": "watch", "evidence": "RSI 26, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Scout", "ticker": "WIF", "idea": "skip", "evidence": "liquidity $99,309 below $100,000", "next": "none"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Scout", "ticker": "VINE", "idea": "big mover", "evidence": "+40.5% in 24h, liquidity $1,482,425", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Scout", "ticker": "GATO", "idea": "big mover", "evidence": "-51.0% in 24h, liquidity $142,340", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-15.1% in 24h, liquidity $1,675,506", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Scout", "ticker": "CYBERLEEK", "idea": "big mover", "evidence": "+31.1% in 24h, liquidity $411,917", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Chartist", "ticker": "JELLYJELLY", "idea": "watch", "evidence": "RSI 30, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Chartist", "ticker": "BERT", "idea": "watch", "evidence": "RSI 22, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-20T04:30:29+00:00", "run": "2026-11-20T04:30:29+00:00", "seat": "Chartist", "ticker": "STONK", "idea": "watch", "evidence": "RSI 26, needs to cross below 20", "next": "keep watching"}

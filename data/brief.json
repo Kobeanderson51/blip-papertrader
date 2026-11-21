@@ -1,25 +1,34 @@
 {
- "date": "2026-11-20",
- "equity_usd": 49.96,
- "change_pct": -0.08,
+ "date": "2026-11-21",
+ "equity_usd": 49.48,
+ "change_pct": -1.04,
  "pipeline_24h": {
-  "setups": 1,
-  "plans": 1,
-  "approved": 1,
-  "rejected": 0,
-  "bought": 1
+  "setups": 12,
+  "plans": 12,
+  "approved": 5,
+  "rejected": 7,
+  "bought": 5
  },
- "closed_24h": 0,
- "pnl_24h": 0,
+ "closed_24h": 2,
+ "pnl_24h": -0.33,
  "open_positions": [
-  "SPX"
+  "BONK",
+  "POPCAT",
+  "BOME",
+  "GOAT"
  ],
  "watching": [
-  "TRUMP",
-  "GRIFFAIN",
+  "ZEREBRO",
   "USELESS",
-  "STONK",
-  "ANSEM"
+  "SWARMS",
+  "CHILLGUY",
+  "BERT"
  ],
- "rejections": []
+ "rejections": [
+  "USELESS: already 6 positions (limit 6)",
+  "ANSEM: already 6 positions (limit 6)",
+  "BERT: already 6 positions (limit 6)",
+  "USELESS: already 6 positions (limit 6)",
+  "USELESS: down 5.4% today (limit 3%)"
+ ]
 }

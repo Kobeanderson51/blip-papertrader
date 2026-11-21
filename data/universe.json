@@ -304,11 +304,6 @@
    "why": "liquidity $0k, only 1 days old, market cap $0.09M",
    "t": "2026-11-21T04:15:18+00:00"
   },
-  "CqpUBhhSxHsXbq6AGPKnbxDpWgECUXAVy3BCrwhGpump": {
-   "symbol": "BER",
-   "why": "liquidity $51k, only 28 days old, market cap $0.33M",
-   "t": "2026-11-21T05:00:24+00:00"
-  },
   "AFHS3ERmXjAzVS7PZoq2wj92QJNmV4cmU3s2UPdLSWcK": {
    "symbol": "PUSSY",
    "why": "liquidity $0k, only 0 days old, market cap $0.02M",
@@ -364,54 +359,9 @@
    "why": "liquidity $0k, only 0 days old, market cap $0.02M",
    "t": "2026-11-21T05:30:20+00:00"
   },
-  "7SL2VnfYsChvog5oQY9Nmtqu1wceaMiQzWoqoLQpump": {
-   "symbol": "NIO",
-   "why": "liquidity $151k, market cap $1.76M",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "Bv1a7cEj5aRnJQhMw4kRQqAFesMSd5LwcDnUzq52BMmr": {
-   "symbol": "FLOAT",
-   "why": "only 23 days old",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn": {
-   "symbol": "PUMP",
-   "why": "not a meme coin",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump": {
-   "symbol": "MIHAO",
-   "why": "only 27 days old",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo": {
-   "symbol": "TTWO",
-   "why": "market cap $0.00M, not a meme coin",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump": {
-   "symbol": "FIONA",
-   "why": "liquidity $69k, only 1 days old, market cap $0.58M",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "CUg7AzWL5p8imZVqqdjEPgRhUsXAkBMW5JxkSJ9fpump": {
-   "symbol": "HUSS",
-   "why": "liquidity $46k, only 5 days old, market cap $0.36M",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
   "Y3q8TyczdPgibhKJM22vt1L77xjoaVDtp876vmkaKH7": {
    "symbol": "GTA6",
    "why": "liquidity $0k, only 0 days old, market cap $0.00M",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "8mnJZnxaNLqVwkaWWGH7dKmoEzyYzGJx5pHaCp7spump": {
-   "symbol": "PATRICK",
-   "why": "liquidity $28k, only 1 days old, market cap $0.12M",
-   "t": "2026-11-21T05:30:20+00:00"
-  },
-  "7R4MP6VX7n3RMNhL9zsk5Zu5ibZvwq8npUYnRq7epump": {
-   "symbol": "SINGULARITY",
-   "why": "liquidity $30k, only 0 days old, market cap $0.17M",
    "t": "2026-11-21T05:30:20+00:00"
   },
   "6zmY8cQd4K5hL1Di1eeh9ToXTh3AjFc3UV42yTvzTftv": {
@@ -423,6 +373,56 @@
    "symbol": "GESTALT",
    "why": "liquidity $0k, only 0 days old, market cap $0.02M",
    "t": "2026-11-21T05:30:20+00:00"
+  },
+  "CqpUBhhSxHsXbq6AGPKnbxDpWgECUXAVy3BCrwhGpump": {
+   "symbol": "BER",
+   "why": "liquidity $52k, only 28 days old, market cap $0.35M",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "7SL2VnfYsChvog5oQY9Nmtqu1wceaMiQzWoqoLQpump": {
+   "symbol": "NIO",
+   "why": "liquidity $149k, market cap $1.73M",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "Bv1a7cEj5aRnJQhMw4kRQqAFesMSd5LwcDnUzq52BMmr": {
+   "symbol": "FLOAT",
+   "why": "only 23 days old",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn": {
+   "symbol": "PUMP",
+   "why": "not a meme coin",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump": {
+   "symbol": "MIHAO",
+   "why": "only 27 days old",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo": {
+   "symbol": "TTWO",
+   "why": "market cap $0.00M, not a meme coin",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump": {
+   "symbol": "FIONA",
+   "why": "liquidity $85k, only 1 days old, market cap $0.85M",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "CUg7AzWL5p8imZVqqdjEPgRhUsXAkBMW5JxkSJ9fpump": {
+   "symbol": "HUSS",
+   "why": "liquidity $47k, only 5 days old, market cap $0.39M",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "8mnJZnxaNLqVwkaWWGH7dKmoEzyYzGJx5pHaCp7spump": {
+   "symbol": "PATRICK",
+   "why": "liquidity $26k, only 1 days old, market cap $0.11M",
+   "t": "2026-11-21T05:45:20+00:00"
+  },
+  "7R4MP6VX7n3RMNhL9zsk5Zu5ibZvwq8npUYnRq7epump": {
+   "symbol": "SINGULARITY",
+   "why": "liquidity $30k, only 0 days old, market cap $0.16M",
+   "t": "2026-11-21T05:45:20+00:00"
   }
  },
  "last_prune_day": "2026-11-21"

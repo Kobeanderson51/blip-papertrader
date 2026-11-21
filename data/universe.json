@@ -137,11 +137,6 @@
   }
  },
  "rejected_recent": {
-  "14MVbGST6dNvYXkYJvuzm8qgeRdVa85pzhNZcrm8GBmN": {
-   "symbol": "CATMARIO",
-   "why": "liquidity $0k, only 0 days old, market cap $0.09M",
-   "t": "2026-11-19T22:45:20+00:00"
-  },
   "5qaP7oKUqKffwwo5DaEqDoTtsBLMpdbQTxEkCDaTpump": {
    "symbol": "MAX",
    "why": "liquidity $120k, only 8 days old, market cap $0.79M",
@@ -307,39 +302,9 @@
    "why": "liquidity $0k, only 1 days old, market cap $0.02M",
    "t": "2026-11-21T21:00:27+00:00"
   },
-  "1urRZDT83BsB4XCjA5CdxAvp6idm46AwthJu5m5sQf5": {
-   "symbol": "GESTALT",
-   "why": "liquidity $0k, only 1 days old, market cap $0.05M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij": {
-   "symbol": "CBBTC",
-   "why": "not a meme coin",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "So11111111111111111111111111111111111111112": {
-   "symbol": "SOL",
-   "why": "market cap $0.00M, not a meme coin",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "DYDSuJumtLMPg8B24p1xVT4yQSjRSawmk261cQs5EeXw": {
-   "symbol": "ANT",
-   "why": "liquidity $0k, only 2 days old, market cap $0.08M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs": {
-   "symbol": "WETH",
-   "why": "not a meme coin",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
   "Y3q8TyczdPgibhKJM22vt1L77xjoaVDtp876vmkaKH7": {
    "symbol": "GTA6",
    "why": "liquidity $0k, only 1 days old, market cap $0.00M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "6zmY8cQd4K5hL1Di1eeh9ToXTh3AjFc3UV42yTvzTftv": {
-   "symbol": "BABYDOG",
-   "why": "liquidity $0k, only 1 days old, market cap $0.07M",
    "t": "2026-11-21T23:00:24+00:00"
   },
   "Bv1a7cEj5aRnJQhMw4kRQqAFesMSd5LwcDnUzq52BMmr": {
@@ -377,54 +342,9 @@
    "why": "liquidity $176k, only 11 days old",
    "t": "2026-11-21T23:00:24+00:00"
   },
-  "E3f2fTayZpABbRAYiWgSMnYkzJnm5nzEntrbNc3aByK9": {
-   "symbol": "SINGULARIT",
-   "why": "liquidity $0k, only 1 days old, market cap $1.27M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB": {
-   "symbol": "USDT",
-   "why": "liquidity $148k, volume $49k, only -0 days old, not a meme coin",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "B8X2ycczSyWK2HqemPsw7DwuA9QrMKeEmYdU82qJ5Y2S": {
-   "symbol": "WIN",
-   "why": "liquidity $0k, only 1 days old, market cap $0.02M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "AuwnNFvFuT4TLVuPN24gQ4B2UCYWbEgJHctyXjqhxHLL": {
-   "symbol": "FLOAT",
-   "why": "liquidity $0k, only 0 days old, market cap $0.03M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "9N6zGSBKeJMcDUt2sk9iQzoawqt2thg2KJv9K5gxDNJX": {
-   "symbol": "WIN",
-   "why": "liquidity $0k, only 0 days old",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
   "4Ye6Y6Vaic8cyPdfW2f9PcLhXkysBtSmV84G8X7spump": {
    "symbol": "GREG",
    "why": "liquidity $54k, only 11 days old, market cap $0.42M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "56Hr2SWA7iCgL4bn3JYRkcuor2AEdL1cSSAoDLjzh9EB": {
-   "symbol": "TRADER",
-   "why": "liquidity $0k, only 1 days old, market cap $0.02M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "wzGUPtVnXoXriWFJpVkR7aGkLbGY4PhQrdqPVw7UPN2": {
-   "symbol": "ANT",
-   "why": "liquidity $0k, volume $0k, only 1 days old, market cap $0.00M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "B1E3aYfrchVwB7sE3waBYEe6FfRrsWPWLXuqSxTVkMVJ": {
-   "symbol": "BABYDOG",
-   "why": "liquidity $0k, only 1 days old, market cap $0.02M",
-   "t": "2026-11-21T23:00:24+00:00"
-  },
-  "8Q14yJbbwzK9NsvFTucUF38qBu51cutGJg6fmLXGkG8A": {
-   "symbol": "SINGULARIT",
-   "why": "liquidity $0k, only 0 days old",
    "t": "2026-11-21T23:00:24+00:00"
   },
   "FJKt1LxbWBpTRt9BaDEB6Wr2qL5LZzjFF5sx8rXnpump": {
@@ -432,10 +352,90 @@
    "why": "liquidity $71k, only 1 days old, market cap $0.97M",
    "t": "2026-11-21T23:00:24+00:00"
   },
+  "1urRZDT83BsB4XCjA5CdxAvp6idm46AwthJu5m5sQf5": {
+   "symbol": "GESTALT",
+   "why": "liquidity $0k, only 1 days old, market cap $0.05M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij": {
+   "symbol": "CBBTC",
+   "why": "not a meme coin",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "So11111111111111111111111111111111111111112": {
+   "symbol": "SOL",
+   "why": "market cap $0.00M, not a meme coin",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "DYDSuJumtLMPg8B24p1xVT4yQSjRSawmk261cQs5EeXw": {
+   "symbol": "ANT",
+   "why": "liquidity $0k, only 2 days old, market cap $0.08M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs": {
+   "symbol": "WETH",
+   "why": "not a meme coin",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "6zmY8cQd4K5hL1Di1eeh9ToXTh3AjFc3UV42yTvzTftv": {
+   "symbol": "BABYDOG",
+   "why": "liquidity $0k, only 1 days old, market cap $0.07M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "E3f2fTayZpABbRAYiWgSMnYkzJnm5nzEntrbNc3aByK9": {
+   "symbol": "SINGULARIT",
+   "why": "liquidity $0k, only 1 days old, market cap $1.27M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB": {
+   "symbol": "USDT",
+   "why": "liquidity $148k, volume $49k, only -0 days old, not a meme coin",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "B8X2ycczSyWK2HqemPsw7DwuA9QrMKeEmYdU82qJ5Y2S": {
+   "symbol": "WIN",
+   "why": "liquidity $0k, only 1 days old, market cap $0.02M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "AuwnNFvFuT4TLVuPN24gQ4B2UCYWbEgJHctyXjqhxHLL": {
+   "symbol": "FLOAT",
+   "why": "liquidity $0k, only 0 days old, market cap $0.03M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "9N6zGSBKeJMcDUt2sk9iQzoawqt2thg2KJv9K5gxDNJX": {
+   "symbol": "WIN",
+   "why": "liquidity $0k, only 0 days old",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "56Hr2SWA7iCgL4bn3JYRkcuor2AEdL1cSSAoDLjzh9EB": {
+   "symbol": "TRADER",
+   "why": "liquidity $0k, only 1 days old, market cap $0.02M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "wzGUPtVnXoXriWFJpVkR7aGkLbGY4PhQrdqPVw7UPN2": {
+   "symbol": "ANT",
+   "why": "liquidity $0k, volume $0k, only 1 days old, market cap $0.00M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "B1E3aYfrchVwB7sE3waBYEe6FfRrsWPWLXuqSxTVkMVJ": {
+   "symbol": "BABYDOG",
+   "why": "liquidity $0k, only 1 days old, market cap $0.02M",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "8Q14yJbbwzK9NsvFTucUF38qBu51cutGJg6fmLXGkG8A": {
+   "symbol": "SINGULARIT",
+   "why": "liquidity $0k, only 0 days old",
+   "t": "2026-11-21T23:14:40+00:00"
+  },
   "GAxzQcPtZarYrv1gcfK9Vj5tYf3axJoB2jiYTm1RHKFg": {
    "symbol": "STBL",
    "why": "liquidity $0k, only 1 days old",
-   "t": "2026-11-21T23:00:24+00:00"
+   "t": "2026-11-21T23:14:40+00:00"
+  },
+  "AogHmS3pfpUBqzUwcynZtcqPdy69EViqERpBAA9RKGSc": {
+   "symbol": "\u8682\u8681",
+   "why": "liquidity $0k, only 1 days old, market cap $0.42M",
+   "t": "2026-11-21T23:14:40+00:00"
   }
  },
  "last_prune_day": "2026-11-21"

@@ -1,6 +1,3 @@
-{"t": "2026-11-21T04:00:24+00:00", "run": "2026-11-21T04:00:24+00:00", "seat": "Scout", "ticker": "PNUT", "idea": "big mover", "evidence": "-10.6% in 24h, liquidity $1,888,989", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-21T04:00:24+00:00", "run": "2026-11-21T04:00:24+00:00", "seat": "Scout", "ticker": "TRUMP", "idea": "big mover", "evidence": "-11.7% in 24h, liquidity $110,654", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-21T04:00:24+00:00", "run": "2026-11-21T04:00:24+00:00", "seat": "Scout", "ticker": "GRIFFAIN", "idea": "big mover", "evidence": "-10.6% in 24h, liquidity $1,169,704", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-21T04:00:24+00:00", "run": "2026-11-21T04:00:24+00:00", "seat": "Scout", "ticker": "SPX", "idea": "big mover", "evidence": "-13.4% in 24h, liquidity $1,405,249", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-21T04:00:24+00:00", "run": "2026-11-21T04:00:24+00:00", "seat": "Scout", "ticker": "USELESS", "idea": "big mover", "evidence": "-25.1% in 24h, liquidity $2,223,658", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-21T04:00:24+00:00", "run": "2026-11-21T04:00:24+00:00", "seat": "Scout", "ticker": "PIPPIN", "idea": "big mover", "evidence": "-11.2% in 24h, liquidity $3,172,304", "next": "Chartist: check for a dip setup"}
@@ -1498,3 +1495,6 @@
 {"t": "2026-11-22T17:00:22+00:00", "run": "2026-11-22T17:00:22+00:00", "seat": "Scout", "ticker": "CYBERLEEK", "idea": "big mover", "evidence": "-11.5% in 24h, liquidity $339,107", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-22T17:00:22+00:00", "run": "2026-11-22T17:00:22+00:00", "seat": "Scout", "ticker": "ANSEM", "idea": "big mover", "evidence": "+18.1% in 24h, liquidity $1,050,424", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-22T17:00:22+00:00", "run": "2026-11-22T17:00:22+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "+44.6% in 24h, liquidity $204,050", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-22T17:23:23+00:00", "run": "2026-11-22T17:23:23+00:00", "seat": "Scout", "ticker": "CYBERLEEK", "idea": "big mover", "evidence": "-12.0% in 24h, liquidity $339,226", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-22T17:23:23+00:00", "run": "2026-11-22T17:23:23+00:00", "seat": "Scout", "ticker": "ANSEM", "idea": "big mover", "evidence": "+18.6% in 24h, liquidity $1,051,090", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-22T17:23:23+00:00", "run": "2026-11-22T17:23:23+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "+45.8% in 24h, liquidity $205,613", "next": "Chartist: check for a dip setup"}

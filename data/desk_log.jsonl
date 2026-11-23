@@ -1,5 +1,3 @@
-{"t": "2026-11-21T06:22:40+00:00", "run": "2026-11-21T06:22:40+00:00", "seat": "Chartist", "ticker": "PNUT", "idea": "watch", "evidence": "RSI 27, needs to cross below 20", "next": "keep watching"}
-{"t": "2026-11-21T06:22:40+00:00", "run": "2026-11-21T06:22:40+00:00", "seat": "Chartist", "ticker": "TRUMP", "idea": "watch", "evidence": "RSI 28, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-21T06:22:40+00:00", "run": "2026-11-21T06:22:40+00:00", "seat": "Chartist", "ticker": "ZEREBRO", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-21T06:22:40+00:00", "run": "2026-11-21T06:22:40+00:00", "seat": "Chartist", "ticker": "USELESS", "idea": "watch", "evidence": "RSI 18, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-21T06:22:40+00:00", "run": "2026-11-21T06:22:40+00:00", "seat": "Chartist", "ticker": "SWARMS", "idea": "watch", "evidence": "RSI 26, needs to cross below 20", "next": "keep watching"}
@@ -1498,3 +1496,5 @@
 {"t": "2026-11-23T11:45:22+00:00", "run": "2026-11-23T11:45:22+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "-13.0% in 24h, liquidity $201,277", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-23T12:00:26+00:00", "run": "2026-11-23T12:00:26+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "-15.4% in 24h, liquidity $458,298", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-23T12:00:26+00:00", "run": "2026-11-23T12:00:26+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "-15.1% in 24h, liquidity $202,948", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-23T12:23:11+00:00", "run": "2026-11-23T12:23:11+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "-16.2% in 24h, liquidity $457,338", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-23T12:23:11+00:00", "run": "2026-11-23T12:23:11+00:00", "seat": "Scout", "ticker": "CYBERLEEK", "idea": "big mover", "evidence": "-11.0% in 24h, liquidity $327,642", "next": "Chartist: check for a dip setup"}

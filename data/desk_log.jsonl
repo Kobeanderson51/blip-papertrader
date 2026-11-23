@@ -1,5 +1,3 @@
-{"t": "2026-11-21T06:30:23+00:00", "run": "2026-11-21T06:30:23+00:00", "seat": "Scout", "ticker": "PNUT", "idea": "big mover", "evidence": "-12.0% in 24h, liquidity $1,872,899", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-21T06:30:23+00:00", "run": "2026-11-21T06:30:23+00:00", "seat": "Scout", "ticker": "MOODENG", "idea": "big mover", "evidence": "-10.1% in 24h, liquidity $1,634,503", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-21T06:30:23+00:00", "run": "2026-11-21T06:30:23+00:00", "seat": "Scout", "ticker": "TRUMP", "idea": "big mover", "evidence": "-12.0% in 24h, liquidity $110,113", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-21T06:30:23+00:00", "run": "2026-11-21T06:30:23+00:00", "seat": "Scout", "ticker": "SPX", "idea": "big mover", "evidence": "-14.5% in 24h, liquidity $1,393,981", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-21T06:30:23+00:00", "run": "2026-11-21T06:30:23+00:00", "seat": "Scout", "ticker": "USELESS", "idea": "big mover", "evidence": "-25.5% in 24h, liquidity $2,208,791", "next": "Chartist: check for a dip setup"}
@@ -1498,3 +1496,5 @@
 {"t": "2026-11-23T13:30:28+00:00", "run": "2026-11-23T13:30:28+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "-14.3% in 24h, liquidity $455,258", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-23T13:30:28+00:00", "run": "2026-11-23T13:30:28+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "-11.9% in 24h, liquidity $199,771", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-23T13:30:28+00:00", "run": "2026-11-23T13:30:28+00:00", "seat": "Desk Lead", "ticker": "ALL", "idea": "morning brief", "evidence": "0 setups, 0 bought, 0 closed (+0.00) in 24h", "next": "brief on dashboard"}
+{"t": "2026-11-23T13:45:21+00:00", "run": "2026-11-23T13:45:21+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "-10.9% in 24h, liquidity $457,865", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-23T13:45:21+00:00", "run": "2026-11-23T13:45:21+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "-10.7% in 24h, liquidity $202,083", "next": "Chartist: check for a dip setup"}

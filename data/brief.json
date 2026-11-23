@@ -1,5 +1,5 @@
 {
- "date": "2026-11-22",
+ "date": "2026-11-23",
  "equity_usd": 49.71,
  "change_pct": -0.57,
  "pipeline_24h": {
@@ -9,9 +9,15 @@
   "rejected": 0,
   "bought": 0
  },
- "closed_24h": 5,
- "pnl_24h": 0.03,
+ "closed_24h": 0,
+ "pnl_24h": 0,
  "open_positions": [],
- "watching": [],
+ "watching": [
+  "CYBERLEEK",
+  "CYBERLEEK",
+  "CYBERLEEK",
+  "CYBERLEEK",
+  "CYBERLEEK"
+ ],
  "rejections": []
 }

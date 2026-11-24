@@ -1,23 +1,23 @@
 {
- "date": "2026-11-23",
- "equity_usd": 49.71,
- "change_pct": -0.57,
+ "date": "2026-11-24",
+ "equity_usd": 48.95,
+ "change_pct": -2.09,
  "pipeline_24h": {
-  "setups": 0,
-  "plans": 0,
-  "approved": 0,
+  "setups": 1,
+  "plans": 1,
+  "approved": 1,
   "rejected": 0,
-  "bought": 0
+  "bought": 1
  },
- "closed_24h": 0,
- "pnl_24h": 0,
+ "closed_24h": 1,
+ "pnl_24h": -0.76,
  "open_positions": [],
  "watching": [
-  "CYBERLEEK",
-  "CYBERLEEK",
-  "CYBERLEEK",
-  "CYBERLEEK",
-  "CYBERLEEK"
+  "BUTTCOIN",
+  "ANSEM",
+  "BUTTCOIN",
+  "ANSEM",
+  "BUTTCOIN"
  ],
  "rejections": []
 }

@@ -14,3 +14,4 @@
 {"t": "2026-11-21T14:23:06+00:00", "mode": "paper", "side": "sell", "symbol": "BOME", "reason": "rsi_recovered", "usd": 8.3425, "market_price": 0.0004533, "fill_price": 0.0004519401, "fees_usd": 0.031, "pnl_usd": 0.0794}
 {"t": "2026-11-21T14:23:06+00:00", "mode": "paper", "side": "sell", "symbol": "GOAT", "reason": "rsi_recovered", "usd": 8.5234, "market_price": 0.01056, "fill_price": 0.01052832, "fees_usd": 0.0315, "pnl_usd": 0.2695}
 {"t": "2026-11-21T16:30:29+00:00", "mode": "paper", "side": "sell", "symbol": "BONK", "reason": "time_limit", "usd": 7.8907, "market_price": 2.02e-06, "fill_price": 2.01394e-06, "fees_usd": 0.0299, "pnl_usd": -0.4002}
+{"t": "2026-11-24T09:23:09+00:00", "mode": "paper", "side": "buy", "symbol": "ANSEM", "usd": 8.2858, "market_price": 0.01623, "fill_price": 0.01627869, "fees_usd": 0.0307}

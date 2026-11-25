@@ -20,3 +20,4 @@
 {"t": "2026-11-25T14:31:21+00:00", "mode": "paper", "side": "buy", "symbol": "STONK", "usd": 8.1632, "market_price": 0.02816, "fill_price": 0.02824448, "fees_usd": 0.0304}
 {"t": "2026-11-25T15:38:04+00:00", "mode": "paper", "side": "buy", "symbol": "CARDS", "usd": 8.0813, "market_price": 0.1473, "fill_price": 0.14774189999999998, "fees_usd": 0.0302}
 {"t": "2026-11-25T19:23:04+00:00", "mode": "paper", "side": "sell", "symbol": "STONK", "reason": "rsi_recovered", "usd": 8.7297, "market_price": 0.03052, "fill_price": 0.030428439999999998, "fees_usd": 0.032, "pnl_usd": 0.5665}
+{"t": "2026-11-25T20:23:04+00:00", "mode": "paper", "side": "sell", "symbol": "ZEREBRO", "reason": "rsi_recovered", "usd": 8.6806, "market_price": 0.01956, "fill_price": 0.019501320000000003, "fees_usd": 0.0318, "pnl_usd": 0.5216}

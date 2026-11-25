@@ -1,23 +1,23 @@
 {
- "date": "2026-11-24",
+ "date": "2026-11-25",
  "equity_usd": 48.95,
  "change_pct": -2.09,
  "pipeline_24h": {
-  "setups": 1,
-  "plans": 1,
-  "approved": 1,
+  "setups": 0,
+  "plans": 0,
+  "approved": 0,
   "rejected": 0,
-  "bought": 1
+  "bought": 0
  },
- "closed_24h": 1,
- "pnl_24h": -0.76,
+ "closed_24h": 0,
+ "pnl_24h": 0,
  "open_positions": [],
  "watching": [
-  "BUTTCOIN",
-  "ANSEM",
-  "BUTTCOIN",
-  "ANSEM",
-  "BUTTCOIN"
+  "SPX",
+  "USELESS",
+  "STONK",
+  "NEET",
+  "CARDS"
  ],
  "rejections": []
 }

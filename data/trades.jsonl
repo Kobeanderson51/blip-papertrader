@@ -18,3 +18,4 @@
 {"t": "2026-11-24T09:30:27+00:00", "mode": "paper", "side": "sell", "symbol": "ANSEM", "reason": "stop_loss", "usd": 7.5246, "market_price": 0.01494, "fill_price": 0.014895180000000001, "fees_usd": 0.0289, "pnl_usd": -0.7612}
 {"t": "2026-11-25T14:22:24+00:00", "mode": "paper", "side": "buy", "symbol": "ZEREBRO", "usd": 8.1589, "market_price": 0.01814, "fill_price": 0.01819442, "fees_usd": 0.0304}
 {"t": "2026-11-25T14:31:21+00:00", "mode": "paper", "side": "buy", "symbol": "STONK", "usd": 8.1632, "market_price": 0.02816, "fill_price": 0.02824448, "fees_usd": 0.0304}
+{"t": "2026-11-25T15:38:04+00:00", "mode": "paper", "side": "buy", "symbol": "CARDS", "usd": 8.0813, "market_price": 0.1473, "fill_price": 0.14774189999999998, "fees_usd": 0.0302}

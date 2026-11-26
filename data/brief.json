@@ -1,23 +1,23 @@
 {
- "date": "2026-11-25",
- "equity_usd": 48.95,
- "change_pct": -2.09,
+ "date": "2026-11-26",
+ "equity_usd": 50.5,
+ "change_pct": 1.0,
  "pipeline_24h": {
-  "setups": 0,
-  "plans": 0,
-  "approved": 0,
+  "setups": 3,
+  "plans": 3,
+  "approved": 3,
   "rejected": 0,
-  "bought": 0
+  "bought": 3
  },
- "closed_24h": 0,
- "pnl_24h": 0,
+ "closed_24h": 3,
+ "pnl_24h": 1.55,
  "open_positions": [],
  "watching": [
-  "SPX",
   "USELESS",
-  "STONK",
-  "NEET",
-  "CARDS"
+  "MELANIA",
+  "USELESS",
+  "MELANIA",
+  "USELESS"
  ],
  "rejections": []
 }

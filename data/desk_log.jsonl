@@ -1,8 +1,3 @@
-{"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Scout", "ticker": "ANSEM", "idea": "big mover", "evidence": "-42.1% in 24h, liquidity $805,788", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Scout", "ticker": "NEET", "idea": "big mover", "evidence": "-13.8% in 24h, liquidity $1,215,009", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Scout", "ticker": "BP", "idea": "big mover", "evidence": "-13.9% in 24h, liquidity $2,290,651", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Scout", "ticker": "JEANPHIL", "idea": "big mover", "evidence": "-14.1% in 24h, liquidity $174,253", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Scout", "ticker": "MIHAO", "idea": "big mover", "evidence": "-29.5% in 24h, liquidity $290,868", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Chartist", "ticker": "USELESS", "idea": "watch", "evidence": "RSI 27, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-24T19:23:25+00:00", "run": "2026-11-24T19:23:25+00:00", "seat": "Chartist", "ticker": "STONK", "idea": "watch", "evidence": "RSI 26, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-24T19:30:24+00:00", "run": "2026-11-24T19:30:24+00:00", "seat": "Scout", "ticker": "WIF", "idea": "skip", "evidence": "liquidity $90,316 below $100,000", "next": "none"}
@@ -1498,3 +1493,8 @@
 {"t": "2026-11-26T11:30:27+00:00", "run": "2026-11-26T11:30:27+00:00", "seat": "Scout", "ticker": "PIPPIN", "idea": "big mover", "evidence": "-10.3% in 24h, liquidity $3,354,598", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-26T11:30:27+00:00", "run": "2026-11-26T11:30:27+00:00", "seat": "Scout", "ticker": "TROLL", "idea": "big mover", "evidence": "+20.1% in 24h, liquidity $1,877,029", "next": "Chartist: check for a dip setup"}
 {"t": "2026-11-26T11:30:27+00:00", "run": "2026-11-26T11:30:27+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "+16.9% in 24h, liquidity $441,410", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-26T11:45:22+00:00", "run": "2026-11-26T11:45:22+00:00", "seat": "Scout", "ticker": "WIF", "idea": "skip", "evidence": "liquidity $98,188 below $100,000", "next": "none"}
+{"t": "2026-11-26T11:45:22+00:00", "run": "2026-11-26T11:45:22+00:00", "seat": "Scout", "ticker": "USELESS", "idea": "big mover", "evidence": "+11.2% in 24h, liquidity $2,336,556", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-26T11:45:22+00:00", "run": "2026-11-26T11:45:22+00:00", "seat": "Scout", "ticker": "TROLL", "idea": "big mover", "evidence": "+20.0% in 24h, liquidity $1,878,320", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-26T11:45:22+00:00", "run": "2026-11-26T11:45:22+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "+18.4% in 24h, liquidity $439,691", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-26T11:45:22+00:00", "run": "2026-11-26T11:45:22+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "+10.1% in 24h, liquidity $811,973", "next": "Chartist: check for a dip setup"}

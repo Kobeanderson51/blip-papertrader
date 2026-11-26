@@ -547,3 +547,5 @@
 {"t": "2026-11-26T02:15:54+00:00", "event": "candles_error", "symbol": "PENGU", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-26T03:15:53+00:00", "event": "candles_error", "symbol": "PENGU", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-26T04:15:55+00:00", "event": "candles_error", "symbol": "PENGU", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-26T04:30:58+00:00", "event": "candles_error", "symbol": "SWARMS", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-26T04:31:58+00:00", "event": "candles_error", "symbol": "MELANIA", "error": "TimeoutError('The read operation timed out')"}

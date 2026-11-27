@@ -592,3 +592,4 @@
 {"t": "2026-11-27T07:30:57+00:00", "event": "candles_error", "symbol": "MELANIA", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-27T08:15:59+00:00", "event": "candles_error", "symbol": "PENGU", "error": "<HTTPError 429: 'Too Many Requests'>"}
 {"t": "2026-11-27T09:15:55+00:00", "event": "candles_error", "symbol": "PENGU", "error": "<HTTPError 429: 'Too Many Requests'>"}
+{"t": "2026-11-27T10:15:54+00:00", "event": "candles_error", "symbol": "PENGU", "error": "<HTTPError 429: 'Too Many Requests'>"}

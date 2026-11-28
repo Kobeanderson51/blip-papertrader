@@ -1,10 +1,3 @@
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Scout", "ticker": "USELESS", "idea": "big mover", "evidence": "-11.2% in 24h, liquidity $2,163,850", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Scout", "ticker": "PIPPIN", "idea": "big mover", "evidence": "+11.4% in 24h, liquidity $3,412,181", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Scout", "ticker": "MELANIA", "idea": "skip", "evidence": "no trades in the last 2.0h (thin or stale)", "next": "none"}
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Scout", "ticker": "STONK", "idea": "big mover", "evidence": "-14.5% in 24h, liquidity $760,091", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Scout", "ticker": "NEET", "idea": "big mover", "evidence": "-13.4% in 24h, liquidity $1,156,674", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Scout", "ticker": "MIHAO", "idea": "big mover", "evidence": "-13.5% in 24h, liquidity $263,223", "next": "Chartist: check for a dip setup"}
-{"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Chartist", "ticker": "USELESS", "idea": "watch", "evidence": "RSI 27, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Chartist", "ticker": "STONK", "idea": "watch", "evidence": "RSI 23, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-25T10:00:26+00:00", "run": "2026-11-25T10:00:26+00:00", "seat": "Chartist", "ticker": "NEET", "idea": "watch", "evidence": "RSI 25, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-25T10:23:05+00:00", "run": "2026-11-25T10:23:05+00:00", "seat": "Scout", "ticker": "WIF", "idea": "skip", "evidence": "liquidity $88,765 below $100,000", "next": "none"}
@@ -1498,3 +1491,10 @@
 {"t": "2026-11-28T12:22:24+00:00", "run": "2026-11-28T12:22:24+00:00", "seat": "Chartist", "ticker": "TRUMP", "idea": "watch", "evidence": "RSI 23, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-28T12:22:24+00:00", "run": "2026-11-28T12:22:24+00:00", "seat": "Chartist", "ticker": "PIPPIN", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}
 {"t": "2026-11-28T12:22:24+00:00", "run": "2026-11-28T12:22:24+00:00", "seat": "Chartist", "ticker": "BERT", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Scout", "ticker": "TRUMP", "idea": "skip", "evidence": "liquidity $65,275 below $100,000", "next": "none"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Scout", "ticker": "PIPPIN", "idea": "big mover", "evidence": "-10.1% in 24h, liquidity $3,228,743", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Scout", "ticker": "MELANIA", "idea": "skip", "evidence": "no trades in the last 4.5h (thin or stale)", "next": "none"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Scout", "ticker": "CLAUDIA", "idea": "big mover", "evidence": "-15.5% in 24h, liquidity $390,953", "next": "Chartist: check for a dip setup"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Scout", "ticker": "CARDS", "idea": "skip", "evidence": "no trades in the last 2.5h (thin or stale)", "next": "none"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Chartist", "ticker": "PIPPIN", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}
+{"t": "2026-11-28T12:31:04+00:00", "run": "2026-11-28T12:31:04+00:00", "seat": "Chartist", "ticker": "BERT", "idea": "watch", "evidence": "RSI 29, needs to cross below 20", "next": "keep watching"}

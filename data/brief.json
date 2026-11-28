@@ -1,5 +1,5 @@
 {
- "date": "2026-11-27",
+ "date": "2026-11-28",
  "equity_usd": 50.5,
  "change_pct": 1.0,
  "pipeline_24h": {
@@ -13,10 +13,11 @@
  "pnl_24h": 0,
  "open_positions": [],
  "watching": [
-  "BP",
-  "BP",
-  "BP",
-  "BP"
+  "PIPPIN",
+  "BERT",
+  "PIPPIN",
+  "BERT",
+  "PIPPIN"
  ],
  "rejections": []
 }

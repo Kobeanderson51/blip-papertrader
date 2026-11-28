@@ -65,22 +65,6 @@
     "mcap": 21781418
    }
   },
-  "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump": {
-   "symbol": "BUTTCOIN",
-   "mint": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
-   "pool": "FFcYgSSgWHforA9rXXkA48p8YFoz8TSW85Jpo3CQHDyS",
-   "added": "2026-11-21T03:15:20+00:00",
-   "fails": [
-    "2026-11-26",
-    "2026-11-27"
-   ],
-   "at_add": {
-    "liq": 546419,
-    "vol24": 969813,
-    "age_days": 316,
-    "mcap": 7057615
-   }
-  },
   "BPxxfRCXkUVhig4HS1Lh7kZqV6SPJhzfEk4x6fVBjPCy": {
    "symbol": "BP",
    "mint": "BPxxfRCXkUVhig4HS1Lh7kZqV6SPJhzfEk4x6fVBjPCy",
@@ -122,11 +106,6 @@
   }
  },
  "rejected_recent": {
-  "DTSkmo3sCCKLCh91dJLiWCpwcKtK3yDBZMqZGSV1pump": {
-   "symbol": "ZERO",
-   "why": "liquidity $40k, only 1 days old, market cap $0.22M",
-   "t": "2026-11-27T03:00:22+00:00"
-  },
   "C5wkuysJ3iyq8BVgBibPjfBxYgZUXSBh2cTHH4yvahea": {
    "symbol": "GROK BOT",
    "why": "liquidity $0k, only 1 days old, market cap $0.03M",
@@ -257,171 +236,176 @@
    "why": "liquidity $26k, volume $73k, only 7 days old, market cap $0.08M",
    "t": "2026-11-27T23:30:21+00:00"
   },
-  "3Tg6YnNrfPdFfsY14MaNsDMWLseAyrUDS3myJtbaJN6f": {
-   "symbol": "BASKET",
-   "why": "liquidity $83k, only 3 days old, market cap $0.33M",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij": {
-   "symbol": "CBBTC",
-   "why": "not a meme coin",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump": {
-   "symbol": "67",
-   "why": "volume $31k, market cap $0.99M",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "J9eBkCb4UtquAMQqB6duwBmR99fFSMoTnDcaMB9Wpump": {
-   "symbol": "INVESTOR",
-   "why": "liquidity $8k, only 2 days old, market cap $0.01M",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "So11111111111111111111111111111111111111112": {
-   "symbol": "SOL",
-   "why": "market cap $0.00M, not a meme coin",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump": {
-   "symbol": "FIONA",
-   "why": "liquidity $124k, only 8 days old, market cap $1.19M",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "38M2z4UCfZEkUHFzD48vhKQhFhNyRGto8pZbLjNipump": {
-   "symbol": "JIMMY",
-   "why": "liquidity $78k, only 4 days old, market cap $0.66M",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "Fo2HAwr7ZAUM2bSZ7MWSi16e3aWGpbw5MsUDYCttpump": {
-   "symbol": "PUMPCHAN",
-   "why": "only 2 days old",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb": {
-   "symbol": "SPCX",
-   "why": "market cap $0.00M, not a meme coin",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
-  "9TKbd3VFaMSXsEAicD9JVQWpWwAoLi4fSgWmZL2cpump": {
-   "symbol": "SNOWBALL",
-   "why": "liquidity $59k, only 2 days old, market cap $0.52M",
-   "t": "2026-11-27T23:45:21+00:00"
-  },
   "2v63tzKPQ88ga9q13tEt1Q6eBaDydcpJTombLZkyjWW1": {
    "symbol": "SUPERFIONA",
    "why": "liquidity $0k, only 1 days old, market cap $0.00M",
    "t": "2026-11-27T23:45:21+00:00"
   },
+  "3Tg6YnNrfPdFfsY14MaNsDMWLseAyrUDS3myJtbaJN6f": {
+   "symbol": "BASKET",
+   "why": "liquidity $84k, only 3 days old, market cap $0.34M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij": {
+   "symbol": "CBBTC",
+   "why": "not a meme coin",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump": {
+   "symbol": "67",
+   "why": "volume $31k, market cap $1.01M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "J9eBkCb4UtquAMQqB6duwBmR99fFSMoTnDcaMB9Wpump": {
+   "symbol": "INVESTOR",
+   "why": "liquidity $8k, only 2 days old, market cap $0.01M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "So11111111111111111111111111111111111111112": {
+   "symbol": "SOL",
+   "why": "market cap $0.00M, not a meme coin",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump": {
+   "symbol": "FIONA",
+   "why": "liquidity $125k, only 8 days old, market cap $1.22M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "38M2z4UCfZEkUHFzD48vhKQhFhNyRGto8pZbLjNipump": {
+   "symbol": "JIMMY",
+   "why": "liquidity $86k, only 4 days old, market cap $0.79M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "Fo2HAwr7ZAUM2bSZ7MWSi16e3aWGpbw5MsUDYCttpump": {
+   "symbol": "PUMPCHAN",
+   "why": "only 2 days old",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb": {
+   "symbol": "SPCX",
+   "why": "market cap $0.00M, not a meme coin",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "9TKbd3VFaMSXsEAicD9JVQWpWwAoLi4fSgWmZL2cpump": {
+   "symbol": "SNOWBALL",
+   "why": "liquidity $57k, only 2 days old, market cap $0.48M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
   "zcRvzm7gAfYGde8gRwaSYxNryL47SjLVUQLAf1bdoor": {
    "symbol": "SIDOOR",
-   "why": "liquidity $64k, only 6 days old, market cap $0.65M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $64k, only 6 days old, market cap $0.64M",
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "UgVBFEstTHmbxKcFMDKZnsuh5oTmuQ1AgRSvKD4RoPC": {
    "symbol": "SUPERFIONA",
    "why": "liquidity $0k, only 1 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "6aHvrZ99fXBDRiVNYsuVERXzCeeMdzF9fjvefx1UjR83": {
    "symbol": "TOGI",
    "why": "liquidity $0k, only 1 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "4szpC6VF7muZ5rjgxxAjV6r3hQb4BgHPAcJbykjsUGfp": {
    "symbol": "THANKSGIVI",
    "why": "liquidity $0k, only 1 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "2QXbXCXinZtrsEYzG6fEmAPX4fpndiv82oJu59o8pEcu": {
    "symbol": "ZOTH",
    "why": "liquidity $0k, volume $0k, only 1 days old, market cap $0.00M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "7KDhKE8SQmGUR6wAp8HJYwBs4S8N9TJ9x7k7AfAQqyjc": {
    "symbol": "PNP",
    "why": "liquidity $0k, only 1 days old",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "63jDWWFwp25ChLvsofbVRMprRbhiXuWoWVxrwFfypump": {
    "symbol": "DEXDATA",
-   "why": "liquidity $40k, only 1 days old, market cap $0.27M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $37k, only 1 days old, market cap $0.24M",
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "6DARe6XUHsxgmF49Fxb3hE4NnnTqfHYHc8ryHUyE5Aym": {
    "symbol": "FUTURE",
    "why": "liquidity $0k, only 1 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "DG2EJSEtPBge5F7zBCTZG78p27LTCiq8tUkJ39qupump": {
    "symbol": "DUK",
-   "why": "liquidity $14k, only 2 days old, market cap $0.02M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $13k, only 2 days old, market cap $0.02M",
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "BSDB4NSJg93X47N3pAVvf9CdUtvUJ4Ei7Ca3T5H6p6cy": {
    "symbol": "GAIB",
    "why": "liquidity $0k, only 1 days old, market cap $0.02M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "G7bZMGHZBQayP3yputWRDoNfqEFVV7fDTDsA9CkBSZzf": {
    "symbol": "NVIDIA",
    "why": "liquidity $0k, only 0 days old",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "ABjG6h2zSe6LPAWZjJ3hVCApceoGG3PiU94fd5PHteQ3": {
    "symbol": "METAMASK",
    "why": "liquidity $0k, only 0 days old, market cap $0.02M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "85cQsFgbi8mBZxiPppbpPXuV7j1hA8tBwhjF4gKW6mHg": {
    "symbol": "RIZZMAS",
    "why": "market cap $0.63M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "7XSYaJygcuNe6Q3kPvwsJpg4ZrFL1AEUFb8kCuzppump": {
    "symbol": "KIBO",
    "why": "liquidity $19k, only 1 days old, market cap $0.07M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "4tqzkSWA9tiWYhzYpSt81We3cVNkrEbkD1tzjFDZpump": {
    "symbol": "VAULT",
-   "why": "liquidity $11k, only 1 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $12k, only 1 days old, market cap $0.03M",
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "2JjmRdQ71UzAUkTCGsFXNEBdqYBAbh9LMzSb8eHnzYJT": {
    "symbol": "GAIB",
-   "why": "liquidity $196k, only 0 days old, market cap $0.30M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $199k, only 0 days old, market cap $0.30M",
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "EjZa2B3rq6AKDXAQsmZC3k7bauYsDUmn9nS7uLBeZucW": {
    "symbol": "ZOTH",
    "why": "liquidity $0k, volume $0k, only 0 days old, market cap $0.00M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "7Y2CVbnqZRvR5RUvEJ9RQ73fZEfv7ybNcysytAepump": {
    "symbol": "WINSTON",
    "why": "liquidity $8k, only 0 days old, market cap $0.01M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "7dmwLAntVq7YE1uAmgZQbTcvth1NkxTp5sbhixJwBvrE": {
    "symbol": "NIAN",
    "why": "liquidity $0k, only 0 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "47DtMgeHne66mFcop94F9fDSmMQo7RxXoDG8ytABE82V": {
    "symbol": "GROK BOT",
    "why": "liquidity $0k, only 0 days old, market cap $0.03M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "HAP9FcXubD88SjRHMY1kr5iukpRZgeMAgCBam3Vtpump": {
    "symbol": "SPLIT",
-   "why": "liquidity $30k, only 0 days old, market cap $0.14M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $30k, only 0 days old, market cap $0.13M",
+   "t": "2026-11-28T00:00:22+00:00"
   },
   "9MnknVq6tbt31ZyEs3Ue2mBAnkvpDLNzbogZ7Kb7vP5U": {
    "symbol": "NINE",
-   "why": "only 0 days old, market cap $0.15M",
-   "t": "2026-11-27T23:45:21+00:00"
+   "why": "liquidity $0k, only 0 days old, market cap $0.03M",
+   "t": "2026-11-28T00:00:22+00:00"
+  },
+  "BRJtuuQJquUvB4ZAJzJVke2uFR18xCsMKA7TbSz2HWRh": {
+   "symbol": "USFF",
+   "why": "liquidity $48k, only 0 days old, market cap $0.04M",
+   "t": "2026-11-28T00:00:22+00:00"
   }
  },
- "last_prune_day": "2026-11-27"
+ "last_prune_day": "2026-11-28"
 }
